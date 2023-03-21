@@ -38,6 +38,7 @@ using NVIDIA GPUs with Kubernetes.
    gpu-operator/gpu-driver-upgrades.rst
    gpu-operator/install-gpu-operator-vgpu.rst
    gpu-operator/install-gpu-operator-nvaie.rst
+   gpu-operator/openshift/contents.rst
    gpu-operator/gpu-operator-mig.rst
    gpu-operator/gpu-sharing.rst
    gpu-operator/gpu-operator-rdma.rst
@@ -52,25 +53,6 @@ using NVIDIA GPUs with Kubernetes.
    kubernetes/install-k8s.rst
    kubernetes/mig-k8s.rst
    kubernetes/anthos-guide.rst
-
-.. toctree::
-   :titlesonly:
-   :caption: NVIDIA GPUs and Red Hat OpenShift
-
-   gpu-operator/openshift/introduction.rst
-   gpu-operator/openshift/prerequisites.rst
-   gpu-operator/openshift/steps-overview.rst
-   gpu-operator/openshift/install-nfd.rst
-   gpu-operator/openshift/install-gpu-ocp.rst
-   gpu-operator/openshift/nvaie-with-ocp.rst
-   gpu-operator/openshift/mig-ocp.rst
-   gpu-operator/openshift/clean-up.rst
-   gpu-operator/openshift/mirror-gpu-ocp-disconnected.rst
-   gpu-operator/openshift/enable-gpu-op-dashboard.rst
-   gpu-operator/openshift/time-slicing-gpus-in-openshift.rst
-   gpu-operator/openshift/openshift-virtualization.rst
-   gpu-operator/openshift/troubleshooting-gpu-ocp.rst
-   gpu-operator/openshift/appendix-ocp.rst
 
 .. toctree::
    :titlesonly:
