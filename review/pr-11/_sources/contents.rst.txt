@@ -58,7 +58,7 @@ using NVIDIA GPUs with Kubernetes.
    :titlesonly:
    :caption: NVIDIA GPUs and Red Hat Device Edge
 
-   Accelerating workloads with NVIDIA GPUs <gpu-operator/openshift/nvidia-gpu-with-device-edge.rst>
+   gpu-operator/openshift/nvidia-gpu-with-device-edge.rst
 
 .. toctree::
    :maxdepth: 2
