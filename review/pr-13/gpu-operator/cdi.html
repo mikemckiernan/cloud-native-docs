@@ -172,15 +172,19 @@
 <h1>Container Device Interface Support in the GPU Operator<a class="headerlink" href="#container-device-interface-support-in-the-gpu-operator" title="Permalink to this heading"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#about-the-container-device-interface" id="id1">About the Container Device Interface</a></p></li>
-<li><p><a class="reference internal" href="#enabling-cdi-during-installation" id="id2">Enabling CDI During Installation</a></p></li>
-<li><p><a class="reference internal" href="#configuring-cdi-after-installation" id="id3">Configuring CDI After Installation</a></p>
+<li><p><a class="reference internal" href="#about-the-container-device-interface" id="id1">About the Container Device Interface</a></p>
 <ul>
-<li><p><a class="reference internal" href="#prerequisites" id="id4">Prerequisites</a></p></li>
-<li><p><a class="reference internal" href="#procedure" id="id5">Procedure</a></p></li>
+<li><p><a class="reference internal" href="#support-for-multi-instance-gpu" id="id2">Support for Multi-Instance GPU</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#specifying-the-runtime-class-for-a-pod" id="id6">Specifying the Runtime Class for a Pod</a></p></li>
+<li><p><a class="reference internal" href="#enabling-cdi-during-installation" id="id3">Enabling CDI During Installation</a></p></li>
+<li><p><a class="reference internal" href="#configuring-cdi-after-installation" id="id4">Configuring CDI After Installation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#prerequisites" id="id5">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#procedure" id="id6">Procedure</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#specifying-the-runtime-class-for-a-pod" id="id7">Specifying the Runtime Class for a Pod</a></p></li>
 </ul>
 </div>
 <section id="about-the-container-device-interface">
@@ -193,10 +197,18 @@ that support for Kubernetes clusters.</p>
 <p>Use of CDI is transparent to cluster administrators and application developers.
 The benefits of CDI are largely to reduce development and support for runtime-specific
 plugins.</p>
-<p>NVIDIA recommends enabling CDI during installation or post-installation configuration.</p>
-<p>One possible exposure of CDI to administrators and developers is the ability to
-specify which container runtime to use when creating a pod specification.
+<p>When CDI is enabled, two runtime classes, nvidia-cdi and nvidia-legacy, become available.
+These two runtime classes are in addition to the default runtime class, nvidia.</p>
+<p>If you do not set CDI as the default runtime, the runtime resolves to the
+legacy runtime mode that the NVIDIA Container Toolkit provides on x86_64
+machines or any architecture that has NVML libraries installed.</p>
+<p>Optionally, you can specify the runtime class for a workload.
 See <a class="reference internal" href="#specifying-the-runtime-class-for-a-pod"><span class="std std-ref">Specifying the Runtime Class for a Pod</span></a> for an example.</p>
+<section id="support-for-multi-instance-gpu">
+<h3>Support for Multi-Instance GPU<a class="headerlink" href="#support-for-multi-instance-gpu" title="Permalink to this heading"></a></h3>
+<p>Configuring CDI is supported with Multi-Instance GPU (MIG).
+Both the <code class="docutils literal notranslate"><span class="pre">single</span></code> and <code class="docutils literal notranslate"><span class="pre">mixed</span></code> strategies are supported.</p>
+</section>
 </section>
 <section id="enabling-cdi-during-installation">
 <h2>Enabling CDI During Installation<a class="headerlink" href="#enabling-cdi-during-installation" title="Permalink to this heading"></a></h2>
@@ -224,7 +236,7 @@ Optionally, also specify the <code class="docutils literal notranslate"><span cl
 </section>
 <section id="procedure">
 <h3>Procedure<a class="headerlink" href="#procedure" title="Permalink to this heading"></a></h3>
-<p>To configure CDI as the default runtime class, perform the following steps:</p>
+<p>To enable CDI support, perform the following steps:</p>
 <ol class="arabic">
 <li><p>Enable CDI by modifying the cluster policy:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -236,7 +248,7 @@ Optionally, also specify the <code class="docutils literal notranslate"><span cl
 </pre></div>
 </div>
 </li>
-<li><p>(Optional) Set CDI as the default runtime class by modifying the cluster policy:</p>
+<li><p>(Optional) Set the default container runtime mode to CDI by modifying the cluster policy:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/cdi/default&quot;, &quot;value&quot;:true}]&#39;</span>
 </pre></div>
@@ -256,11 +268,11 @@ Optionally, also specify the <code class="docutils literal notranslate"><span cl
 <span class="go">gpu-operator-6d59774ff-hznmr                                  1/1     Running     0          2d</span>
 <span class="go">gpu-operator-node-feature-discovery-master-6d6649d597-7l8bj   1/1     Running     0          2d</span>
 <span class="go">gpu-operator-node-feature-discovery-worker-v86vj              1/1     Running     0          2d</span>
-<span class="go">nvidia-container-toolkit-daemonset-2768s                      1/1     Running     0          2m11s</span>
-<span class="go">nvidia-cuda-validator-ls4vc                                   0/1     Completed   0          47h</span>
+<span class="hll"><span class="go">nvidia-container-toolkit-daemonset-2768s                      1/1     Running     0          2m11s</span>
+</span><span class="go">nvidia-cuda-validator-ls4vc                                   0/1     Completed   0          47h</span>
 <span class="go">nvidia-dcgm-exporter-fxp9h                                    1/1     Running     0          47h</span>
-<span class="go">nvidia-device-plugin-daemonset-dvp4v                          1/1     Running     0          2m26s</span>
-<span class="go">nvidia-device-plugin-validator-kvxbs                          0/1     Completed   0          47h</span>
+<span class="hll"><span class="go">nvidia-device-plugin-daemonset-dvp4v                          1/1     Running     0          2m26s</span>
+</span><span class="go">nvidia-device-plugin-validator-kvxbs                          0/1     Completed   0          47h</span>
 <span class="go">nvidia-driver-daemonset-m86r7                                 1/1     Running     0          2d</span>
 <span class="go">nvidia-operator-validator-xg98r                               1/1     Running     0          47h</span>
 </pre></div>
@@ -283,8 +295,12 @@ Optionally, also specify the <code class="docutils literal notranslate"><span cl
 </section>
 <section id="specifying-the-runtime-class-for-a-pod">
 <h2>Specifying the Runtime Class for a Pod<a class="headerlink" href="#specifying-the-runtime-class-for-a-pod" title="Permalink to this heading"></a></h2>
-<p>You can run the following steps to verify that CDI is enabled or as a
-routine practice if you did not set CDI as the default runtime class.</p>
+<p>If you enabled CDI mode for the default container runtime, then you can use the
+following procedure to specify the legacy mode for a workload if you experience
+trouble.</p>
+<p>If you did not enable CDI mode for the default container runtime, then you can
+use the following procedure to verify that CDI is enabled and as a
+routine practice to use the CDI mode of the container runtime.</p>
 <ol class="arabic">
 <li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">cuda-vectoradd-cdi.yaml</span></code>, with contents like the following example:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -293,8 +309,8 @@ routine practice if you did not set CDI as the default runtime class.</p>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuda-vectoradd</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
-<span class="w">  </span><span class="nt">runtimeClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia-cdi</span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">runtimeClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia-cdi</span>
+</span><span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuda-vectoradd</span>
 <span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nvcr.io/nvidia/k8s/cuda-sample:vectoradd-cuda11.7.1-ubuntu20.04&quot;</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
@@ -302,18 +318,19 @@ routine practice if you did not set CDI as the default runtime class.</p>
 <span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
+<p>As an alternative, specify <code class="docutils literal notranslate"><span class="pre">nvidia-legacy</span></code> to use the legacy mode of the container runtime.</p>
 </li>
 <li><p>(Optional) Create a temporary namespace:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>cdi-verify
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>demo
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">namespace/cdi-verify created</span>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">namespace/demo created</span>
 </pre></div>
 </div>
 </li>
 <li><p>Start the pod:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>cdi-verify<span class="w"> </span>-f<span class="w"> </span>cuda-vectoradd-cdi.yaml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>demo<span class="w"> </span>-f<span class="w"> </span>cuda-vectoradd-cdi.yaml
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
@@ -322,7 +339,7 @@ routine practice if you did not set CDI as the default runtime class.</p>
 </div>
 </li>
 <li><p>View the logs from the pod:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>cdi-verify<span class="w"> </span>cuda-vectoradd
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>demo<span class="w"> </span>cuda-vectoradd
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
@@ -338,11 +355,11 @@ routine practice if you did not set CDI as the default runtime class.</p>
 <li><p>Delete the temporary namespace:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>delete<span class="w"> </span>ns<span class="w"> </span>cdi-verify
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>delete<span class="w"> </span>ns<span class="w"> </span>demo
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">namespace &quot;cdi-verify&quot; deleted</span>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">namespace &quot;demo&quot; deleted</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -361,7 +378,7 @@ routine practice if you did not set CDI as the default runtime class.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-03-22.
+      <span class="lastupdated">Last updated on 2023-03-24.
       </span></p>
   </div>
 

@@ -782,21 +782,17 @@ under <strong>Configuration</strong> select <strong>VM/Host Rules</strong>. Sele
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cdi.enabled</span></code></p></td>
 <td><p>When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the Operator installs two additional runtime classes,
-nvidia-cdi and nvidia-legacy and enables injecting Container Device Interface (CDI)
-devices into the nvidia-cdi runtime.
+nvidia-cdi and nvidia-legacy and enables the use of the Container Device Interface (CDI)
+to request devices internally.
 Using CDI aligns the Operator with the recent efforts to standardize how complex devices like GPUs
 are exposed to containerized environments.</p>
 <p>Pods can specify <code class="docutils literal notranslate"><span class="pre">spec.runtimeClassName</span></code> as <code class="docutils literal notranslate"><span class="pre">nvidia-cdi</span></code> to use the functionality or
-specify <code class="docutils literal notranslate"><span class="pre">nvidia-legacy</span></code> or <code class="docutils literal notranslate"><span class="pre">nvidia</span></code> to use the default runtime class.</p>
-<p>NVIDIA recommends enabling CDI.</p>
+specify <code class="docutils literal notranslate"><span class="pre">nvidia-legacy</span></code> to prevent using CDI to perform device injection.</p>
 </td>
 <td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cdi.default</span></code></p></td>
-<td><p>When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the nvidia-cdi runtime is set as the default runtime class.
-Otherwise, the default runtime class is <code class="docutils literal notranslate"><span class="pre">nvidia</span></code>.</p>
-<p>NVIDIA recommends using nvidia-cdi as the default runtime class.</p>
-</td>
+<td><p>When set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the container runtime uses CDI to perform device injection by default.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">driver.enabled</span></code></p></td>
@@ -890,7 +886,6 @@ where <code class="docutils literal notranslate"><span class="pre">0x10de</span>
 <section id="common-deployment-scenarios">
 <h5>Common Deployment Scenarios<a class="headerlink" href="#common-deployment-scenarios" title="Permalink to this heading"></a></h5>
 <p>In this section, we present some common deployment recipes when using the Helm chart to install the GPU Operator.</p>
-<p>NVIDIA recommends specifying the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">cdi.enabled=true</span></code> and <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">cdi.default=true</span></code> arguments.</p>
 <section id="bare-metal-passthrough-with-default-configurations-on-ubuntu">
 <h6>Bare-metal/Passthrough with default configurations on Ubuntu<a class="headerlink" href="#bare-metal-passthrough-with-default-configurations-on-ubuntu" title="Permalink to this heading"></a></h6>
 <p>In this scenario, the default configuration options are used:</p>
@@ -1481,7 +1476,7 @@ will essentially be pinned to the ESXi host which hosts the GPU. vMotion and VMw
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-03-22.
+      <span class="lastupdated">Last updated on 2023-03-24.
       </span></p>
   </div>
 
