@@ -24,6 +24,7 @@
         <script src="../_static/sphinx_highlight.js"></script>
         <script src="../_static/clipboard.min.js"></script>
         <script src="../_static/copybutton.js"></script>
+        <script src="../_static/tabs.js"></script>
         <script src="../_static/js/google-analytics/google-analytics-tracker.js"></script>
         <script src="../_static/js/google-analytics/google-analytics-write.js"></script>
         <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-7ba51e58dc61bcb0e9311aadd02a0108ab24cc6c.js"></script>
@@ -177,18 +178,20 @@
 <li><p><a class="reference internal" href="#platform-support" id="id8">Platform Support</a></p></li>
 <li><p><a class="reference internal" href="#prerequisites" id="id9">Prerequisites</a></p></li>
 <li><p><a class="reference internal" href="#installing-the-gpu-operator-and-enabling-gpudirect-rdma" id="id10">Installing the GPU Operator and Enabling GPUDirect RDMA</a></p></li>
-<li><p><a class="reference internal" href="#verifying-the-gpudirect-with-rdma-installation" id="id11">Verifying the GPUDirect with RDMA Installation</a></p></li>
+<li><p><a class="reference internal" href="#verifying-the-installation-of-gpudirect-with-rdma" id="id11">Verifying the Installation of GPUDirect with RDMA</a></p></li>
+<li><p><a class="reference internal" href="#verifying-the-installation-by-performing-a-data-transfer" id="id12">Verifying the Installation by Performing a Data Transfer</a></p></li>
+<li><p><a class="reference internal" href="#related-information" id="id13">Related Information</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#using-gpudirect-storage" id="id12">Using GPUDirect Storage</a></p>
+<li><p><a class="reference internal" href="#using-gpudirect-storage" id="id14">Using GPUDirect Storage</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id2" id="id13">Platform Support</a></p></li>
-<li><p><a class="reference internal" href="#id3" id="id14">Prerequisites</a></p></li>
-<li><p><a class="reference internal" href="#installation" id="id15">Installation</a></p></li>
-<li><p><a class="reference internal" href="#verification" id="id16">Verification</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id15">Platform Support</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id16">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id17">Installation</a></p></li>
+<li><p><a class="reference internal" href="#verification" id="id18">Verification</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#further-reading" id="id17">Further Reading</a></p></li>
+<li><p><a class="reference internal" href="#further-reading" id="id19">Further Reading</a></p></li>
 </ul>
 </div>
 <section id="about-gpudirect-rdma-and-gpudirect-storage">
@@ -259,8 +262,8 @@ document from VMWare.</p>
 </pre></div>
 </div>
 </section>
-<section id="verifying-the-gpudirect-with-rdma-installation">
-<h3>Verifying the GPUDirect with RDMA Installation<a class="headerlink" href="#verifying-the-gpudirect-with-rdma-installation" title="Permalink to this heading"></a></h3>
+<section id="verifying-the-installation-of-gpudirect-with-rdma">
+<h3>Verifying the Installation of GPUDirect with RDMA<a class="headerlink" href="#verifying-the-installation-of-gpudirect-with-rdma" title="Permalink to this heading"></a></h3>
 <p>During the installation, the NVIDIA driver daemonset runs an <cite>init container</cite> to wait on the Mellanox OFED (MOFED) drivers to be ready.
 This init container checks for Mellanox NICs on the node and ensures that the necessary kernel symbols are exported MOFED kernel drivers.
 After the verfication is complete by the init container, the nvidia-peermem-ctr container is started inside each driver pod.</p>
@@ -297,7 +300,7 @@ the nvidia-driver-ctr and nvidia-peermem-ctr containers:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span>ds/nvidia-driver-daemonset<span class="w"> </span>-c<span class="w"> </span>nvidia-peermem-ctr
 </pre></div>
 </div>
-<p>Alternatively, run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">logs</span> <span class="pre">-n</span> <span class="pre">nvidia-driver-daemonset-xxxxx</span> <span class="pre">-c</span> <span class="pre">nvidia-peermem-ctr</span></code> for each pod in the daemonset.</p>
+<p>Alternatively, run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">logs</span> <span class="pre">-n</span> <span class="pre">gpu-operator</span> <span class="pre">nvidia-driver-daemonset-xxxxx</span> <span class="pre">-c</span> <span class="pre">nvidia-peermem-ctr</span></code> for each pod in the daemonset.</p>
 <p><em>Example Output</em></p>
 <div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">waiting for mellanox ofed and nvidia drivers to be installed</span>
 <span class="go">waiting for mellanox ofed and nvidia drivers to be installed</span>
@@ -306,6 +309,243 @@ the nvidia-driver-ctr and nvidia-peermem-ctr containers:</p>
 </div>
 </li>
 </ol>
+</section>
+<section id="verifying-the-installation-by-performing-a-data-transfer">
+<h3>Verifying the Installation by Performing a Data Transfer<a class="headerlink" href="#verifying-the-installation-by-performing-a-data-transfer" title="Permalink to this heading"></a></h3>
+<p>You can perform the following steps to verify that GPUDirect with RDMA is configured
+correctly and that pods can perform RDMA data transfers.</p>
+<ol class="arabic">
+<li><p>Get the network interface name of the Infiniband device on the host:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>-n<span class="w"> </span>network-operator<span class="w"> </span>mofed-ubuntu22.04-ds-xxxxx<span class="w"> </span>--<span class="w"> </span>ibdev2netdev
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">mlx5_0 port 1 ==&gt; ens64np1 (Up)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Configure a secondary network on the device using MACVLAN:</p>
+<ul>
+<li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">demo-macvlannetwork.yaml</span></code>, with contents like the following example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mellanox.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MacvlanNetwork</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-macvlannetwork</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">networkNamespace</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default&quot;</span>
+<span class="hll"><span class="nt">master</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ens64np1&quot;</span>
+</span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bridge&quot;</span>
+<span class="nt">mtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1500</span>
+<span class="nt">ipam</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">  </span><span class="no">{</span>
+<span class="w">    </span><span class="no">&quot;type&quot;: &quot;whereabouts&quot;,</span>
+<span class="w">    </span><span class="no">&quot;range&quot;: &quot;192.168.2.225/28&quot;,</span>
+<span class="w">    </span><span class="no">&quot;exclude&quot;: [</span>
+<span class="w">      </span><span class="no">&quot;192.168.2.229/30&quot;,</span>
+<span class="w">      </span><span class="no">&quot;192.168.2.236/32&quot;</span>
+<span class="w">    </span><span class="no">]</span>
+<span class="w">  </span><span class="no">}</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">ens64np1</span></code> with the the network interface name reported by the <code class="docutils literal notranslate"><span class="pre">ibdev2netdev</span></code> command
+from the preceding step.</p>
+</li>
+<li><p>Apply the manifest:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>demo-macvlannetwork.yaml
+</pre></div>
+</div>
+</li>
+<li><p>Confirm that the additional network is ready:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>macvlannetworks<span class="w"> </span>demo-macvlannetwork
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">NAME                  STATUS   AGE</span>
+<span class="go">demo-macvlannetwork   ready    2023-03-10T18:22:28Z</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Start two pods that run the <code class="docutils literal notranslate"><span class="pre">mellanox/cuda-perftest</span></code> container on two different nodes in the cluster.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">demo-pod-1</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">demo-pod-2</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><ul>
+<li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">demo-pod-1.yaml</span></code>, for the first pod with contents like the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-pod-1</span>
+</span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">k8s.v1.cni.cncf.io/networks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-macvlannetwork</span>
+<span class="w">    </span><span class="c1"># If a network with static IPAM is used replace network annotation with the below.</span>
+<span class="w">    </span><span class="c1"># k8s.v1.cni.cncf.io/networks: &#39;[</span>
+<span class="w">    </span><span class="c1">#   { &quot;name&quot;: &quot;rdma-net&quot;,</span>
+<span class="w">    </span><span class="c1">#     &quot;ips&quot;: [&quot;192.168.111.101/24&quot;],</span>
+<span class="w">    </span><span class="c1">#     &quot;gateway&quot;: [&quot;192.168.111.1&quot;]</span>
+<span class="w">    </span><span class="c1">#   }</span>
+<span class="w">    </span><span class="c1"># ]&#39;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Note: Replace hostname or remove selector altogether</span>
+<span class="hll"><span class="w">    </span><span class="nt">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvnode1</span>
+</span><span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mellanox/cuda-perftest</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdma-gpu-test-ctr</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">capabilities</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;IPC_LOCK&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">rdma/rdma_shared_device_a</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">rdma/rdma_shared_device_a</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Apply the manifest:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>demo-pod-1.yaml
+</pre></div>
+</div>
+</li>
+</ul>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><ul>
+<li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">demo-pod-2.yaml</span></code>, for the second pod with contents like the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="hll"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-pod-2</span>
+</span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">k8s.v1.cni.cncf.io/networks</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-macvlannetwork</span>
+<span class="w">    </span><span class="c1"># If a network with static IPAM is used replace network annotation with the below.</span>
+<span class="w">    </span><span class="c1"># k8s.v1.cni.cncf.io/networks: &#39;[</span>
+<span class="w">    </span><span class="c1">#   { &quot;name&quot;: &quot;rdma-net&quot;,</span>
+<span class="w">    </span><span class="c1">#     &quot;ips&quot;: [&quot;192.168.111.101/24&quot;],</span>
+<span class="w">    </span><span class="c1">#     &quot;gateway&quot;: [&quot;192.168.111.1&quot;]</span>
+<span class="w">    </span><span class="c1">#   }</span>
+<span class="w">    </span><span class="c1"># ]&#39;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># Note: Replace hostname or remove selector altogether</span>
+<span class="hll"><span class="w">    </span><span class="nt">kubernetes.io/hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvnode2</span>
+</span><span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OnFailure</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mellanox/cuda-perftest</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rdma-gpu-test-ctr</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">capabilities</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&quot;IPC_LOCK&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">rdma/rdma_shared_device_a</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">rdma/rdma_shared_device_a</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</pre></div>
+</div>
+</li>
+<li><p>Apply the manifest:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>demo-pod-2.yaml
+</pre></div>
+</div>
+</li>
+</ul>
+</div></div>
+</li>
+<li><p>Get the IP addresses of the pods:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-o<span class="w"> </span>wide
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">NAME         READY   STATUS    RESTARTS   AGE    IP              NODE      NOMINATED NODE   READINESS GATES</span>
+<span class="go">demo-pod-1   1/1     Running   0          3d4h   192.168.38.90   nvnode1   &lt;none&gt;           &lt;none&gt;</span>
+<span class="go">demo-pod-2   1/1     Running   0          3d4h   192.168.47.89   nvnode2   &lt;none&gt;           &lt;none&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>From one terminal, open a shell in the container on the first pod and start the performance test server:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>demo-pod-1<span class="w"> </span>--<span class="w"> </span>ib_write_bw<span class="w"> </span>-d<span class="w"> </span>mlx5_0<span class="w"> </span>-a<span class="w"> </span>-F<span class="w"> </span>--report_gbits<span class="w"> </span>-q<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">************************************</span>
+<span class="go">* Waiting for client to connect... *</span>
+<span class="go">************************************</span>
+</pre></div>
+</div>
+</li>
+<li><p>From another terminal, open a shell in the container on the second pod and run the performance client:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>demo-pod-2<span class="w"> </span>--<span class="w"> </span>ib_write_bw<span class="w"> </span>-d<span class="w"> </span>mlx5_0<span class="w"> </span>-a<span class="w"> </span>-F<span class="w"> </span>--report_gbits<span class="w"> </span>-q<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">192</span>.168.38.90
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go"> ---------------------------------------------------------------------------------------</span>
+<span class="go">                    RDMA_Write BW Test</span>
+<span class="go"> Dual-port       : OFF          Device         : mlx5_0</span>
+<span class="go"> Number of qps   : 1            Transport type : IB</span>
+<span class="go"> Connection type : RC           Using SRQ      : OFF</span>
+<span class="go"> PCIe relax order: ON</span>
+<span class="go"> ibv_wr* API     : ON</span>
+<span class="go"> TX depth        : 128</span>
+<span class="go"> CQ Moderation   : 100</span>
+<span class="go"> Mtu             : 1024[B]</span>
+<span class="go"> Link type       : Ethernet</span>
+<span class="go"> GID index       : 5</span>
+<span class="go"> Max inline data : 0[B]</span>
+<span class="go"> rdma_cm QPs     : OFF</span>
+<span class="go"> Data ex. method : Ethernet</span>
+<span class="go">---------------------------------------------------------------------------------------</span>
+<span class="go"> local address: LID 0000 QPN 0x01ac PSN 0xc76db1 RKey 0x23beb2 VAddr 0x007f26a2c8b000</span>
+<span class="go"> GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:02:226</span>
+<span class="go"> remote address: LID 0000 QPN 0x01a9 PSN 0x2f722 RKey 0x23beaf VAddr 0x007f820b24f000</span>
+<span class="go"> GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:02:225</span>
+<span class="go">---------------------------------------------------------------------------------------</span>
+<span class="go"> #bytes     #iterations    BW peak[Gb/sec]    BW average[Gb/sec]   MsgRate[Mpps]</span>
+<span class="go"> 2          5000             0.11               0.11               6.897101</span>
+<span class="go"> 4          5000             0.22               0.22               6.995646</span>
+<span class="go"> 8          5000             0.45               0.45               7.014752</span>
+<span class="go"> 16         5000             0.90               0.90               7.017509</span>
+<span class="go"> 32         5000             1.80               1.80               7.020162</span>
+<span class="go"> 64         5000             3.59               3.59               7.007110</span>
+<span class="go"> 128        5000             7.19               7.18               7.009540</span>
+<span class="go"> 256        5000             15.06              14.98              7.313517</span>
+<span class="go"> 512        5000             30.04              29.73              7.259329</span>
+<span class="go"> 1024       5000             59.65              58.81              7.178529</span>
+<span class="go"> 2048       5000             91.53              91.47              5.582931</span>
+<span class="go"> 4096       5000             92.13              92.06              2.809574</span>
+<span class="go"> 8192       5000             92.35              92.31              1.408535</span>
+<span class="go"> 16384      5000             92.46              92.46              0.705381</span>
+<span class="go"> 32768      5000             92.36              92.35              0.352302</span>
+<span class="go"> 65536      5000             92.39              92.38              0.176196</span>
+<span class="go"> 131072     5000             92.42              92.41              0.088131</span>
+<span class="go"> 262144     5000             92.45              92.44              0.044080</span>
+<span class="go"> 524288     5000             92.42              92.42              0.022034</span>
+<span class="go"> 1048576    5000             92.40              92.40              0.011015</span>
+<span class="go"> 2097152    5000             92.40              92.39              0.005507</span>
+<span class="go"> 4194304    5000             92.40              92.39              0.002753</span>
+<span class="go"> 8388608    5000             92.39              92.39              0.001377</span>
+<span class="go">---------------------------------------------------------------------------------------</span>
+</pre></div>
+</div>
+<p>The command output indicates that the data transfer rate was approximately 92 Gbps.</p>
+</li>
+<li><p>Delete the pods:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>demo-pod-1.yaml<span class="w"> </span>-f<span class="w"> </span>demo-pod-2.yaml
+</pre></div>
+</div>
+</li>
+<li><p>Delete the secondary network:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>demo-macvlannetworks.yaml
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="related-information">
+<h3>Related Information<a class="headerlink" href="#related-information" title="Permalink to this heading"></a></h3>
 <p>For more information about nvidia-peermem, refer to
 <a class="reference external" href="https://docs.nvidia.com/cuda/gpudirect-rdma/index.html#using-nvidia-peermem">Using nvidia-peermem</a>
 in the NVIDIA CUDA documentation.</p>
