@@ -90,7 +90,7 @@ Limitations
 ===========
 
 DGCM-Exporter does not provide metrics for time-sliced GPUs.
-Metrics continue to be reported for the physical GPUs.
+The exporter continues to report metrics for the physical GPUs.
 
 
 Changes to Node Labels
