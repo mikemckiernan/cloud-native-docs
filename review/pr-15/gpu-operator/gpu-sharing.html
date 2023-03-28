@@ -170,6 +170,29 @@
              
   <section id="time-slicing-gpus-in-kubernetes">
 <span id="gpu-sharing"></span><h1>Time-Slicing GPUs in Kubernetes<a class="headerlink" href="#time-slicing-gpus-in-kubernetes" title="Permalink to this heading"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#understanding-time-slicing-gpus" id="id2">Understanding Time-Slicing GPUs</a></p>
+<ul>
+<li><p><a class="reference internal" href="#comparison-time-slicing-and-multi-instance-gpu" id="id3">Comparison: Time-Slicing and Multi-Instance GPU</a></p></li>
+<li><p><a class="reference internal" href="#support-platforms-and-resource-types" id="id4">Support Platforms and Resource Types</a></p></li>
+<li><p><a class="reference internal" href="#limitations" id="id5">Limitations</a></p></li>
+<li><p><a class="reference internal" href="#changes-to-node-labels" id="id6">Changes to Node Labels</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#configuration" id="id7">Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#about-configuring-gpu-time-slicing" id="id8">About Configuring GPU Time-Slicing</a></p></li>
+<li><p><a class="reference internal" href="#applying-one-cluster-wide-configuration" id="id9">Applying One Cluster-Wide Configuration</a></p></li>
+<li><p><a class="reference internal" href="#applying-multiple-node-specific-configurations" id="id10">Applying Multiple Node-Specific Configurations</a></p></li>
+<li><p><a class="reference internal" href="#configuring-time-slicing-before-installing-the-nvidia-gpu-operator" id="id11">Configuring Time-Slicing Before Installing the NVIDIA GPU Operator</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#verifying-the-gpu-time-slicing-configuration" id="id12">Verifying the GPU Time-Slicing Configuration</a></p></li>
+<li><p><a class="reference internal" href="#example-configurations" id="id13">Example Configurations</a></p></li>
+<li><p><a class="reference internal" href="#references" id="id14">References</a></p></li>
+</ul>
+</div>
 <section id="understanding-time-slicing-gpus">
 <h2>Understanding Time-Slicing GPUs<a class="headerlink" href="#understanding-time-slicing-gpus" title="Permalink to this heading"></a></h2>
 <p>The NVIDIA GPU Operator enables oversubscription of GPUs through a set
