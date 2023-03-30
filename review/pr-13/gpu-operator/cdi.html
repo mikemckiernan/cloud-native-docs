@@ -175,16 +175,17 @@
 <li><p><a class="reference internal" href="#about-the-container-device-interface" id="id1">About the Container Device Interface</a></p>
 <ul>
 <li><p><a class="reference internal" href="#support-for-multi-instance-gpu" id="id2">Support for Multi-Instance GPU</a></p></li>
+<li><p><a class="reference internal" href="#limitations-and-restrictions" id="id3">Limitations and Restrictions</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#enabling-cdi-during-installation" id="id3">Enabling CDI During Installation</a></p></li>
-<li><p><a class="reference internal" href="#configuring-cdi-after-installation" id="id4">Configuring CDI After Installation</a></p>
+<li><p><a class="reference internal" href="#enabling-cdi-during-installation" id="id4">Enabling CDI During Installation</a></p></li>
+<li><p><a class="reference internal" href="#configuring-cdi-after-installation" id="id5">Configuring CDI After Installation</a></p>
 <ul>
-<li><p><a class="reference internal" href="#prerequisites" id="id5">Prerequisites</a></p></li>
-<li><p><a class="reference internal" href="#procedure" id="id6">Procedure</a></p></li>
+<li><p><a class="reference internal" href="#prerequisites" id="id6">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#procedure" id="id7">Procedure</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#specifying-the-runtime-class-for-a-pod" id="id7">Specifying the Runtime Class for a Pod</a></p></li>
+<li><p><a class="reference internal" href="#specifying-the-runtime-class-for-a-pod" id="id8">Specifying the Runtime Class for a Pod</a></p></li>
 </ul>
 </div>
 <section id="about-the-container-device-interface">
@@ -209,12 +210,17 @@ See <a class="reference internal" href="#specifying-the-runtime-class-for-a-pod"
 <p>Configuring CDI is supported with Multi-Instance GPU (MIG).
 Both the <code class="docutils literal notranslate"><span class="pre">single</span></code> and <code class="docutils literal notranslate"><span class="pre">mixed</span></code> strategies are supported.</p>
 </section>
+<section id="limitations-and-restrictions">
+<h3>Limitations and Restrictions<a class="headerlink" href="#limitations-and-restrictions" title="Permalink to this heading"></a></h3>
+<p>Enabling CDI is not supported with Red Hat OpenShift Container Platform.
+Refer to the <a class="reference internal" href="platform-support.html#supported-operating-systems-and-kubernetes-platforms"><span class="std std-ref">Supported Operating Systems and Kubernetes Platforms</span></a>.</p>
+</section>
 </section>
 <section id="enabling-cdi-during-installation">
 <h2>Enabling CDI During Installation<a class="headerlink" href="#enabling-cdi-during-installation" title="Permalink to this heading"></a></h2>
-<p>Follow the installation to use Helm for installing the Operator on the <span class="xref std std-doc">operator-install-guide</span> page.</p>
+<p>Follow the instructions for installing the Operator with Helm on the <span class="xref std std-doc">operator-install-guide</span> page.</p>
 <p>When you install the Operator with Helm, specify the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">cdi.enabled=true</span></code> argument.
-Optionally, also specify the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">cdi.default=true</span></code> argument to use the CDI runtime class by default for workloads.</p>
+Optionally, also specify the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">cdi.default=true</span></code> argument to use the CDI runtime class by default for all pods.</p>
 </section>
 <section id="configuring-cdi-after-installation">
 <h2>Configuring CDI After Installation<a class="headerlink" href="#configuring-cdi-after-installation" title="Permalink to this heading"></a></h2>
@@ -378,7 +384,7 @@ routine practice to use the CDI mode of the container runtime.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-03-24.
+      <span class="lastupdated">Last updated on 2023-03-30.
       </span></p>
   </div>
 
