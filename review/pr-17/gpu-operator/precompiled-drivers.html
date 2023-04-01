@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Archive" href="archive.html" />
-    <link rel="prev" title="Installing Precompiled and Canonical Signed Drivers on Ubuntu 20.04 and 22.04" href="install-precompiled-signed-drivers.html" /> 
+    <link rel="prev" title="Customizing NVIDIA GPU Driver Parameters during Installation" href="custom-driver-params.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -114,7 +114,6 @@
 <li class="toctree-l2"><a class="reference internal" href="install-gpu-operator-air-gapped.html">Install GPU Operator in Air-gapped Environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install-gpu-operator-outdated-kernels.html">Considerations when Installing with Outdated Kernels in Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom-driver-params.html">Customizing NVIDIA GPU Driver Parameters during Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-precompiled-signed-drivers.html">Installing Precompiled and Canonical Signed Drivers on Ubuntu 20.04 and 22.04</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Precompiled Driver Containers</a></li>
 </ul>
 </li>
@@ -172,6 +171,20 @@
              
   <section id="precompiled-driver-containers">
 <span id="install-precompiled-drivers"></span><h1>Precompiled Driver Containers<a class="headerlink" href="#precompiled-driver-containers" title="Permalink to this heading"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#about-precompiled-driver-containers" id="id1">About Precompiled Driver Containers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#limitations-and-restrictions" id="id2">Limitations and Restrictions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#determining-if-a-precompiled-driver-container-is-available" id="id3">Determining if a Precompiled Driver Container is Available</a></p></li>
+<li><p><a class="reference internal" href="#enabling-precompiled-driver-container-support-during-installation" id="id4">Enabling Precompiled Driver Container Support During Installation</a></p></li>
+<li><p><a class="reference internal" href="#enabling-support-after-installation" id="id5">Enabling Support After Installation</a></p></li>
+<li><p><a class="reference internal" href="#disabling-support-for-precompiled-driver-containers" id="id6">Disabling Support for Precompiled Driver Containers</a></p></li>
+<li><p><a class="reference internal" href="#building-a-custom-driver-container-image" id="id7">Building a Custom Driver Container Image</a></p></li>
+</ul>
+</div>
 <section id="about-precompiled-driver-containers">
 <h2>About Precompiled Driver Containers<a class="headerlink" href="#about-precompiled-driver-containers" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
@@ -192,13 +205,50 @@ with restricted internet access or sites with resource-constrained hardware.</p>
 <h3>Limitations and Restrictions<a class="headerlink" href="#limitations-and-restrictions" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Support for deploying the driver containers with precompiled drivers is limited to
-hosts with Ubuntu 20.04 or 22.04 operating systems, x86_64 architecture, and
-the <code class="docutils literal notranslate"><span class="pre">generic</span></code> kernel variant.</p></li>
+hosts with the Ubuntu 22.04 operating system and x86_64 architecture.</p></li>
 <li><p>NVIDIA supports precompiled driver containers for the most recently released long-term
-servicing branch (LTSB) driver branches 525 and 530.</p></li>
+servicing branch (LTSB) driver branch, 525.</p></li>
+<li><p>NVIDIA builds images for the <code class="docutils literal notranslate"><span class="pre">generic</span></code> kernel variant.
+If your hosts run a different kernel variant, you can build a precompiled driver image
+and use your own container registry.</p></li>
 <li><p>Precompiled driver containers do not support NVIDIA vGPU or GPUDirect Storage (GDS).</p></li>
 </ul>
 </section>
+</section>
+<section id="determining-if-a-precompiled-driver-container-is-available">
+<h2>Determining if a Precompiled Driver Container is Available<a class="headerlink" href="#determining-if-a-precompiled-driver-container-is-available" title="Permalink to this heading"></a></h2>
+<p>Use one of the following ways to check if a driver container is available for your Linux kernel and driver branch:</p>
+<ul>
+<li><p>Use a web browser to access the NVIDIA GPU Driver page of the NVIDIA GPU Cloud registry at
+<a class="reference external" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/driver/tags">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/driver/tags</a>.
+Use the search field to filter the tags by your operating system version.</p></li>
+<li><p>Use the <a class="reference external" href="https://ngc.nvidia.com/setup/installers/cli">NGC CLI</a> tool to list the tags for the driver container:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ngc<span class="w"> </span>registry<span class="w"> </span>image<span class="w"> </span>info<span class="w"> </span>nvidia/driver
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Image Repository Information</span>
+<span class="go">  Name: driver</span>
+<span class="go">  Display Name: NVIDIA GPU Driver</span>
+<span class="go">  Short Description: Provision NVIDIA GPU Driver as a Container.</span>
+<span class="go">  Built By: NVIDIA</span>
+<span class="go">  Publisher: NVIDIA</span>
+<span class="go">  Multinode Support: False</span>
+<span class="go">  Multi-Arch Support: True</span>
+<span class="go">  Logo: https://assets.nvidiagrid.net/ngc/logos/Infrastructure.png</span>
+<span class="go">  Labels: NVIDIA AI Enterprise Supported, ARM, Kubernetes, Multi-Arch, X86, Infrastructure</span>
+<span class="go">  Public: Yes</span>
+<span class="go">  Last Updated: Mar 30, 2023</span>
+<span class="go">  Latest Image Size: 620.18 MB</span>
+<span class="go">  Latest Tag: 525.105.17-rhel8.7</span>
+<span class="go">  Tags:</span>
+<span class="go">      525.105.17-rhel8.7</span>
+<span class="go">      525.105.17-rhel8.6</span>
+<span class="go">  ...</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </section>
 <section id="enabling-precompiled-driver-container-support-during-installation">
 <h2>Enabling Precompiled Driver Container Support During Installation<a class="headerlink" href="#enabling-precompiled-driver-container-support-during-installation" title="Permalink to this heading"></a></h2>
@@ -285,50 +335,122 @@ servicing branch (LTSB) driver branches 525 and 530.</p></li>
 </li>
 </ol>
 </section>
-<section id="determining-if-a-precompiled-driver-container-is-available">
-<h2>Determining if a Precompiled Driver Container is Available<a class="headerlink" href="#determining-if-a-precompiled-driver-container-is-available" title="Permalink to this heading"></a></h2>
-<p>Before you upgrade the Linux kernel on the worker nodes, you can ensure that
-a precompiled driver is available for that kernel version.</p>
-<p>If a precompiled driver is not available, then you can remain on the older Linux kernel
-or you can disable support for precompiled driver containers and use conventional driver containers.</p>
+<section id="building-a-custom-driver-container-image">
+<h2>Building a Custom Driver Container Image<a class="headerlink" href="#building-a-custom-driver-container-image" title="Permalink to this heading"></a></h2>
+<p>If a precompiled driver container for your Linux kernel variant is not available,
+you can perform the following steps to build and run a container image.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>NVIDIA provides limited support for custom driver container images.</p>
+</div>
+<p class="rubric">Prerequisites</p>
 <ul>
-<li><p>Check if precompiled driver support for a specific kernel version is available:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">KERNEL_VERSION</span><span class="o">=</span><span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span><span class="w">  </span><span class="c1"># 5.15.0-69-generic</span>
-<span class="gp">$ </span><span class="nv">DRIVER_BRANCH</span><span class="o">=</span><span class="m">525</span>
-<span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>update
-<span class="gp">$ </span>sudo<span class="w"> </span>apt<span class="w"> </span>show<span class="w"> </span>linux-modules-nvidia-<span class="si">${</span><span class="nv">DRIVER_BRANCH</span><span class="si">}</span>-server-<span class="si">${</span><span class="nv">KERNEL_VERSION</span><span class="si">}</span>
+<li><p>You have access to a private container registry, such as NVIDIA NGC Private Registry, and can push container images to the registry.</p></li>
+<li><p>Your build machine has access to the internet to download operating system packages.</p></li>
+<li><p>You know a CUDA version, such as <code class="docutils literal notranslate"><span class="pre">12.1.0</span></code>, that you want to use.
+The CUDA version only specifies which base image is used to build the driver container.
+The version does not have any correlation to the version of CUDA that is associated with or supported by the resulting driver container.</p>
+<p>One way to find a supported CUDA version for your operating system is to access the NVIDIA GPU Cloud registry
+at <a class="reference external" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda/tags">https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda/tags</a> and view the tags.
+Use the search field to filter the tags, such as <code class="docutils literal notranslate"><span class="pre">base-ubuntu22.04</span></code>.
+The filtered results show the CUDA versions, such as <code class="docutils literal notranslate"><span class="pre">12.1.0</span></code>, <code class="docutils literal notranslate"><span class="pre">12.0.1</span></code>, <code class="docutils literal notranslate"><span class="pre">12.0.0</span></code>, and so on.</p>
+</li>
+<li><p>You know the GPU driver branch, such as <code class="docutils literal notranslate"><span class="pre">525</span></code>, that you want to use.</p></li>
+<li><p>You know the GPU driver version for the driver branch, such as <code class="docutils literal notranslate"><span class="pre">525.85.12</span></code>.</p>
+<p>One way to find the driver version is to run the following command on a worker machine or other host with
+the same operating system as the worker machine:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt-cache<span class="w"> </span>show<span class="w"> </span>nvidia-utils-<span class="si">${</span><span class="nv">DRIVER_BRANCH</span><span class="si">}</span>-server<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Version<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39;-&#39;</span><span class="w"> </span>-f1<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
-<p>The following example output shows a successful response for Linux kernel 5.15.0-69 and driver branch 525.</p>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Package: linux-modules-nvidia-525-server-5.15.0-69-generic</span>
-<span class="go">Version: 5.15.0-69.76</span>
-<span class="go">Priority: optional</span>
-<span class="go">Section: restricted/kernel</span>
-<span class="go">Source: linux-restricted-modules</span>
-<span class="go">Origin: Ubuntu</span>
-<span class="go">Maintainer: Canonical Kernel Team &lt;kernel-team@lists.ubuntu.com&gt;</span>
-<span class="go">Bugs: https://bugs.launchpad.net/ubuntu/+filebug</span>
-<span class="go">Installed-Size: 34.8 kB</span>
-<span class="go">Depends: debconf (&gt;= 0.5) | debconf-2.0, linux-image-5.15.0-69-generic | linux-image-unsigned-5.15.0-69-generic, linux-signatures-nvidia-5.15.0-69-generic (= 5.15.0-69.76), linux-objects-nvidia-525-server-5.15.0-69-generic (= 5.15.0-69.76), nvidia-kernel-common-525-server (&gt;= 525.85.12)</span>
-<span class="go">Download-Size: 7026 B</span>
-<span class="go">APT-Sources: http://us.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages</span>
-<span class="go">Description: Linux kernel nvidia modules for version 5.15.0-69</span>
-<span class="go"> This package pulls together the Linux kernel nvidia modules for</span>
-<span class="go"> version 5.15.0-69 with the appropriate signatures.</span>
-<span class="go"> .</span>
-<span class="go"> You likely do not want to install this package directly. Instead, install the</span>
-<span class="go"> one of the linux-modules-nvidia-525-server-generic* meta-packages,</span>
-<span class="go"> which will ensure that upgrades work correctly, and that supporting packages are</span>
-<span class="go"> also installed.</span>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">525.85.12</span>
 </pre></div>
 </div>
-<p>The following example shows a failure response for Linux kernel 5.15.0-58 and driver branch 525.</p>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">N: Unable to locate package linux-modules-nvidia-525-server-5.15.0-58</span>
-<span class="go">N: Couldn&#39;t find any package by glob &#39;linux-modules-nvidia-525-server-5.15.0-58&#39;</span>
-<span class="go">N: Unable to locate package linux-modules-nvidia-525-server-5.15.0-58</span>
-<span class="go">N: Couldn&#39;t find any package by glob &#39;linux-modules-nvidia-525-server-5.15.0-58&#39;</span>
-<span class="go">E: No packages found</span>
+</li>
+</ul>
+<p class="rubric">Procedure</p>
+<ol class="arabic">
+<li><p>Clone the driver container repository and change directory into the repository:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://gitlab.com/nvidia/container-images/driver
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>driver
+</pre></div>
+</div>
+</li>
+<li><p>Change directory to the operating system name and version under the driver directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>ubuntu22.04/precompiled
+</pre></div>
+</div>
+</li>
+<li><p>Set environment variables for building the driver container image.</p>
+<ul>
+<li><p>Specify your private registry URL:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">PRIVATE_REGISTRY</span><span class="o">=</span>&lt;private-registry-url&gt;
+</pre></div>
+</div>
+</li>
+<li><p>Specify the <code class="docutils literal notranslate"><span class="pre">KERNEL_VERSION</span></code> environment variable that matches your kernel variant, such as <code class="docutils literal notranslate"><span class="pre">5.15.0-1033-aws</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">KERNEL_VERSION</span><span class="o">=</span><span class="m">5</span>.15.0-1033-aws
+</pre></div>
+</div>
+</li>
+<li><p>Specify the version of the CUDA base image to use when building the driver container:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">CUDA_VERSION</span><span class="o">=</span><span class="m">12</span>.1.0
+</pre></div>
+</div>
+</li>
+<li><p>Specify the driver branch, such as <code class="docutils literal notranslate"><span class="pre">525</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DRIVER_BRANCH</span><span class="o">=</span><span class="m">525</span>
+</pre></div>
+</div>
+</li>
+<li><p>Specify the driver version, such as <code class="docutils literal notranslate"><span class="pre">525.85.12</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">DRIVER_VERSION</span><span class="o">=</span><span class="m">525</span>.85.12
+</pre></div>
+</div>
+</li>
+<li><p>Specify the <code class="docutils literal notranslate"><span class="pre">OS_TAG</span></code> environment variable to identify the guest operating system name and version:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">OS_TAG</span><span class="o">=</span>ubuntu22.04
+</pre></div>
+</div>
+<p>The value must match the guest operating system version.</p>
+</li>
+</ul>
+</li>
+<li><p>Build the driver container image:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>build<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--build-arg<span class="w"> </span><span class="nv">KERNEL_VERSION</span><span class="o">=</span><span class="nv">$KERNEL_VERSION</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--build-arg<span class="w"> </span><span class="nv">CUDA_VERSION</span><span class="o">=</span><span class="nv">$CUDA_VERSION</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--build-arg<span class="w"> </span><span class="nv">DRIVER_BRANCH</span><span class="o">=</span><span class="nv">$DRIVER_BRANCH</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-t<span class="w"> </span><span class="si">${</span><span class="nv">PRIVATE_REGISTRY</span><span class="si">}</span>/driver:<span class="si">${</span><span class="nv">DRIVER_VERSION</span><span class="si">}</span>-<span class="si">${</span><span class="nv">KERNEL_VERSION</span><span class="si">}</span>-<span class="si">${</span><span class="nv">OS_TAG</span><span class="si">}</span><span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p>Push the driver container image to your private registry.</p>
+<ul>
+<li><p>Log in to your private registry:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>login<span class="w"> </span><span class="si">${</span><span class="nv">PRIVATE_REGISTRY</span><span class="si">}</span><span class="w"> </span>--username<span class="o">=</span>&lt;username&gt;
+</pre></div>
+</div>
+<p>Enter your password when prompted.</p>
+</li>
+<li><p>Push the driver container image to your private registry:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">PRIVATE_REGISTRY</span><span class="si">}</span>/driver:<span class="si">${</span><span class="nv">DRIVER_VERSION</span><span class="si">}</span>-<span class="si">${</span><span class="nv">KERNEL_VERSION</span><span class="si">}</span>-<span class="si">${</span><span class="nv">OS_TAG</span><span class="si">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<p class="rubric">Next Steps</p>
+<ul>
+<li><p>To use the custom driver container image, follow the steps for enabling support during or after installation.</p>
+<p>If you have not already installed the GPU Operator, in addition to the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">driver.usePrecompiled=true</span></code> argument
+for Helm, also specify the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">driver.repository=&quot;$PRIVATE_REGISTRY&quot;</span></code> argument.</p>
+<p>If you already installed the GPU Operator, specify the private registry for the driver in the cluster policy:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/driver/repository&quot;, &quot;value&quot;:&quot;$PRIVATE_REGISTRY&quot;}]&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -340,7 +462,7 @@ or you can disable support for precompiled driver containers and use conventiona
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="install-precompiled-signed-drivers.html" class="btn btn-neutral float-left" title="Installing Precompiled and Canonical Signed Drivers on Ubuntu 20.04 and 22.04" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="custom-driver-params.html" class="btn btn-neutral float-left" title="Customizing NVIDIA GPU Driver Parameters during Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="archive.html" class="btn btn-neutral float-right" title="Archive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -348,7 +470,7 @@ or you can disable support for precompiled driver containers and use conventiona
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-03-31.
+      <span class="lastupdated">Last updated on 2023-04-01.
       </span></p>
   </div>
 
