@@ -298,12 +298,12 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-216-04/index.html">450.216.04</a></div>
 </div>
 </td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.6.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.11.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.13.0</a></p></td>
+<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.6.1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.13.0</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.14.0</a></p></td>
 <td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">3.1.6-3.1.3</a></p></td>
 <td><p>v0.10.1</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.7.0</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.8.0</a></p></td>
 <td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.5.1</a></p></td>
 <td><div class="line-block">
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/release-notes/changelog.html">3.1.6-1</a> (default),</div>
@@ -455,6 +455,12 @@ NVSwitch</p></td>
 </tr>
 <tr class="row-odd"><td><p>NVIDIA H100</p></td>
 <td><p>NVIDIA Hopper</p></td>
+</tr>
+<tr class="row-even"><td><p>NVIDIA L40</p></td>
+<td><p>NVIDIA Ada</p></td>
+</tr>
+<tr class="row-odd"><td><p>NVIDIA L4</p></td>
+<td><p>NVIDIA Ada</p></td>
 </tr>
 <tr class="row-even"><td><p>NVIDIA DGX A100</p></td>
 <td><p>A100 and NVSwitch</p></td>
@@ -680,12 +686,13 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Bare Metal / Virtual Machines with GPU Passthrough</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Virtual Machines with NVIDIA vGPU</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><table class="docutils align-default">
 <colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head stub"><div class="line-block">
@@ -715,6 +722,11 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">Enterprise</div>
 </div>
 </th>
+<th class="head"><div class="line-block">
+<div class="line">Canonical</div>
+<div class="line">MicroK8s</div>
+</div>
+</th>
 </tr>
 </thead>
 <tbody>
@@ -724,6 +736,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">1.24, 1.25, 1.26</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -743,6 +756,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </div>
 </td>
 <td></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>Ubuntu 22.04 LTS</p></th>
 <td><div class="line-block">
@@ -754,6 +768,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <td></td>
 <td></td>
 <td></td>
+<td><p>1.26</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>CentOS 7</p></th>
 <td><div class="line-block">
@@ -761,6 +776,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">1.24, 1.25, 1.26</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -773,6 +789,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">4.11, 4.12</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -797,6 +814,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </div>
 </td>
 <td></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><div class="line-block">
 <div class="line">Red Hat</div>
@@ -809,6 +827,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <td></td>
 <td></td>
 <td><p>5.5</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -1190,11 +1209,15 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <tr class="row-odd"><td><p>Ubuntu 22.04 LTS with Network Operator 1.4</p></td>
 <td><p>525.60.13 (2.14.13)</p></td>
 </tr>
+<tr class="row-even"><td><p>Red Hat OpenShift Container Platform 4.11</p></td>
+<td><p>525.85.12 (2.14.13)</p></td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Not supported with secure boot and only with local NVME and remote NFS storage.</p>
+<p>Not supported with secure boot.
+Supported storage types are local NVMe and remote NFS.</p>
 </div>
 </section>
 <section id="additional-supported-container-management-tools">
@@ -1429,7 +1452,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-03-15.
+      <span class="lastupdated">Last updated on 2023-04-01.
       </span></p>
   </div>
 
