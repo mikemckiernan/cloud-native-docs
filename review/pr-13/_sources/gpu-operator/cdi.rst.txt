@@ -165,6 +165,11 @@ To disable CDI support, perform the following steps:
           -l nvidia.com/gpu.present=true \
           --overwrite
 
+   .. tip::
+
+      You can run ``kubectl get nodes -o wide`` and view the ``CONTAINER-RUNTIME``
+      column to determine if your nodes use CRI-O.
+
 #. Disable CDI by modifying the cluster policy:
 
    .. code-block:: console

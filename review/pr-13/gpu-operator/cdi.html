@@ -306,6 +306,11 @@ GPU Operator validator:</p>
 <span class="w">    </span>--overwrite
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nodes</span> <span class="pre">-o</span> <span class="pre">wide</span></code> and view the <code class="docutils literal notranslate"><span class="pre">CONTAINER-RUNTIME</span></code>
+column to determine if your nodes use CRI-O.</p>
+</div>
 </li>
 <li><p>Disable CDI by modifying the cluster policy:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -429,7 +434,7 @@ on GitHub.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-01.
+      <span class="lastupdated">Last updated on 2023-04-02.
       </span></p>
   </div>
 
