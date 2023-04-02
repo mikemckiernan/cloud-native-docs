@@ -60,23 +60,29 @@ New Features
 Improvements
 ------------
 
-*
+* FIXME
 
 
 Fixed issues
 ------------
 
 * Added support for new MIG profiles with the 525 driver.
+
   * For A100-40GB and A800-40GB devices:
+
     * ``1g.5gb.me``
     * ``1g.10gb``
     * ``4g.20gb``
-* For H100-80GB, H800-80GB, A100-80GB, and A800-80GB devices:
+
+  * For H100-80GB, H800-80GB, A100-80GB, and A800-80GB devices:
+
     * ``1g.10gb``
     * ``1g.10gb.me``
     * ``1g.20gb``
     * ``4g.40gb``
+
   * For A30-24GB devices:
+
     * ``1g.6gb.me``
     * ``2g.12gb.me``
 
