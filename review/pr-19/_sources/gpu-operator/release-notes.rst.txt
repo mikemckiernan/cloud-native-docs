@@ -141,13 +141,13 @@ Fixed issues
 
 * Added support for new MIG profiles with the 525 driver.
 
-  * For A100-40GB and A800-40GB devices:
+  * For A100-40GB devices:
 
     * ``1g.5gb.me``
     * ``1g.10gb``
     * ``4g.20gb``
 
-  * For H100-80GB, H800-80GB, A100-80GB, and A800-80GB devices:
+  * For H100-80GB and A100-80GB devices:
 
     * ``1g.10gb``
     * ``1g.10gb.me``
@@ -166,6 +166,7 @@ Common Vulnerabilities and Exposures (CVEs)
 Known Limitations
 ------------------
 
+* Using NVIDIA vGPU on bare metal nodes and NVSwitch is not supported.
 * All worker nodes within the Kubernetes cluster must use the same operating system version.
 * NVIDIA GPUDirect Storage (GDS) is not supported with secure boot enabled systems.
 * Driver Toolkit images are broken with Red Hat OpenShift version ``4.11.12`` and require cluster-level entitlements to be enabled

@@ -291,14 +291,14 @@ In this release, the driver manager unloads the nvidia-fs Linux kernel module be
 performing the upgrade.</p></li>
 <li><p>Added support for new MIG profiles with the 525 driver.</p>
 <ul>
-<li><p>For A100-40GB and A800-40GB devices:</p>
+<li><p>For A100-40GB devices:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">1g.5gb.me</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">1g.10gb</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">4g.20gb</span></code></p></li>
 </ul>
 </li>
-<li><p>For H100-80GB, H800-80GB, A100-80GB, and A800-80GB devices:</p>
+<li><p>For H100-80GB and A100-80GB devices:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">1g.10gb</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">1g.10gb.me</span></code></p></li>
@@ -322,6 +322,7 @@ performing the upgrade.</p></li>
 <section id="known-limitations">
 <h3>Known Limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading"></a></h3>
 <ul class="simple">
+<li><p>Using NVIDIA vGPU on bare metal nodes and NVSwitch is not supported.</p></li>
 <li><p>All worker nodes within the Kubernetes cluster must use the same operating system version.</p></li>
 <li><p>NVIDIA GPUDirect Storage (GDS) is not supported with secure boot enabled systems.</p></li>
 <li><p>Driver Toolkit images are broken with Red Hat OpenShift version <code class="docutils literal notranslate"><span class="pre">4.11.12</span></code> and require cluster-level entitlements to be enabled
