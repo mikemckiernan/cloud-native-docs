@@ -202,7 +202,15 @@
 <h2>23.3.0<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
 <section id="new-features">
 <h3>New Features<a class="headerlink" href="#new-features" title="Permalink to this heading"></a></h3>
-<ul>
+<ul class="simple">
+<li><p>Added support for the NVIDIA Data Center GPU Driver version 525.105.17.
+Refer to the <a class="reference internal" href="platform-support.html#gpu-operator-component-matrix"><span class="std std-ref">GPU Operator Component Matrix</span></a>
+on the platform support page.</p></li>
+<li><p>Added support for GPUDirect Storage with Red Hat OpenShift Container Platform 4.11.
+Refer to <a class="reference internal" href="platform-support.html#support-for-gpudirect-storage"><span class="std std-ref">Support for GPUDirect Storage</span></a> on the platform support page.</p></li>
+<li><p>Added support for Canonical MicroK8s v1.26.
+Refer to <a class="reference internal" href="platform-support.html#supported-operating-systems-and-kubernetes-platforms"><span class="std std-ref">Supported Operating Systems and Kubernetes Platforms</span></a>
+on the platform support page.</p></li>
 <li><p>Added support for the Container Device Interface (CDI) that is implemented by the
 NVIDIA Container Toolkit v1.13.0.
 Refer to <a class="reference internal" href="../kubernetes/anthos-guide.html#gpu-operator-helm-chart-options"><span class="std std-ref">Chart Customization Options</span></a> for information about the <code class="docutils literal notranslate"><span class="pre">cdi.enable</span></code> and
@@ -214,9 +222,7 @@ cluster such as downloading kernel header packages and GCC tooling.
 Sites with isolated networks that cannot access the internet can benefit.
 Sites with machines that are resource constrained can also benefit by removing the computational demand
 to compile the driver.
-For more information, see <span class="xref std std-doc">precompiled-drivers</span>.</p>
-<p>This feature replaces the functionality that was previously available with the precompiled and Canonical signed drivers.</p>
-</li>
+For more information, see <span class="xref std std-doc">precompiled-drivers</span>.</p></li>
 </ul>
 </section>
 <section id="improvements">
@@ -229,7 +235,9 @@ The value can be an integer or a string that specifies a percentage.
 If you specify a percentage, the number of nodes is calculated by rounding up.
 The default value is <code class="docutils literal notranslate"><span class="pre">25%</span></code>.</p>
 <p>If you specify a value for <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> and also specify <code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades</span></code>,
-the field that results in fewer nodes is used.
+the <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> value applies an additional constraint on the value of
+<code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades</span></code> to ensure that the number of parallel upgrades does not
+cause more than the intended number of nodes to become unavailable during the upgrade.
 For example, if you specify <code class="docutils literal notranslate"><span class="pre">maxUnavailable=100%</span></code> and <code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades=1</span></code>,
 one node at a time is upgraded.</p>
 </li>
@@ -254,7 +262,8 @@ For configuration information, see <a class="reference internal" href="gpu-opera
 <li><p>Fixed an issue that prevented building the GPU driver container when a <a class="reference internal" href="install-gpu-operator-air-gapped.html#local-package-repository"><span class="std std-ref">Local Package Repository</span></a>
 is used.
 Previously, if you needed to provide CA certificates, the certificates were not installed correctly.
-The certificates are now installed in the correct directories.</p></li>
+The certificates are now installed in the correct directories.
+Refer to GitHub <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues/299">issue #299</a> for more details.</p></li>
 <li><p>Fixed an issue that created audit log records related to deprecated API requests for pod security policy.
 on Red Hat OpenShift Container Platform.
 Refer to GitHub <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues/451">issue #451</a>
@@ -262,9 +271,6 @@ and <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/i
 <li><p>Fixed an issue that caused the Operator to attempt to add a pod security policy on pre-release versions
 of Kubernetes v1.25.
 Refer to GitHub <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues/484">issue #484</a> for more details.</p></li>
-<li><p>Fixed an issue that prevented adding Node Feature Discovery pods on worker nodes with VMWare Tanzu when
-pod security policy is enabled.
-The resolution is to declare a service account that is named <code class="docutils literal notranslate"><span class="pre">node-feature-discovery</span></code> on the worker nodes.</p></li>
 <li><p>Fixed a race condition that is related to preinstalled GPU drivers, validator pods, and the device plugin pods.
 The race condition can cause the device plugin pods to set the wrong path to the GPU driver.
 Refer to GitHub <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues/508">issue #508</a> for more details.</p></li>
@@ -323,6 +329,11 @@ performing the upgrade.</p></li>
 <h3>Known Limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Using NVIDIA vGPU on bare metal nodes and NVSwitch is not supported.</p></li>
+<li><p>When installing the Operator on Amazon EKS and using Kubernetes versions lower than
+<code class="docutils literal notranslate"><span class="pre">1.25</span></code>, specify the <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">psp.enabled=true</span></code> Helm argument because EKS enables
+pod security policy (PSP).
+If you use Kubernetes version <code class="docutils literal notranslate"><span class="pre">1.25</span></code> or higher, do not specify the <code class="docutils literal notranslate"><span class="pre">psp.enabled</span></code>
+argument so that the default value, <code class="docutils literal notranslate"><span class="pre">false</span></code>, is used.</p></li>
 <li><p>All worker nodes within the Kubernetes cluster must use the same operating system version.</p></li>
 <li><p>NVIDIA GPUDirect Storage (GDS) is not supported with secure boot enabled systems.</p></li>
 <li><p>Driver Toolkit images are broken with Red Hat OpenShift version <code class="docutils literal notranslate"><span class="pre">4.11.12</span></code> and require cluster-level entitlements to be enabled
@@ -1233,7 +1244,7 @@ would not be available after reboot.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-03.
+      <span class="lastupdated">Last updated on 2023-04-04.
       </span></p>
   </div>
 
