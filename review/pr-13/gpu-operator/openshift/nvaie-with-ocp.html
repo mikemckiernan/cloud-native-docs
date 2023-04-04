@@ -125,8 +125,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cdi.html">Container Device Interface Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -229,7 +228,7 @@ This requires powering down running worker VMs. The template must be converted t
 to a template.</p>
 <p>Secure boot also needs to be disabled as shown:</p>
 <blockquote>
-<div><img alt="../../_images/vmx_secure_boot5.png" src="../../_images/vmx_secure_boot5.png" />
+<div><img alt="../../_images/vmx_secure_boot6.png" src="../../_images/vmx_secure_boot6.png" />
 </div></blockquote>
 <p>When using the <a class="reference external" href="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere">UPI install method</a>, after <strong>Step 8</strong> of the “Installing RHCOS and starting the OpenShift
 Container Platform bootstrap process” change the boot method to EFI before <strong>continuing to Step 9</strong>.</p>
@@ -239,7 +238,7 @@ Container Platform bootstrap process” change the boot method to EFI before <st
 <p><code class="docutils literal notranslate"><span class="pre">pciPassthru.use64bitMMIO</span> <span class="pre">TRUE</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">pciPassthru.64bitMMIOSizeGB</span> <span class="pre">512</span></code></p>
 <blockquote>
-<div><img alt="../../_images/pci_passthrough5.png" src="../../_images/pci_passthrough5.png" />
+<div><img alt="../../_images/pci_passthrough6.png" src="../../_images/pci_passthrough6.png" />
 </div></blockquote>
 <p>To support GPUDirect RDMA ensure that the VM has the following configuration parameters set:</p>
 <p><strong>VM Settings</strong> &gt; <strong>VM options</strong> &gt; <strong>Advanced</strong> &gt; <strong>Configuration Parameters</strong> &gt; <strong>Edit Configuration</strong></p>
@@ -274,7 +273,7 @@ NGC container registry).</p>
 <li><p>In the OpenShift Container Platform web console, click <strong>Secrets</strong> from the Workloads drop down.</p></li>
 <li><p>Click the <strong>Create</strong> Drop down.</p></li>
 <li><p>Select Image Pull Secret.</p>
-<img alt="../../_images/secrets5.png" src="../../_images/secrets5.png" />
+<img alt="../../_images/secrets6.png" src="../../_images/secrets6.png" />
 </li>
 <li><p>Enter the following into each field:</p>
 <blockquote>
@@ -287,11 +286,11 @@ NGC container registry).</p>
 <li><p><strong>Email</strong>: &lt;YOUR-EMAIL&gt;</p></li>
 </ul>
 </div></blockquote>
-<img alt="../../_images/secrets_25.png" src="../../_images/secrets_25.png" />
+<img alt="../../_images/secrets_26.png" src="../../_images/secrets_26.png" />
 </li>
 <li><p>Click <strong>Create</strong>.</p>
 <p>A pull secret is created.</p>
-<img alt="../../_images/created_pull-secret5.png" src="../../_images/created_pull-secret5.png" />
+<img alt="../../_images/created_pull-secret6.png" src="../../_images/created_pull-secret6.png" />
 </li>
 </ol>
 </section>
@@ -308,7 +307,7 @@ NGC container registry).</p>
 <li><p>Select the <strong>Workloads</strong> Drop Down menu.</p></li>
 <li><p>Select <strong>ConfigMaps</strong>.</p></li>
 <li><p>Click <strong>Create ConfigMap</strong>.</p>
-<img alt="../../_images/create_config_map15.png" src="../../_images/create_config_map15.png" />
+<img alt="../../_images/create_config_map16.png" src="../../_images/create_config_map16.png" />
 </li>
 <li><p>Enter the details for your ConfigMap.</p>
 <ol class="arabic simple">
@@ -330,7 +329,7 @@ NGC container registry).</p>
 </div>
 </li>
 <li><p>The created ConfigMap should resemble the following:</p>
-<img alt="../../_images/create_config_maps25.png" src="../../_images/create_config_maps25.png" />
+<img alt="../../_images/create_config_maps26.png" src="../../_images/create_config_maps26.png" />
 </li>
 </ol>
 </section>
@@ -352,26 +351,26 @@ Refer the screenshots for parameter examples and modify values accordingly.</p>
 <p class="admonition-title">Note</p>
 <p>This was previously created in the previous section “Create the ConfigMap for NLS Token”.</p>
 </div>
-<img alt="../../_images/cluster_policy_15.png" src="../../_images/cluster_policy_15.png" />
+<img alt="../../_images/cluster_policy_16.png" src="../../_images/cluster_policy_16.png" />
 <ul class="simple">
 <li><p><strong>configMapName</strong>: licensing-config</p></li>
 <li><p><strong>nlsEnabled</strong>: Enabled</p></li>
 </ul>
 </li>
 <li><p>Scroll down to specify repository path under the <strong>NVIDIA GPU/vGPU Driver config</strong> section. See the screenshot below for parameter examples and modify values accordingly.</p>
-<img alt="../../_images/createclusterpolicy25.png" src="../../_images/createclusterpolicy25.png" />
+<img alt="../../_images/createclusterpolicy26.png" src="../../_images/createclusterpolicy26.png" />
 <ul class="simple">
 <li><p><strong>enabled</strong>: Enabled</p></li>
 <li><p><strong>repository</strong>: <code class="docutils literal notranslate"><span class="pre">nvcr.io/nvaie</span></code></p></li>
 </ul>
 <ol class="arabic">
 <li><p>Expand the rdma menu and check <strong>enabled</strong> if you want to deploy GPUDirect RDMA:</p>
-<img alt="../../_images/enable-gpu-direct-rdma5.png" src="../../_images/enable-gpu-direct-rdma5.png" />
+<img alt="../../_images/enable-gpu-direct-rdma6.png" src="../../_images/enable-gpu-direct-rdma6.png" />
 </li>
 </ol>
 </li>
 <li><p>Scroll down further to image name and specifgy the NVIDIA vGPU driver version under the <strong>NVIDIA GPU/vGPU Driver config</strong> section.</p>
-<img alt="../../_images/createclusterpolicy35.png" src="../../_images/createclusterpolicy35.png" />
+<img alt="../../_images/createclusterpolicy36.png" src="../../_images/createclusterpolicy36.png" />
 <ul>
 <li><p><strong>version</strong>: 525.60.13</p></li>
 <li><p><strong>image</strong>: vgpu-guest-driver-3-0</p>
@@ -394,7 +393,7 @@ Refer the screenshots for parameter examples and modify values accordingly.</p>
 <p class="admonition-title">Note</p>
 <p>This was previously created in the section “Create NGC secret”.</p>
 </div>
-<img alt="../../_images/cluster_policy_45.png" src="../../_images/cluster_policy_45.png" />
+<img alt="../../_images/cluster_policy_46.png" src="../../_images/cluster_policy_46.png" />
 </li>
 <li><p>Click <strong>Create</strong>.</p></li>
 </ol>
@@ -404,7 +403,7 @@ Refer the screenshots for parameter examples and modify values accordingly.</p>
 <p>Wait at least 10-20 minutes before digging deeper into any form of troubleshooting because this may take some time to finish.</p>
 </div>
 <p>The status of the newly deployed ClusterPolicy <em>gpu-cluster-policy</em> for the NVIDIA GPU Operator changes to <code class="docutils literal notranslate"><span class="pre">State:ready</span></code> when the installation succeeds.</p>
-<img alt="../../_images/cluster_policy_suceed8.png" src="../../_images/cluster_policy_suceed8.png" />
+<img alt="../../_images/cluster_policy_suceed9.png" src="../../_images/cluster_policy_suceed9.png" />
 <p>Verify the ClusterPolicy installation from the CLI run:</p>
 <blockquote>
 <div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="o">=</span>custom-columns<span class="o">=</span><span class="s1">&#39;Node:metadata.name,GPUs:status.capacity.nvidia\.com/gpu&#39;</span>

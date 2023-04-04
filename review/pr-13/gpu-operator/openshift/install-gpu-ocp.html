@@ -125,8 +125,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cdi.html">Container Device Interface Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -317,7 +316,7 @@ If you install in any other namespace other than <code class="docutils literal n
 </div>
 </li>
 <li><p>Optional: Log in to web console and navigate to the <strong>Operators</strong> &gt; <strong>Installed Operators</strong> page. In the <code class="docutils literal notranslate"><span class="pre">Project:</span> <span class="pre">nvidia-gpu-operator</span></code> the following is displayed:</p>
-<img alt="../../_images/gpu-operator-certified-cli-install7.png" src="../../_images/gpu-operator-certified-cli-install7.png" />
+<img alt="../../_images/gpu-operator-certified-cli-install8.png" src="../../_images/gpu-operator-certified-cli-install8.png" />
 </li>
 <li><p>Verify an install plan has been created:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>installplan<span class="w"> </span>-n<span class="w"> </span>nvidia-gpu-operator
@@ -342,10 +341,10 @@ If you install in any other namespace other than <code class="docutils literal n
 </div>
 </li>
 <li><p>Alternatively click <code class="docutils literal notranslate"><span class="pre">Upgrade</span> <span class="pre">available</span></code> and approve the plan using the web console:</p>
-<img alt="../../_images/gpu-operator-certified-cli-install7.png" src="../../_images/gpu-operator-certified-cli-install7.png" />
+<img alt="../../_images/gpu-operator-certified-cli-install8.png" src="../../_images/gpu-operator-certified-cli-install8.png" />
 </li>
 <li><p>Optional: Verify the successful install in the web console. The display changes to:</p>
-<img alt="../../_images/cluster_policy_suceed8.png" src="../../_images/cluster_policy_suceed8.png" />
+<img alt="../../_images/cluster_policy_suceed9.png" src="../../_images/cluster_policy_suceed9.png" />
 </li>
 </ol>
 <p id="create-cluster-policy">When you install the <strong>NVIDIA GPU Operator</strong> in the OpenShift Container Platform, a custom resource definition for a ClusterPolicy is created. The ClusterPolicy configures the GPU stack, configuring the image names and repository, pod restrictions/credentials and so on.</p>
@@ -376,7 +375,7 @@ when using <strong>NVIDIA vGPU</strong>. Please refer to appropriate sections be
 <li><p>The status of the newly deployed ClusterPolicy <em>gpu-cluster-policy</em> for the NVIDIA GPU Operator changes to <code class="docutils literal notranslate"><span class="pre">State:ready</span></code> when the installation succeeds.</p></li>
 </ol>
 <blockquote>
-<div><img alt="../../_images/cluster-policy-state-ready2.png" src="../../_images/cluster-policy-state-ready2.png" />
+<div><img alt="../../_images/cluster-policy-state-ready3.png" src="../../_images/cluster-policy-state-ready3.png" />
 </div></blockquote>
 </section>
 <section id="create-the-cluster-policy-using-the-cli">
@@ -412,13 +411,13 @@ when using <strong>NVIDIA vGPU</strong>. Please refer to appropriate sections be
 <li><p>Provide name of the licensing <code class="docutils literal notranslate"><span class="pre">ConfigMap</span></code> under <strong>Driver</strong> section, this should be created during pre-requsite steps above for NVIDIA vGPU. Refer to below screenshots for example and modify values accordingly.</p></li>
 </ol>
 <blockquote>
-<div><img alt="../../_images/cluster_policy_vgpu_16.png" src="../../_images/cluster_policy_vgpu_16.png" />
+<div><img alt="../../_images/cluster_policy_vgpu_17.png" src="../../_images/cluster_policy_vgpu_17.png" />
 </div></blockquote>
 <ol class="arabic simple">
 <li><p>Specify <code class="docutils literal notranslate"><span class="pre">repository</span></code> path, <code class="docutils literal notranslate"><span class="pre">image</span></code> name and NVIDIA vGPU driver <code class="docutils literal notranslate"><span class="pre">version</span></code> bundled under <strong>Driver</strong> section. If the registry is not public, please specify the <code class="docutils literal notranslate"><span class="pre">imagePullSecret</span></code> created during pre-requisite step under <strong>Driver</strong> advanced configurations section.</p></li>
 </ol>
 <blockquote>
-<div><img alt="../../_images/cluster_policy_vgpu_26.png" src="../../_images/cluster_policy_vgpu_26.png" />
+<div><img alt="../../_images/cluster_policy_vgpu_27.png" src="../../_images/cluster_policy_vgpu_27.png" />
 </div></blockquote>
 <ol class="arabic">
 <li><p>Click <strong>Create</strong>.</p>
@@ -427,7 +426,7 @@ when using <strong>NVIDIA vGPU</strong>. Please refer to appropriate sections be
 <li><p>The status of the newly deployed ClusterPolicy <em>gpu-cluster-policy</em> for the NVIDIA GPU Operator changes to <code class="docutils literal notranslate"><span class="pre">State:ready</span></code> when the installation succeeds.</p></li>
 </ol>
 <blockquote>
-<div><img alt="../../_images/cluster-policy-state-ready2.png" src="../../_images/cluster-policy-state-ready2.png" />
+<div><img alt="../../_images/cluster-policy-state-ready3.png" src="../../_images/cluster-policy-state-ready3.png" />
 </div></blockquote>
 </section>
 <section id="id2">

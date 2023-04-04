@@ -125,8 +125,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cdi.html">Container Device Interface Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -335,7 +334,7 @@
 <p>The Init status indicates the driver pod is not ready. In this example the driver Pod is in state <cite>CrashLoopBackOff</cite>. This combined with the RESTARTS equal to 13 indicates a problem.</p>
 </li>
 <li><p>Verify the main console page:</p>
-<img alt="../../_images/ocp_main_console_alerts8.png" src="../../_images/ocp_main_console_alerts8.png" />
+<img alt="../../_images/ocp_main_console_alerts9.png" src="../../_images/ocp_main_console_alerts9.png" />
 <p>The first alert shows that the “nvidia driver could not be properly deployed”.</p>
 </li>
 <li><p>Examine the NVIDIA driver main container logs:</p>
@@ -369,7 +368,7 @@ If you see this message a workaround is to edit the created <code class="docutil
 </pre></div>
 </div>
 <p>Examining <strong>Alerts</strong> on the OpenShift Container Platform web console reveals the following for <strong>GPUOperatorOpenshiftDriverToolkitEnabledImageStreamMissing</strong>. This screenshot provides additional evidence that the Openshift version needs upgraded.</p>
-<img alt="../../_images/driver_toolkit_alert7.png" src="../../_images/driver_toolkit_alert7.png" />
+<img alt="../../_images/driver_toolkit_alert8.png" src="../../_images/driver_toolkit_alert8.png" />
 <p>The log entry and information from the alert indicates this version of OpenShift does not support a successful deployment of the OpenShift Driver Toolkit. For more details about the dependencies between the OpenShift Container Platform version and the OpenShift Driver Toolkit see <a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/openshift/steps-overview.html#supported-versions">supported versions</a>.</p>
 </li>
 </ol>
