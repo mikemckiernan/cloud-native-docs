@@ -106,7 +106,12 @@
 <li class="toctree-l1"><a class="reference internal" href="install-gpu-operator-nvaie.html">NVIDIA AI Enterprise</a></li>
 <li class="toctree-l1"><a class="reference internal" href="openshift/contents.html">GPU Operator on OpenShift</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">GPU Operator with MIG</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-multi-instance-gpu">About Multi-Instance GPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enabling-mig-during-installation">Enabling MIG During Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-mig-profiles">Configuring MIG Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reconfiguring-mig-profiles">Reconfiguring MIG Profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verification-running-sample-cuda-workloads">Verification: Running Sample CUDA Workloads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disabling-mig">Disabling MIG</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mig-manager-with-preinstalled-drivers">MIG Manager with Preinstalled Drivers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#architecture">Architecture</a></li>
 </ul>
@@ -169,6 +174,25 @@
              
   <section id="gpu-operator-with-mig">
 <span id="install-gpu-operator-mig"></span><h1>GPU Operator with MIG<a class="headerlink" href="#gpu-operator-with-mig" title="Permalink to this heading"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#about-multi-instance-gpu" id="id1">About Multi-Instance GPU</a></p></li>
+<li><p><a class="reference internal" href="#enabling-mig-during-installation" id="id2">Enabling MIG During Installation</a></p></li>
+<li><p><a class="reference internal" href="#configuring-mig-profiles" id="id3">Configuring MIG Profiles</a></p></li>
+<li><p><a class="reference internal" href="#reconfiguring-mig-profiles" id="id4">Reconfiguring MIG Profiles</a></p></li>
+<li><p><a class="reference internal" href="#verification-running-sample-cuda-workloads" id="id5">Verification: Running Sample CUDA Workloads</a></p>
+<ul>
+<li><p><a class="reference internal" href="#cuda-vectoradd" id="id6">CUDA VectorAdd</a></p></li>
+<li><p><a class="reference internal" href="#concurrent-job-launch" id="id7">Concurrent Job Launch</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#disabling-mig" id="id8">Disabling MIG</a></p></li>
+<li><p><a class="reference internal" href="#mig-manager-with-preinstalled-drivers" id="id9">MIG Manager with Preinstalled Drivers</a></p></li>
+<li><p><a class="reference internal" href="#architecture" id="id10">Architecture</a></p></li>
+</ul>
+</div>
+<section id="about-multi-instance-gpu">
+<h2>About Multi-Instance GPU<a class="headerlink" href="#about-multi-instance-gpu" title="Permalink to this heading"></a></h2>
 <p>Multi-Instance GPU (MIG) allows GPUs based on the NVIDIA Ampere architecture
 (such as NVIDIA A100) to be securely partitioned into separate GPU Instances for
 CUDA applications. Refer to the
@@ -176,10 +200,9 @@ CUDA applications. Refer to the
 for more details on MIG.</p>
 <p>This documents provides an overview of how to use the GPU Operator with nodes that support
 MIG.</p>
-<section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
-<section id="initial-setup">
-<h3>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this heading"></a></h3>
+</section>
+<section id="enabling-mig-during-installation">
+<h2>Enabling MIG During Installation<a class="headerlink" href="#enabling-mig-during-installation" title="Permalink to this heading"></a></h2>
 <p>In this example workflow, we start with a MIG strategy of <code class="docutils literal notranslate"><span class="pre">single</span></code>. The <code class="docutils literal notranslate"><span class="pre">mixed</span></code> strategy can also be
 specified and used in a similar manner.</p>
 <div class="admonition note">
@@ -262,7 +285,7 @@ before changing the MIG mode or the MIG geometry on the GPUs.</p>
 </div>
 </section>
 <section id="configuring-mig-profiles">
-<h3>Configuring MIG Profiles<a class="headerlink" href="#configuring-mig-profiles" title="Permalink to this heading"></a></h3>
+<h2>Configuring MIG Profiles<a class="headerlink" href="#configuring-mig-profiles" title="Permalink to this heading"></a></h2>
 <p>Now, let’s configure the GPU into a supported by setting the <code class="docutils literal notranslate"><span class="pre">mig.config</span></code> label on the
 GPU node.</p>
 <div class="admonition note">
@@ -362,7 +385,7 @@ in the driver container to verify that the GPU has been configured:</p>
 </div>
 </section>
 <section id="reconfiguring-mig-profiles">
-<h3>Reconfiguring MIG Profiles<a class="headerlink" href="#reconfiguring-mig-profiles" title="Permalink to this heading"></a></h3>
+<h2>Reconfiguring MIG Profiles<a class="headerlink" href="#reconfiguring-mig-profiles" title="Permalink to this heading"></a></h2>
 <p>The MIG manager supports dynamic reconfiguration of the MIG geometry. In this example, let’s reconfigure the
 GPU into a <code class="docutils literal notranslate"><span class="pre">3g.20gb</span></code> profile:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>label<span class="w"> </span>nodes<span class="w"> </span><span class="nv">$NODE</span><span class="w"> </span>nvidia.com/mig.config<span class="o">=</span>all-3g.20gb<span class="w"> </span>--overwrite
@@ -403,12 +426,11 @@ GPU into a <code class="docutils literal notranslate"><span class="pre">3g.20gb<
 <span class="go">&quot;nvidia.com/mig.config&quot;: &quot;all-3g.20gb&quot;,</span>
 </pre></div>
 </div>
-<p>We can now proceed to run some sample workloads.</p>
 </section>
-<section id="running-sample-cuda-workloads">
-<span id="mig-examples"></span><h3>Running Sample CUDA Workloads<a class="headerlink" href="#running-sample-cuda-workloads" title="Permalink to this heading"></a></h3>
+<section id="verification-running-sample-cuda-workloads">
+<h2>Verification: Running Sample CUDA Workloads<a class="headerlink" href="#verification-running-sample-cuda-workloads" title="Permalink to this heading"></a></h2>
 <section id="cuda-vectoradd">
-<h4>CUDA VectorAdd<a class="headerlink" href="#cuda-vectoradd" title="Permalink to this heading"></a></h4>
+<h3>CUDA VectorAdd<a class="headerlink" href="#cuda-vectoradd" title="Permalink to this heading"></a></h3>
 <p>Let’s run a simple CUDA sample, in this case <code class="docutils literal notranslate"><span class="pre">vectorAdd</span></code> by requesting a GPU resource as you would
 normally do in Kubernetes. In this case, Kubernetes will schedule the pod on a single MIG device and
 we use a <code class="docutils literal notranslate"><span class="pre">nodeSelector</span></code> to direct the pod to be scheduled on the node with the MIG devices.</p>
@@ -432,7 +454,7 @@ we use a <code class="docutils literal notranslate"><span class="pre">nodeSelect
 </div>
 </section>
 <section id="concurrent-job-launch">
-<h4>Concurrent Job Launch<a class="headerlink" href="#concurrent-job-launch" title="Permalink to this heading"></a></h4>
+<h3>Concurrent Job Launch<a class="headerlink" href="#concurrent-job-launch" title="Permalink to this heading"></a></h3>
 <p>Now, let’s try a more complex example. In this example, we will use Argo Workflows to launch concurrent
 jobs on MIG devices. In this example, the A100 has been configured into 2 MIG devices using the: <code class="docutils literal notranslate"><span class="pre">3g.20gb</span></code> profile.</p>
 <p>First, <a class="reference external" href="https://argoproj.github.io/argo-workflows/quick-start/#install-argo-workflows">install</a> the Argo Workflows
@@ -540,6 +562,13 @@ We will reuse the same <code class="docutils literal notranslate"><span class="p
 </div>
 </section>
 </section>
+<section id="disabling-mig">
+<h2>Disabling MIG<a class="headerlink" href="#disabling-mig" title="Permalink to this heading"></a></h2>
+<p>You can disable MIG on a node by setting the <code class="docutils literal notranslate"><span class="pre">nvidia.con/mig.config</span></code> label
+to <code class="docutils literal notranslate"><span class="pre">all-disabled</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>label<span class="w"> </span>nodes<span class="w"> </span><span class="nv">$NODE</span><span class="w"> </span>nvidia.com/mig.config<span class="o">=</span>all-disabled<span class="w"> </span>--overwrite
+</pre></div>
+</div>
 </section>
 <section id="mig-manager-with-preinstalled-drivers">
 <span id="mig-with-preinstalled-drivers"></span><h2>MIG Manager with Preinstalled Drivers<a class="headerlink" href="#mig-manager-with-preinstalled-drivers" title="Permalink to this heading"></a></h2>
@@ -626,7 +655,7 @@ changes to the GPU, including enabling MIG mode (with a node reboot as required 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-02.
+      <span class="lastupdated">Last updated on 2023-04-04.
       </span></p>
   </div>
 
