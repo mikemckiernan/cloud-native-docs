@@ -125,7 +125,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -273,7 +273,7 @@ of homogeneous instances</p></th>
 <li><p>2g.10gb: 3 nvidia.com/gpu instances, or</p></li>
 <li><p>3g.20gb: 2 nvidia.com/gpuinstances, or</p></li>
 <li><p>7g.40gb: 1 nvidia.com/gpu instances</p>
-<img alt="../../_images/Mig-profile-A1008.png" src="../../_images/Mig-profile-A1008.png" />
+<img alt="../../_images/Mig-profile-A1009.png" src="../../_images/Mig-profile-A1009.png" />
 </li>
 </ul>
 </div></blockquote>
@@ -289,7 +289,7 @@ of homogeneous instances</p></th>
 <li><p>2g.10gb: 1 nvidia.com/mig-2g.10gb instance, and</p></li>
 <li><p>3g.20gb: 1 nvidia.com/mig-3g.20gb instance</p></li>
 </ul>
-<img alt="../../_images/mig-mixed-profile-A1008.png" src="../../_images/mig-mixed-profile-A1008.png" />
+<img alt="../../_images/mig-mixed-profile-A1009.png" src="../../_images/mig-mixed-profile-A1009.png" />
 </li>
 </ul>
 </div></blockquote>
@@ -442,7 +442,7 @@ The tables below describe these configurations:</p>
 </li>
 <li><p>In the OpenShift Container Platform web console, from the side menu, select <strong>Operators</strong> &gt; <strong>Installed Operators</strong>, then click the <strong>NVIDIA GPU Operator</strong>.</p></li>
 <li><p>Select the <strong>ClusterPolicy</strong> tab. The status of the newly deployed ClusterPolicy <strong>gpu-cluster-policy</strong> for the <strong>NVIDIA GPU Operator</strong> displays <code class="docutils literal notranslate"><span class="pre">State:ready</span></code> once the installation succeeded.</p>
-<img alt="../../_images/cluster_policy_suceed8.png" src="../../_images/cluster_policy_suceed8.png" />
+<img alt="../../_images/cluster_policy_suceed9.png" src="../../_images/cluster_policy_suceed9.png" />
 </li>
 <li><p>Apply the desired MIG partitioning profile. To configure 3x 2g.10gb MIG devices run the following:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">MIG_CONFIGURATION</span><span class="o">=</span>all-2g.10gb<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>

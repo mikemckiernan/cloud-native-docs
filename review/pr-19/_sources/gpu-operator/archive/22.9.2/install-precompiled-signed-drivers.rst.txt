@@ -1,7 +1,7 @@
 .. Date: Mar 15 2022
 .. Author: smerla
 
-.. _install-precompiled-signed-drivers:
+.. _install-precompiled-signed-drivers-22.9.2:
 
 Installing Precompiled and Canonical Signed Drivers on Ubuntu 20.04 and 22.04
 *****************************************************************************

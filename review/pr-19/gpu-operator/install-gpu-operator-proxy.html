@@ -29,7 +29,9 @@
         <script src="//assets.adobedtm.com/b92787824f2e0e9b68dc2e993f9bd995339fe417/satelliteLib-7ba51e58dc61bcb0e9311aadd02a0108ab24cc6c.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Install GPU Operator in Air-gapped Environments" href="install-gpu-operator-air-gapped.html" />
+    <link rel="prev" title="Advanced Configurations" href="appendix.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -94,7 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../container-toolkit/archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">NVIDIA GPU Operator:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="platform-support.html">Platform Support</a></li>
@@ -107,7 +109,15 @@
 <li class="toctree-l1"><a class="reference internal" href="gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="appendix.html">Advanced Configurations</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Install GPU Operator in Proxy Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-gpu-operator-air-gapped.html">Install GPU Operator in Air-gapped Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-gpu-operator-outdated-kernels.html">Considerations when Installing with Outdated Kernels in Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom-driver-params.html">Customizing NVIDIA GPU Driver Parameters during Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="precompiled-drivers.html">Precompiled Driver Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdi.html">Container Device Interface Support</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -150,6 +160,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="appendix.html">Advanced Configurations</a> &raquo;</li>
       <li>Install GPU Operator in Proxy Environments</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -163,12 +174,18 @@
 <span id="install-gpu-operator-proxy"></span><h1>Install GPU Operator in Proxy Environments<a class="headerlink" href="#install-gpu-operator-in-proxy-environments" title="Permalink to this heading"></a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
-<p>This page describes how to successfully deploy the GPU Operator in clusters behind a HTTP Proxy.
+<p>This page describes how to successfully deploy the GPU Operator in clusters behind an HTTP proxy.
 By default, the GPU Operator requires internet access for the following reasons:</p>
 <blockquote>
-<div><ol class="arabic simple">
+<div><ol class="arabic">
 <li><p>Container images need to be pulled during GPU Operator installation.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">driver</span></code> container needs to download several OS packages prior to driver installation.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">driver</span></code> container needs to download several OS packages prior to driver installation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Using <a class="reference internal" href="precompiled-drivers.html"><span class="doc">Precompiled Driver Containers</span></a> removes the need for the <code class="docutils literal notranslate"><span class="pre">driver</span></code> containers to
+download operating system packages.</p>
+</div>
+</li>
 </ol>
 </div></blockquote>
 <p>To address these requirements, all Kubernetes nodes as well as the <code class="docutils literal notranslate"><span class="pre">driver</span></code> container need proper configuration
@@ -257,7 +274,10 @@ based on information present in the cluster-wide Proxy object.</p>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="appendix.html" class="btn btn-neutral float-left" title="Advanced Configurations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="install-gpu-operator-air-gapped.html" class="btn btn-neutral float-right" title="Install GPU Operator in Air-gapped Environments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

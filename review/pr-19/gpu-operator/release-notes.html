@@ -137,7 +137,7 @@
 <li class="toctree-l1"><a class="reference internal" href="gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">Archive</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Kubernetes with GPUs:</span></p>
@@ -211,18 +211,21 @@ Refer to <a class="reference internal" href="platform-support.html#support-for-g
 <li><p>Added support for Canonical MicroK8s v1.26.
 Refer to <a class="reference internal" href="platform-support.html#supported-operating-systems-and-kubernetes-platforms"><span class="std std-ref">Supported Operating Systems and Kubernetes Platforms</span></a>
 on the platform support page.</p></li>
+<li><p>Added support for running the NVIDIA GPU Operator in Amazon EKS and Google GKE.
+You must configure the cluster with custom nodes that run a supported operating
+system, such as Ubuntu 22.04.</p></li>
 <li><p>Added support for the Container Device Interface (CDI) that is implemented by the
 NVIDIA Container Toolkit v1.13.0.
 Refer to <a class="reference internal" href="../kubernetes/anthos-guide.html#gpu-operator-helm-chart-options"><span class="std std-ref">Chart Customization Options</span></a> for information about the <code class="docutils literal notranslate"><span class="pre">cdi.enable</span></code> and
 <code class="docutils literal notranslate"><span class="pre">cdi.default</span></code> options to enable CDI during installation
-or <span class="xref std std-doc">cdi</span> for post-installation configuration information.</p></li>
+or <a class="reference internal" href="cdi.html"><span class="doc">Container Device Interface Support in the GPU Operator</span></a> for post-installation configuration information.</p></li>
 <li><p>[Technology Preview] Added support for precompiled driver containers for select operating systems.
 This feature removes the dynamic dependencies to build the driver during installation in the
 cluster such as downloading kernel header packages and GCC tooling.
 Sites with isolated networks that cannot access the internet can benefit.
 Sites with machines that are resource constrained can also benefit by removing the computational demand
 to compile the driver.
-For more information, see <span class="xref std std-doc">precompiled-drivers</span>.</p></li>
+For more information, see <a class="reference internal" href="precompiled-drivers.html"><span class="doc">Precompiled Driver Containers</span></a>.</p></li>
 </ul>
 </section>
 <section id="improvements">
@@ -324,6 +327,12 @@ performing the upgrade.</p></li>
 </section>
 <section id="common-vulnerabilities-and-exposures-cves">
 <h3>Common Vulnerabilities and Exposures (CVEs)<a class="headerlink" href="#common-vulnerabilities-and-exposures-cves" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">gpu-operator:v23.3.0</span></code> and <code class="docutils literal notranslate"><span class="pre">gpu-operator-validator:v23.3.0</span></code> images have the following known high-vulnerability CVEs.
+These CVEs are from the base images and are not in libraries that are used by the GPU operator:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">openssl-libs</span></code> - <a class="reference external" href="https://access.redhat.com/security/cve/CVE-2023-0286">CVE-2023-0286</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">platform-python</span></code> and <code class="docutils literal notranslate"><span class="pre">python3-libs</span></code> - <a class="reference external" href="https://access.redhat.com/security/cve/CVE-2023-24329">CVE-2023-24329</a></p></li>
+</ul>
 </section>
 <section id="known-limitations">
 <h3>Known Limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading"></a></h3>
@@ -622,7 +631,7 @@ These are from the base images and are not in libraries used by GPU Operator:</p
 <section id="id37">
 <h3>Fixed issues<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>Fixed an issue when GPU Operator was installed and MIG was already enabled on a GPU. The GPU Operator will now install sucessfully and MIG can either be disabled via the label <code class="docutils literal notranslate"><span class="pre">nvidia.com/mig.config=all-disabled</span></code> or configured with the required MIG profiles.</p></li>
+<li><p>Fixed an issue when GPU Operator was installed and MIG was already enabled on a GPU. The GPU Operator will now install successfully and MIG can either be disabled via the label <code class="docutils literal notranslate"><span class="pre">nvidia.com/mig.config=all-disabled</span></code> or configured with the required MIG profiles.</p></li>
 </ul>
 </section>
 <section id="id38">
@@ -1085,7 +1094,7 @@ using the following Helm command:</p>
 <ul class="simple">
 <li><p>Updated DCGM-Exporter to <code class="docutils literal notranslate"><span class="pre">2.1.2</span></code>, which uses DCGM 2.0.13.</p></li>
 <li><p>Added the ability to pass arguments to the NVIDIA device plugin to enable <code class="docutils literal notranslate"><span class="pre">migStrategy</span></code> and <code class="docutils literal notranslate"><span class="pre">deviceListStrategy</span></code> flags
-that allow addtional configuration of the plugin.</p></li>
+that allow additional configuration of the plugin.</p></li>
 <li><p>Added more resiliency to <code class="docutils literal notranslate"><span class="pre">dcgm-exporter</span></code>- <code class="docutils literal notranslate"><span class="pre">dcgm-exporter</span></code> would not check whether GPUs support profiling metrics and would result in a <code class="docutils literal notranslate"><span class="pre">CrashLoopBackOff</span></code>
 state at launch in these configurations.</p></li>
 </ul>
