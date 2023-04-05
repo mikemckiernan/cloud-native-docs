@@ -30,7 +30,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Archive" href="archive.html" />
+    <link rel="next" title="NVIDIA GPU Operator with Google GKE" href="google-gke.html" />
     <link rel="prev" title="GPU Operator with Cloud Service Providers" href="csp.html" /> 
 </head>
 
@@ -109,9 +109,10 @@
 <li class="toctree-l1"><a class="reference internal" href="gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="csp.html">GPU Operator with Cloud Service Providers</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">GPU Operator with Amazon EKS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="google-gke.html">GPU Operator with Google GKE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">Archive</a></li>
@@ -228,12 +229,9 @@ The steps create a node group that uses an Amazon EKS optimized AMI.</p>
 <p>Replace the values for the cluster name, Kubernetes version, and so on.</p>
 </li>
 <li><p>Create the Amazon EKS cluster with the unmanaged node group:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>eksctl<span class="w"> </span>create<span class="w"> </span>-cluster<span class="w"> </span>-f<span class="w"> </span>cluster-config.yaml<span class="w"> </span>--install-nvidia-plugin<span class="o">=</span><span class="nb">false</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>eksctl<span class="w"> </span>create<span class="w"> </span>-cluster<span class="w"> </span>-f<span class="w"> </span>cluster-config.yaml
 </pre></div>
 </div>
-<p>NVIDIA recommends preventing the CLI from installing the NVIDIA GPU driver.
-By preventing the install now, the Operator can manage the installation and
-upgrade of the GPU driver.</p>
 <p>Creating the cluster requires several minutes.</p>
 <p><em>Example Output</em></p>
 <div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">2022-08-19 17:51:04 [i]  eksctl version 0.105.0</span>
@@ -265,7 +263,7 @@ upgrade of the GPU driver.</p>
 You can run <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">nodes</span> <span class="pre">-o</span> <span class="pre">wide</span></code> to view the nodes in the Amazon EKS cluster.</p></li>
 <li><p>You are ready to <a class="reference internal" href="../kubernetes/anthos-guide.html#install-gpu-operator"><span class="std std-ref">install the NVIDIA GPU Operator</span></a>
 with Helm.</p>
-<p>If you specified Kubernetes version <code class="docutils literal notranslate"><span class="pre">1.25</span></code>, then specify <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">psp.enabled=true</span></code>
+<p>If you specified a Kubernetes version less than <code class="docutils literal notranslate"><span class="pre">1.25</span></code>, then specify <code class="docutils literal notranslate"><span class="pre">--set</span> <span class="pre">psp.enabled=true</span></code>
 when you run the <code class="docutils literal notranslate"><span class="pre">helm</span> <span class="pre">install</span></code> command.</p>
 </li>
 </ul>
@@ -289,14 +287,14 @@ This documentation includes steps for using the AWS Management Console.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="csp.html" class="btn btn-neutral float-left" title="GPU Operator with Cloud Service Providers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="archive.html" class="btn btn-neutral float-right" title="Archive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="google-gke.html" class="btn btn-neutral float-right" title="NVIDIA GPU Operator with Google GKE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-04.
+      <span class="lastupdated">Last updated on 2023-04-05.
       </span></p>
   </div>
 

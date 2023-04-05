@@ -78,11 +78,7 @@ The steps create a node group that uses an Amazon EKS optimized AMI.
 
    .. code-block:: console
 
-      $ eksctl create -cluster -f cluster-config.yaml --install-nvidia-plugin=false
-
-   NVIDIA recommends preventing the CLI from installing the NVIDIA GPU driver.
-   By preventing the install now, the Operator can manage the installation and
-   upgrade of the GPU driver.
+      $ eksctl create -cluster -f cluster-config.yaml
 
    Creating the cluster requires several minutes.
 
@@ -122,7 +118,7 @@ Next Steps
 * You are ready to :ref:`install the NVIDIA GPU Operator <install-gpu-operator>`
   with Helm.
 
-  If you specified Kubernetes version ``1.25``, then specify ``--set psp.enabled=true``
+  If you specified a Kubernetes version less than ``1.25``, then specify ``--set psp.enabled=true``
   when you run the ``helm install`` command.
 
 

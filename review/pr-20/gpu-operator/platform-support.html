@@ -126,7 +126,7 @@
 <li class="toctree-l1"><a class="reference internal" href="gpu-sharing.html">Time-Slicing GPUs in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-rdma.html">GPUDirect RDMA and GPUDirect Storage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gpu-operator-kubevirt.html">GPU Operator with KubeVirt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Advanced Configurations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="csp.html">GPU Operator with Cloud Service Providers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">Archive</a></li>
 </ul>
@@ -290,7 +290,32 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>v22.9.2</p></td>
+<tr class="row-even"><td><p>v23.3.0</p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-105-17/index.html">525.105.17</a> (default),</div>
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-86-01/index.html">515.86.01</a>,</div>
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-108-03/index.html">510.108.03</a>,</div>
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-161-03/index.html">470.161.03</a>,</div>
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-216-04/index.html">450.216.04</a></div>
+</div>
+</td>
+<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.6.1</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.13.0</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.14.0</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">3.1.7-3.1.4</a></p></td>
+<td><p>v0.12.1</p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.8.0</a></p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/main/deployments/gpu-operator">0.5.2</a></p></td>
+<td><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/release-notes/changelog.html">3.1.7-1</a> (default),</div>
+</div>
+</td>
+<td><p>v23.3.0</p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/kubevirt-gpu-device-plugin">v1.2.1</a></p></td>
+<td><p>v0.2.1</p></td>
+<td><p><a class="reference external" href="https://github.com/NVIDIA/gds-nvidia-fs/releases">2.15.1</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>v22.9.2</p></td>
 <td><div class="line-block">
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-85-12/index.html">525.85.12</a> (recommended),</div>
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-60-13/index.html">525.60.13</a> (default),</div>
@@ -317,7 +342,7 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <td><p>v0.2.0</p></td>
 <td><p><a class="reference external" href="https://github.com/NVIDIA/gds-nvidia-fs/releases">2.14.13</a></p></td>
 </tr>
-<tr class="row-odd"><td><p>v22.9.1</p></td>
+<tr class="row-even"><td><p>v22.9.1</p></td>
 <td><div class="line-block">
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-60-13/index.html">525.60.13</a> (default),</div>
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-86-01/index.html">515.86.01</a>,</div>
@@ -339,7 +364,7 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <td><p>v0.2.0</p></td>
 <td><p><a class="reference external" href="https://github.com/NVIDIA/gds-nvidia-fs/releases">2.14.13</a></p></td>
 </tr>
-<tr class="row-even"><td><p>v22.9.0</p></td>
+<tr class="row-odd"><td><p>v22.9.0</p></td>
 <td><div class="line-block">
 <div class="line">520.61.05,</div>
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-65-01/index.html">515.65.01</a> (default),</div>
@@ -361,7 +386,7 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <td><p>v0.2.0</p></td>
 <td><p>N/A</p></td>
 </tr>
-<tr class="row-odd"><td><p>1.11</p></td>
+<tr class="row-even"><td><p>1.11</p></td>
 <td><div class="line-block">
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-515-48-07/index.html">515.48.07</a> (default),</div>
 <div class="line"><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-47-03/index.html">510.47.03</a>,</div>
@@ -382,7 +407,7 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <td><p>v0.1.0</p></td>
 <td><p>N/A</p></td>
 </tr>
-<tr class="row-even"><td><p>1.10</p></td>
+<tr class="row-odd"><td><p>1.10</p></td>
 <td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-47-03/index.html">510.47.03</a></p></td>
 <td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.3.0</a></p></td>
 <td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.9.0</a></p></td>
@@ -393,261 +418,6 @@ Refer to <a class="reference internal" href="openshift/steps-overview.html#upgra
 <td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.3.0</a></p></td>
 <td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.3.4.1</a></p></td>
 <td><p>v1.10.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.9.1</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-82-01/index.html">470.82.01</a></p></td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.2.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.7.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.10.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.3.1-2.6.1</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.2.0</a></p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.3.1</a></p></td>
-<td><p>v1.9.1</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.9.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-82-01/index.html">470.82.01</a></p></td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.2.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.7.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.10.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.3.1-2.6.0</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.2.0</a></p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.3.1</a></p></td>
-<td><p>v1.9.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.8.2</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-57-02/index.html">470.57.02</a></p></td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.1.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.7.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.9.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.9-2.4.0</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.1.3</a></p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.2.3</a></p></td>
-<td><p>v1.8.2</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.8.1</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-57-02/index.html">470.57.02</a></p></td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.1.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.6.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.9.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.9-2.4.0</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.1.2</a></p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.2.3</a></p></td>
-<td><p>v1.8.1</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.8.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-470-57-02/index.html">470.57.02</a></p></td>
-<td><p><a class="reference external" href="https://ngc.nvidia.com/catalog/containers/nvidia:cloud-native:k8s-driver-manager">v0.1.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.6.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.9.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.9-2.4.0</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.1.2</a></p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/dcgm/latest/dcgm-release-notes/index.html">2.2.3</a></p></td>
-<td><p>v1.8.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.7.1</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-73-01/index.html">460.73.01</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.5.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.9.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.8-2.4.0-rc.2</a></p></td>
-<td><p>0.8.2</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.1.0</a></p></td>
-<td><p>N/A</p></td>
-<td><p>v1.7.1</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.7.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-73-01/index.html">460.73.01</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.5.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.9.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.8-2.4.0-rc.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/mig-parted/tree/master/deployments/gpu-operator">0.1.0</a></p></td>
-<td><p>N/A</p></td>
-<td><p>v1.7.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.6.2</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-32-03/index.html">460.32.03</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.7</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.8.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.0</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.6.1</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-32-03/index.html">460.32.03</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.6</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.8.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.0</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.6.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-460-32-03/index.html">460.32.03</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.5</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.8.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.2.0</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.1</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.5.2</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.4</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.8.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.4.0</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.5.1</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.3</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.7.3</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.3.0</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.5.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.2</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.7.3</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.3.0</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.4.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.4.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.7.1</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.2.2</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.3.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.3.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.7.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.0</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-feature-discovery/releases">0.2.1</a></p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-even"><td><p>1.2.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-450-102-04/index.html">450.80.02</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.3.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">0.7.0</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">2.1.0-rc.2</a></p></td>
-<td><p>0.6.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-</tr>
-<tr class="row-odd"><td><p>1.1.0</p></td>
-<td><p><a class="reference external" href="https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-440-6400/index.html">440.64.00</a></p></td>
-<td><p>N/A</p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/nvidia-container-toolkit/releases">1.0.5</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/k8s-device-plugin/releases">1.0.0-beta4</a></p></td>
-<td><p><a class="reference external" href="https://github.com/NVIDIA/gpu-monitoring-tools/releases">1.7.2</a></p></td>
-<td><p>0.5.0</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
-<td><p>N/A</p></td>
 <td><p>N/A</p></td>
 <td><p>N/A</p></td>
 <td><p>N/A</p></td>
@@ -917,12 +687,13 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Bare Metal / Virtual Machines with GPU Passthrough</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Virtual Machines with NVIDIA vGPU</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><table class="docutils align-default">
 <colgroup>
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
-<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head stub"><div class="line-block">
@@ -952,6 +723,11 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">Enterprise</div>
 </div>
 </th>
+<th class="head"><div class="line-block">
+<div class="line">Canonical</div>
+<div class="line">MicroK8s</div>
+</div>
+</th>
 </tr>
 </thead>
 <tbody>
@@ -961,6 +737,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">1.24, 1.25, 1.26</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -980,6 +757,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </div>
 </td>
 <td></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>Ubuntu 22.04 LTS</p></th>
 <td><div class="line-block">
@@ -991,6 +769,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <td></td>
 <td></td>
 <td></td>
+<td><p>1.26</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>CentOS 7</p></th>
 <td><div class="line-block">
@@ -998,6 +777,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">1.24, 1.25, 1.26</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1010,6 +790,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <div class="line">4.11, 4.12</div>
 </div>
 </td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1034,6 +815,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </div>
 </td>
 <td></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><div class="line-block">
 <div class="line">Red Hat</div>
@@ -1046,6 +828,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <td></td>
 <td></td>
 <td><p>5.5</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -1387,21 +1170,21 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <td><p>510.108.03</p></td>
 <td><p>515.86.01</p></td>
 <td><p>520.61.07</p></td>
-<td><p>525.60.13</p></td>
+<td><p>525.105.17</p></td>
 </tr>
 <tr class="row-odd"><td><p>Red Hat OpenShift 4.10 and 4.11 with Network Operator 1.4</p></td>
 <td><p>470.161.03</p></td>
 <td><p>510.108.03</p></td>
 <td><p>515.86.01</p></td>
 <td><p>520.61.07</p></td>
-<td><p>525.60.13</p></td>
+<td><p>525.105.17</p></td>
 </tr>
 <tr class="row-even"><td><p>CentOS 7 with MOFED installed on the node</p></td>
 <td><p>470.161.03</p></td>
 <td><p>510.108.03</p></td>
 <td><p>515.86.01</p></td>
 <td><p>520.61.07</p></td>
-<td><p>525.60.13</p></td>
+<td><p>525.105.17</p></td>
 </tr>
 </tbody>
 </table>
@@ -1422,16 +1205,20 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Ubuntu 20.04 LTS with Network Operator 1.4</p></td>
-<td><p>525.60.13 (2.14.13)</p></td>
+<td><p>525.105.17 (2.15.1)</p></td>
 </tr>
 <tr class="row-odd"><td><p>Ubuntu 22.04 LTS with Network Operator 1.4</p></td>
-<td><p>525.60.13 (2.14.13)</p></td>
+<td><p>525.105.17 (2.15.1)</p></td>
+</tr>
+<tr class="row-even"><td><p>Red Hat OpenShift Container Platform 4.11</p></td>
+<td><p>525.105.17 (2.15.1)</p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Not supported with secure boot and only with local NVME and remote NFS storage.</p>
+<p>Not supported with secure boot.
+Supported storage types are local NVMe and remote NFS.</p>
 </div>
 </section>
 <section id="additional-supported-container-management-tools">
@@ -1460,6 +1247,16 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p>v22.9.2</p></td>
+<td><p>v1.21+</p></td>
+<td><p>4.9, 4.10, 4.11, 4.12</p></td>
+<td><p>Supported</p></td>
+</tr>
+<tr class="row-odd"><td><p>v22.9.1</p></td>
+<td><p>v1.21+</p></td>
+<td><p>4.9, 4.10, 4.11</p></td>
+<td><p>Supported</p></td>
+</tr>
 <tr class="row-even"><td><p>v22.9.0</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9, 4.10, 4.11</p></td>
@@ -1547,6 +1344,16 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p>v22.9.2</p></td>
+<td><p>v1.21+</p></td>
+<td><p>4.9, 4.10, 4.11, 4.12</p></td>
+<td><p>Not Supported</p></td>
+</tr>
+<tr class="row-odd"><td><p>v22.9.1</p></td>
+<td><p>v1.21+</p></td>
+<td><p>4.9, 4.10, 4.11</p></td>
+<td><p>Not Supported</p></td>
+</tr>
 <tr class="row-even"><td><p>v22.9.0</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9, 4.10, 4.11</p></td>
@@ -1593,7 +1400,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 <colgroup>
 <col style="width: 24%" />
 <col style="width: 14%" />
-<col style="width: 22%" />
+<col style="width: 24%" />
 <col style="width: 25%" />
 <col style="width: 14%" />
 </colgroup>
@@ -1606,43 +1413,49 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>v22.9.1</p></td>
+<tr class="row-even"><td><p>v22.9.2</p></td>
+<td><p>v1.21+.</p></td>
+<td><p>4.9.9+, 4.10, 4.11, 4.12</p></td>
+<td><p>Supported</p></td>
+<td><p>3.0 and 1.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>v22.9.1</p></td>
 <td><p>v1.21+.</p></td>
 <td><p>4.9.9+, 4.10, 4.11</p></td>
 <td><p>Supported</p></td>
 <td><p>3.0 and 1.4</p></td>
 </tr>
-<tr class="row-odd"><td><p>v22.9.0</p></td>
+<tr class="row-even"><td><p>v22.9.0</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9.9+, 4.10, 4.11</p></td>
 <td><p>Supported</p></td>
 <td><p>1.3 and 2.3</p></td>
 </tr>
-<tr class="row-even"><td><p>1.11.1</p></td>
+<tr class="row-odd"><td><p>1.11.1</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9.9+, 4.10, 4.11</p></td>
 <td><p>Supported</p></td>
 <td><p>2.2</p></td>
 </tr>
-<tr class="row-odd"><td><p>1.11</p></td>
+<tr class="row-even"><td><p>1.11</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9.9+, 4.10, 4.11</p></td>
 <td><p>Supported</p></td>
 <td><p>2.1</p></td>
 </tr>
-<tr class="row-even"><td><p>1.10.1</p></td>
+<tr class="row-odd"><td><p>1.10.1</p></td>
 <td><p>v1.21+</p></td>
 <td><p>4.9.9+, 4.10</p></td>
 <td><p>Supported</p></td>
 <td><p>2.0</p></td>
 </tr>
-<tr class="row-odd"><td><p>1.9.1</p></td>
+<tr class="row-even"><td><p>1.9.1</p></td>
 <td><p>v1.21+</p></td>
 <td><p>Not Supported</p></td>
 <td><p>Supported</p></td>
 <td><p>1.1</p></td>
 </tr>
-<tr class="row-even"><td><p>1.8.1</p></td>
+<tr class="row-odd"><td><p>1.8.1</p></td>
 <td><p>v1.21+</p></td>
 <td><p>Not Supported</p></td>
 <td><p>Not Supported</p></td>
@@ -1666,7 +1479,7 @@ may be supported through enterprise distributions of Kubernetes such as Red Hat 
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-04.
+      <span class="lastupdated">Last updated on 2023-04-05.
       </span></p>
   </div>
 

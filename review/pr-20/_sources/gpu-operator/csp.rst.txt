@@ -9,5 +9,4 @@ GPU Operator with Cloud Service Providers
 
    GPU Operator with Amazon EKS <amazon-eks.rst>
 
-..
-   google-gcp.rst
+   GPU Operator with Google GKE <google-gke.rst>
