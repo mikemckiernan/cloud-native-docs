@@ -192,6 +192,10 @@ This operating system is not supported by the Operator.</p>
 <p>To use a supported operating system, such as Ubuntu 22.04 or 20.04, configure your
 GKE cluster entirely with Ubuntu containerd nodes images or with a node pool
 that uses Ubuntu containerd node images.</p>
+<p>By selecting a supported operating system rather than Container-Optimized OS with Containerd,
+you can customize which NVIDIA software components are installed by the GPU Operator at deployment time.
+For example, the Operator can deploy GPU driver containers and use the Operator
+to manage the lifecycle of the NVIDIA software components.</p>
 </section>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>

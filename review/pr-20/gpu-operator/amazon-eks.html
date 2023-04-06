@@ -195,6 +195,10 @@ The Amazon EKS documentation refers to these nodes as self-managed Linux nodes.<
 <p>When you create the unmanaged node group, you specify the Amazon EKS optimized
 Amazon Machine Image (AMI) that is specific to an AWS region and Kubernetes version.
 See <a class="reference external" href="https://cloud-images.ubuntu.com/aws-eks/">https://cloud-images.ubuntu.com/aws-eks/</a> for the AMI values such as <code class="docutils literal notranslate"><span class="pre">ami-00687acd80b7a620a</span></code>.</p>
+<p>By selecting the AMI, you can customize which NVIDIA software components are
+installed by the GPU Operator at deployment time.
+For example, the Operator can deploy GPU driver containers and use the Operator
+to manage the lifecycle of the NVIDIA software components.</p>
 </section>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
@@ -230,7 +234,7 @@ The steps create a node group that uses an Amazon EKS optimized AMI.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demo-gpu-workers</span>
 <span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">g4dn.xlarge</span>
 <span class="w">    </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ami-0770ab88ec35aa875</span>
-<span class="w">    </span><span class="nt">amiFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ubuntu 2004</span>
+<span class="w">    </span><span class="nt">amiFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ubuntu2004</span>
 <span class="w">    </span><span class="nt">desiredCapacity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">    </span><span class="nt">overrideBootstrapCommand</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">#!/bin/bash</span>
