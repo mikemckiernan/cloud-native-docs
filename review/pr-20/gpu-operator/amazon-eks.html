@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="NVIDIA GPU Operator with Google GKE" href="google-gke.html" />
-    <link rel="prev" title="GPU Operator with Cloud Service Providers" href="csp.html" /> 
+    <link rel="prev" title="Container Device Interface Support in the GPU Operator" href="cdi.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -116,7 +116,8 @@
 <li class="toctree-l2"><a class="reference internal" href="custom-driver-params.html">Customizing NVIDIA GPU Driver Parameters during Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="precompiled-drivers.html">Precompiled Driver Containers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cdi.html">Container Device Interface Support</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="csp.html">GPU Operator with Cloud Service Providers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GPU Operator with Amazon EKS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="google-gke.html">GPU Operator with Google GKE</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="archive.html">Archive</a></li>
@@ -162,7 +163,6 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="appendix.html">Advanced Configurations</a> &raquo;</li>
-          <li><a href="csp.html">GPU Operator with Cloud Service Providers</a> &raquo;</li>
       <li>NVIDIA GPU Operator with Amazon EKS</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -234,13 +234,15 @@ The steps create a node group that uses an Amazon EKS optimized AMI.</p>
 <span class="w">    </span><span class="nt">desiredCapacity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">    </span><span class="nt">overrideBootstrapCommand</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">#!/bin/bash</span>
-<span class="w">      </span><span class="no">/etc/eks/bootstrap.sh demo-cluster --use-max-pods false --kubelet-extra-args &#39;--max-pods=60&#39;</span>
+<span class="w">      </span><span class="no">source /var/lib/cloud/scripts/eksctl/bootstrap.helper.sh</span>
+<span class="w">      </span><span class="no">/etc/eks/bootstrap.sh ${CLUSTER_NAME} --container-runtime containerd --kubelet-extra-args &quot;--node-labels=${NODE_LABELS}&quot;</span>
 <span class="w">    </span><span class="nt">ssh</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">allow</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">      </span><span class="nt">publicKeyPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">~/.ssh/id_rsa.pub</span>
 </pre></div>
 </div>
-<p>Replace the values for the cluster name, Kubernetes version, and so on.</p>
+<p>Replace the values for the cluster name, Kubernetes version, and so on.
+To resolve the environment variables in the override bootstrap command, you must source the bootstrap helper script.</p>
 </li>
 <li><p>Create the Amazon EKS cluster with the unmanaged node group:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>eksctl<span class="w"> </span>create<span class="w"> </span>-cluster<span class="w"> </span>-f<span class="w"> </span>cluster-config.yaml
@@ -300,7 +302,7 @@ This documentation includes steps for using the AWS Management Console.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="csp.html" class="btn btn-neutral float-left" title="GPU Operator with Cloud Service Providers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cdi.html" class="btn btn-neutral float-left" title="Container Device Interface Support in the GPU Operator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="google-gke.html" class="btn btn-neutral float-right" title="NVIDIA GPU Operator with Google GKE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
@@ -308,7 +310,7 @@ This documentation includes steps for using the AWS Management Console.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-05.
+      <span class="lastupdated">Last updated on 2023-04-06.
       </span></p>
   </div>
 

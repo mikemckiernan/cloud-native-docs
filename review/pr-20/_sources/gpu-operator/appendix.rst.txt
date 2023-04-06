@@ -38,4 +38,6 @@ Advanced Configurations
 
    Container Device Interface Support <cdi.rst>
 
-   csp.rst
+   GPU Operator with Amazon EKS <amazon-eks.rst>
+
+   GPU Operator with Google GKE <google-gke.rst>

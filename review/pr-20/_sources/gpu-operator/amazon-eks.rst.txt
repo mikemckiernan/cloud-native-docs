@@ -78,6 +78,7 @@ The steps create a node group that uses an Amazon EKS optimized AMI.
       :language: yaml
 
    Replace the values for the cluster name, Kubernetes version, and so on.
+   To resolve the environment variables in the override bootstrap command, you must source the bootstrap helper script.
 
 #. Create the Amazon EKS cluster with the unmanaged node group:
 

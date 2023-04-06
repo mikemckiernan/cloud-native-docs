@@ -108,7 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#running-sample-gpu-applications">Running Sample GPU Applications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#demo">Demo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gpu-telemetry">GPU Telemetry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#upgrade">Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-the-gpu-operator">Upgrading the GPU Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#uninstall">Uninstall</a></li>
 </ul>
 </li>
@@ -1177,35 +1177,48 @@ The password credentials for the login are available in the <code class="docutil
 </section>
 </section>
 </section>
-<section id="upgrade">
-<span id="operator-upgrades"></span><h2>Upgrade<a class="headerlink" href="#upgrade" title="Permalink to this heading"></a></h2>
+<section id="upgrading-the-gpu-operator">
+<span id="operator-upgrades"></span><h2>Upgrading the GPU Operator<a class="headerlink" href="#upgrading-the-gpu-operator" title="Permalink to this heading"></a></h2>
 <section id="using-helm">
 <h3>Using Helm<a class="headerlink" href="#using-helm" title="Permalink to this heading"></a></h3>
-<p>Starting with GPU Operator v1.8.0, the GPU Operator supports dynamic updates to existing resources. This allows
-the GPU Operator to ensure settings from the <cite>ClusterPolicy</cite> Spec are always applied and current.</p>
-<p>Since Helm does not <a class="reference external" href="https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations">support</a> auto upgrade of existing CRDs, the user has following options to
-upgrade the GPU Operator chart:</p>
+<p>The GPU Operator supports dynamic updates to existing resources.
+This ability enables the GPU Operator to ensure settings from the cluster policy specification are always applied and current.</p>
+<p>Because Helm does not <a class="reference external" href="https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#some-caveats-and-explanations">support</a> automatic upgrade of existing CRDs,
+you can upgrade the GPU Operator chart manually or by enabling a Helm hook.</p>
 <section id="option-1-manually-upgrade-crd">
 <h4>Option 1 - manually upgrade CRD<a class="headerlink" href="#option-1-manually-upgrade-crd" title="Permalink to this heading"></a></h4>
 <div class="align-default"><img height="120" src="../_images/blockdiag-369eda0a7f3f131de010bca25d186c7a6a920e0e.png" width="448" /></div>
-<p>With this workflow, all existing GPU operator resources are updated inline and the <cite>ClusterPolicy</cite> resource is patched with updates from <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code>.</p>
-<p>Download the CRD from the specific <cite>&lt;release-tag&gt;</cite> from the Git repo. For example:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/&lt;release-tag&gt;/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
+<p>With this workflow, all existing GPU operator resources are updated inline and the cluster policy resource is patched with updates from <code class="docutils literal notranslate"><span class="pre">values.yaml</span></code>.</p>
+<ol class="arabic">
+<li><p>Specify the Operator release tag in an environment variable:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">RELEASE_TAG</span><span class="o">=</span>v23.3.0
 </pre></div>
 </div>
-<p>Apply the CRD using the file downloaded above:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>nvidia.com_clusterpolicies_crd.yaml
+</li>
+<li><p>Apply the custom resource definition for the cluster policy:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<span class="nv">$RELEASE_TAG</span>/deployments/gpu-operator/crds/nvidia.com_clusterpolicies_crd.yaml
 </pre></div>
 </div>
-<p>Fetch latest values from the chart (replace the <code class="docutils literal notranslate"><span class="pre">.x</span></code> below with the desired version)</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm<span class="w"> </span>show<span class="w"> </span>values<span class="w"> </span>nvidia/gpu-operator<span class="w"> </span>--version<span class="o">=</span>v22.9.x<span class="w"> </span>&gt;<span class="w"> </span>values-22.9.x.yaml
+</li>
+<li><p>Apply the custom resource definition for Node Feature Discovery:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$  </span>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>https://gitlab.com/nvidia/kubernetes/gpu-operator/-/raw/<span class="nv">$RELEASE_TAG</span>/deployments/gpu-operator/charts/node-feature-discovery/crds/nfd-api-crds.yaml
 </pre></div>
 </div>
-<p>Update the values file as needed.</p>
-<p>And upgrade via Helm:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm<span class="w"> </span>upgrade<span class="w"> </span>gpu-operator<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span>-f<span class="w"> </span>values-22.9.x.yaml
+</li>
+<li><p>Fetch the values from the chart (replace the <code class="docutils literal notranslate"><span class="pre">.x</span></code> below with the desired version)</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm<span class="w"> </span>show<span class="w"> </span>values<span class="w"> </span>nvidia/gpu-operator<span class="w"> </span>--version<span class="o">=</span><span class="nv">$RELEASE_TAG</span><span class="w"> </span>&gt;<span class="w"> </span>values-<span class="nv">$RELEASE_TAG</span>.yaml
 </pre></div>
 </div>
+</li>
+<li><p>Update the values file as needed.</p></li>
+<li><p>Upgrade the Operator:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm<span class="w"> </span>upgrade<span class="w"> </span>gpu-operator<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span>-f<span class="w"> </span>values-<span class="nv">$RELEASE_TAG</span>.yaml
+</pre></div>
+</div>
+</li>
+</ol>
 </section>
 <section id="option-2-auto-upgrade-crd-using-helm-hook">
 <h4>Option 2 - auto upgrade CRD using Helm hook<a class="headerlink" href="#option-2-auto-upgrade-crd-using-helm-hook" title="Permalink to this heading"></a></h4>
@@ -1298,7 +1311,7 @@ In this case, chart needs to be deleted using <code class="docutils literal notr
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-05.
+      <span class="lastupdated">Last updated on 2023-04-06.
       </span></p>
   </div>
 
