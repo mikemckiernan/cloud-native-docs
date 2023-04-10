@@ -102,7 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="platform-support.html">Platform Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">GPU Driver Upgrades</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-upgrading-the-gpu-driver">About Upgrading the GPU Driver</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrades-with-the-upgrade-controller">Upgrades with the Upgrade Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#upgrades-without-the-upgrade-controller">Upgrades without the Upgrade Controller</a></li>
 </ul>
@@ -168,9 +168,29 @@
              
   <section id="gpu-driver-upgrades">
 <span id="id1"></span><h1>GPU Driver Upgrades<a class="headerlink" href="#gpu-driver-upgrades" title="Permalink to this heading"></a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
-<p>The NVIDIA driver daeamonset requires special consideration for upgrades because the driver kernel modules must be unloaded and loaded again on each driver container restart.
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#about-upgrading-the-gpu-driver" id="id3">About Upgrading the GPU Driver</a></p></li>
+<li><p><a class="reference internal" href="#upgrades-with-the-upgrade-controller" id="id4">Upgrades with the Upgrade Controller</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configuration-options" id="id5">Configuration Options</a></p></li>
+<li><p><a class="reference internal" href="#upgrade-state-machine" id="id6">Upgrade State Machine</a></p></li>
+<li><p><a class="reference internal" href="#pausing-driver-upgrades" id="id7">Pausing Driver Upgrades</a></p></li>
+<li><p><a class="reference internal" href="#skipping-driver-upgrades" id="id8">Skipping Driver Upgrades</a></p></li>
+<li><p><a class="reference internal" href="#metrics-and-events" id="id9">Metrics and Events</a></p></li>
+<li><p><a class="reference internal" href="#troubleshooting" id="id10">Troubleshooting</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#upgrades-without-the-upgrade-controller" id="id11">Upgrades without the Upgrade Controller</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id12">Configuration Options</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="about-upgrading-the-gpu-driver">
+<h2>About Upgrading the GPU Driver<a class="headerlink" href="#about-upgrading-the-gpu-driver" title="Permalink to this heading"></a></h2>
+<p>The NVIDIA driver daeamon set requires special consideration for upgrades because the driver kernel modules must be unloaded and loaded again on each driver container restart.
 Consequently, the following steps must occur across a driver upgrade:</p>
 <ol class="arabic simple">
 <li><p>Disable all clients to the GPU driver.</p></li>
@@ -192,8 +212,10 @@ Drivers which are pre-installed on the host are not managed by the GPU Operator.
 The controller automates the upgrade process and generates metrics and events so that you can monitor the upgrade process.</p>
 <p class="rubric">Procedure</p>
 <ol class="arabic">
-<li><p>Upgrade the driver by changing <code class="docutils literal notranslate"><span class="pre">driver.version</span></code> value in ClusterPolicy:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/driver/version&quot;, &quot;value&quot;:&quot;510.85.02&quot;}]&#39;</span>
+<li><p>Upgrade the driver by changing the <code class="docutils literal notranslate"><span class="pre">driver.version</span></code> value in the cluster policy:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>patch<span class="w"> </span>clusterpolicy/cluster-policy<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--type<span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-p<span class="o">=</span><span class="s1">&#39;[{&quot;op&quot;: &quot;replace&quot;, &quot;path&quot;: &quot;/spec/driver/version&quot;, &quot;value&quot;:&quot;510.85.02&quot;}]&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -202,11 +224,24 @@ The controller automates the upgrade process and generates metrics and events so
 <span class="w">   </span>-ojsonpath<span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.metadata.labels.nvidia\.com/gpu-driver-upgrade-state}{&quot;\n&quot;}{end}&#39;</span>
 </pre></div>
 </div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">k8s-node-1 upgrade-required</span>
+<span class="go">k8s-node-2 upgrade-required</span>
+<span class="go">k8s-node-3 upgrade-required</span>
+</pre></div>
+</div>
+<p>You can periodically poll the upgrade status by running the preceding command.
+The GPU driver upgrade is complete when the output shows <code class="docutils literal notranslate"><span class="pre">upgrade-done</span></code>:</p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">k8s-node-1 upgrade-done</span>
+<span class="go">k8s-node-2 upgrade-done</span>
+<span class="go">k8s-node-3 upgrade-done</span>
+</pre></div>
+</div>
 </li>
 </ol>
 <section id="configuration-options">
-<h3>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this heading"></a></h3>
-<p>The following fields in ClusterPolicy are available to configure the upgrade controller:</p>
+<h3>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this heading"></a></h3>
+<p>You can set the following fields in the cluster policy to configure the upgrade controller:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">driver</span><span class="p">:</span>
 
 <span class="w">  </span><span class="nt">upgradePolicy</span><span class="p">:</span>
@@ -215,7 +250,12 @@ The controller automates the upgrade process and generates metrics and events so
 <span class="w">    </span><span class="nt">autoUpgrade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">    </span><span class="c1"># maxParallelUpgrades (default=1): Number of nodes that can be upgraded in parallel. 0 means infinite.</span>
 <span class="w">    </span><span class="nt">maxParallelUpgrades</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-
+<span class="w">    </span><span class="c1"># maximum number of nodes with the driver installed, that can be unavailable during</span>
+<span class="w">    </span><span class="c1"># the upgrade. Value can be an absolute number (ex: 5) or</span>
+<span class="w">    </span><span class="c1"># a percentage of total nodes at the start of upgrade (ex:</span>
+<span class="w">    </span><span class="c1"># 10%). Absolute number is calculated from percentage by rounding</span>
+<span class="w">    </span><span class="c1"># up. By default, a fixed value of 25% is used.&#39;</span>
+<span class="w">    </span><span class="nt">maxUnavailable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25%</span>
 <span class="w">    </span><span class="c1"># waitForCompletion: Options for the &#39;wait-for-completion&#39; state, which will wait for a user-defined group of pods</span>
 <span class="w">    </span><span class="c1">#    to complete before upgrading the driver on a node.</span>
 <span class="w">    </span><span class="nt">waitForCompletion</span><span class="p">:</span>
@@ -252,6 +292,15 @@ The controller automates the upgrade process and generates metrics and events so
 <span class="w">      </span><span class="nt">deleteEmptyDir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </pre></div>
 </div>
+<p>If you specify a value for <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> and also specify <code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades</span></code>,
+the <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> value applies an additional constraint on the value of
+<code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades</span></code> to ensure that the number of parallel upgrades does not
+cause more than the intended number of nodes to become unavailable during the upgrade.
+For example, if you specify <code class="docutils literal notranslate"><span class="pre">maxUnavailable=100%</span></code> and <code class="docutils literal notranslate"><span class="pre">maxParallelUpgrades=1</span></code>,
+one node at a time is upgraded.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> value also applies to the currently unavailable nodes in the cluster.
+If you cordoned nodes in the cluster and the <code class="docutils literal notranslate"><span class="pre">maxUnavailable</span></code> value is already met by the number of cordoned nodes,
+then the upgrade does not progress.</p>
 </section>
 <section id="upgrade-state-machine">
 <h3>Upgrade State Machine<a class="headerlink" href="#upgrade-state-machine" title="Permalink to this heading"></a></h3>
@@ -278,18 +327,18 @@ performs validations in the pod named <code class="docutils literal notranslate"
 </section>
 <section id="pausing-driver-upgrades">
 <h3>Pausing Driver Upgrades<a class="headerlink" href="#pausing-driver-upgrades" title="Permalink to this heading"></a></h3>
-<p>If you desire to pause the automatic driver upgrade process in the cluster, toggle <code class="docutils literal notranslate"><span class="pre">driver.upgradePolicy.autoUpgrade</span></code> flag
-in ClusterPolicy.
-The entire state machine will pause and effectively disable any pending nodes from being upgraded.
-This flag can be dynamically toggled again to re-enable the upgrade controller and resume any pending upgrades.</p>
+<p>To pause the automatic driver upgrade process in the cluster, toggle <code class="docutils literal notranslate"><span class="pre">driver.upgradePolicy.autoUpgrade</span></code> flag
+in the cluster policy.
+The entire state machine pauses and effectively disables any pending nodes from being upgraded.
+You can toggle the flag to <code class="docutils literal notranslate"><span class="pre">true</span></code> again to re-enable the upgrade controller and resume any pending upgrades.</p>
 </section>
 <section id="skipping-driver-upgrades">
 <h3>Skipping Driver Upgrades<a class="headerlink" href="#skipping-driver-upgrades" title="Permalink to this heading"></a></h3>
-<p>If you desire to skip driver upgrades on a certain node, label the node with <code class="docutils literal notranslate"><span class="pre">nvidia.com/gpu-driver-upgrade.skip=true</span></code>.</p>
+<p>To skip driver upgrades on a certain node, label the node with <code class="docutils literal notranslate"><span class="pre">nvidia.com/gpu-driver-upgrade.skip=true</span></code>.</p>
 </section>
 <section id="metrics-and-events">
 <h3>Metrics and Events<a class="headerlink" href="#metrics-and-events" title="Permalink to this heading"></a></h3>
-<p>The GPU Operator will generate the following metrics during the upgrade process which can be scraped by Prometheus.</p>
+<p>The GPU Operator generates the following metrics during the upgrade process which can be scraped by Prometheus.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">gpu_operator_auto_upgrade_enabled</span></code>: 1 if driver auto upgrade is enabled; 0 if not.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gpu_operator_nodes_upgrades_in_progress</span></code>: Total number of nodes in which a driver pod is being upgraded on.</p></li>
@@ -298,11 +347,14 @@ This flag can be dynamically toggled again to re-enable the upgrade controller a
 <li><p><code class="docutils literal notranslate"><span class="pre">gpu_operator_nodes_upgrades_available</span></code>: Total number of nodes in which a driver pod upgrade can start on.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gpu_operator_nodes_upgrades_pending</span></code>: Total number of nodes in which driver pod upgrades are pending.</p></li>
 </ul>
-<p>The GPU Operator will generate events during the upgrade process.
+<p>The GPU Operator generates events during the upgrade process.
 The most common events are for state transitions or failures at a particular state.
 Below are an example set of events generated for the upgrade of one node.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>--sort-by<span class="o">=</span><span class="s1">&#39;.lastTimestamp&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>GPUDriverUpgrade
-<span class="go">10m         Normal   GPUDriverUpgrade     node/localhost.localdomain   Successfully updated node state label to [upgrade-required]</span>
+</pre></div>
+</div>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">10m         Normal   GPUDriverUpgrade     node/localhost.localdomain   Successfully updated node state label to [upgrade-required]</span>
 <span class="go">10m         Normal   GPUDriverUpgrade     node/localhost.localdomain   Successfully updated node state label to [cordon-required]</span>
 <span class="go">10m         Normal   GPUDriverUpgrade     node/localhost.localdomain   Successfully updated node state label to [wait-for-jobs-required]</span>
 <span class="go">10m         Normal   GPUDriverUpgrade     node/localhost.localdomain   Successfully updated node state label to [pod-deletion-required]</span>
@@ -315,26 +367,36 @@ Below are an example set of events generated for the upgrade of one node.</p>
 </section>
 <section id="troubleshooting">
 <h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h3>
-<p>If the upgrade fails for a particular node, the node will be marked in the <code class="docutils literal notranslate"><span class="pre">upgrade-failed</span></code> state.</p>
+<p>If the upgrade fails for a particular node, the node is labelled with the <code class="docutils literal notranslate"><span class="pre">upgrade-failed</span></code> state.</p>
+<ol class="arabic">
+<li><p>View the upgrade state labels:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>node<span class="w"> </span>-l<span class="w"> </span>nvidia.com/gpu.present<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>-ojsonpath<span class="o">=</span><span class="s1">&#39;{range .items[*]}{.metadata.name}{&quot;\t&quot;}{.metadata.labels.nvidia\.com/gpu-driver-upgrade-state}{&quot;\n&quot;}{end}&#39;</span>
-<span class="go">k8s-node-1 upgrade-done</span>
-<span class="go">k8s-node-2 upgrade-done</span>
-<span class="go">k8s-node-3 upgrade-failed</span>
 </pre></div>
 </div>
-<p>Check events to better understand at which stage the ugprade failed:</p>
+<p><em>Example Output</em></p>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">k8s-node-1 upgrade-done</span>
+<span class="go">k8s-node-2 upgrade-done</span>
+<span class="hll"><span class="go">k8s-node-3 upgrade-failed</span>
+</span></pre></div>
+</div>
+</li>
+<li><p>Check the events to determine the stage that the upgrade failed:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>--sort-by<span class="o">=</span><span class="s1">&#39;.lastTimestamp&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>GPUDriverUpgrade
 </pre></div>
 </div>
-<p>Optionally, you can check the gpu-operator logs generated for the upgrade controller:</p>
+</li>
+<li><p>(Optional) Check the logs from the upgrade controller in the gpu-operator container:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>logs<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span>gpu-operator-xxxxx<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>controllers.Upgrade
 </pre></div>
 </div>
-<p>After resolving the upgrade failures for a particular node, you can restart the upgrade process on the node by placing it in the <code class="docutils literal notranslate"><span class="pre">upgrade-required</span></code> state:</p>
+</li>
+<li><p>After resolving the upgrade failures for a particular node, you can restart the upgrade process on the node by placing it in the <code class="docutils literal notranslate"><span class="pre">upgrade-required</span></code> state:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>label<span class="w"> </span>node<span class="w"> </span>&lt;node-name&gt;<span class="w">  </span>nvidia.com/gpu-driver-upgrade-state<span class="o">=</span>upgrade-required<span class="w"> </span>--overwrite
 </pre></div>
 </div>
+</li>
+</ol>
 </section>
 </section>
 <section id="upgrades-without-the-upgrade-controller">
@@ -354,7 +416,7 @@ In addition, no new features will be added to the <code class="docutils literal 
 </div>
 </li>
 <li><p>(Optional) To monitor the status of the upgrade, watch the deployment of the new driver pod on GPU worker nodes:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">kubectl get pods -n gpu-operator -lapp=nvidia-driver-daemonset -w</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>gpu-operator<span class="w"> </span>-lapp<span class="o">=</span>nvidia-driver-daemonset<span class="w"> </span>-w
 </pre></div>
 </div>
 </li>
@@ -362,7 +424,7 @@ In addition, no new features will be added to the <code class="docutils literal 
 <section id="id2">
 <h3>Configuration Options<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
 <p>The following configuration options are available for <code class="docutils literal notranslate"><span class="pre">k8s-driver-manager</span></code>. The options allow users to control the
-GPU pod eviction / node drain behavior.</p>
+GPU pod eviction and node drain behavior.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">driver</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">manager</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">env</span><span class="p">:</span>
@@ -381,15 +443,15 @@ GPU pod eviction / node drain behavior.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>The <em>ENABLE_GPU_POD_EVICTION</em> env allows <code class="docutils literal notranslate"><span class="pre">k8s-driver-manager</span></code> to attempt evicting only GPU pods from the node before attempting a node drain. Only if this fails and
-<em>ENABLE_AUTO_DRAIN</em> is enabled will the node ever be drained.</p></li>
-<li><p>The <em>DRAIN_USE_FORCE</em> env needs to be enabled for evicting GPU pods that are not managed by any of the replication controllers (Deployment, Daemonset, StatefulSet, ReplicaSet).</p></li>
-<li><p>The <em>DRAIN_DELETE_EMPTYDIR_DATA</em> env needs to be enabled to allow deletion of GPU pods using emptyDir volume.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">ENABLE_GPU_POD_EVICTION</span></code> environment variable enables <code class="docutils literal notranslate"><span class="pre">k8s-driver-manager</span></code> to attempt evicting only GPU pods from the node before attempting a node drain. Only if this fails and
+<code class="docutils literal notranslate"><span class="pre">ENABLE_AUTO_DRAIN</span></code> is enabled will the node ever be drained.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">DRAIN_USE_FORCE</span></code> environment variable must be enabled to evict GPU pods that are not managed by any of the replication controllers such as deployment, daemon set, stateful set, and replica set.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">DRAIN_DELETE_EMPTYDIR_DATA</span></code> environment variable must be enabled to delete GPU pods that use the <code class="docutils literal notranslate"><span class="pre">emptyDir</span></code> type volume.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <blockquote>
-<div><p>Since GPU pods get evicted whenever the NVIDIA Driver Daemonset spec is updated, it may not always be desirable to allow this to happen automatically.
+<div><p>Since GPU pods get evicted whenever the NVIDIA Driver daemon set specification is updated, it might not always be desirable to allow this to happen automatically.
 To prevent this <code class="docutils literal notranslate"><span class="pre">daemonsets.updateStrategy</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">ClusterPolicy</span></code> can be set to <a class="reference external" href="https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy">OnDelete</a> .
 With <code class="docutils literal notranslate"><span class="pre">OnDelete</span></code> update strategy, a new driver pod with the updated spec will only get deployed on a node once the old driver pod is manually deleted.</p>
 </div></blockquote>
@@ -412,7 +474,7 @@ For more information on DaemonSet update strategies, refer to the <a class="refe
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-06.
+      <span class="lastupdated">Last updated on 2023-04-10.
       </span></p>
   </div>
 

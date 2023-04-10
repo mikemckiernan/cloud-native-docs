@@ -176,29 +176,67 @@
 <h1>NVIDIA GPU Operator with Amazon EKS<a class="headerlink" href="#nvidia-gpu-operator-with-amazon-eks" title="Permalink to this heading"></a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#about-using-the-operator-with-amazon-eks" id="id1">About Using the Operator with Amazon EKS</a></p></li>
-<li><p><a class="reference internal" href="#prerequisites" id="id2">Prerequisites</a></p></li>
-<li><p><a class="reference internal" href="#procedure" id="id3">Procedure</a></p></li>
-<li><p><a class="reference internal" href="#next-steps" id="id4">Next Steps</a></p></li>
-<li><p><a class="reference internal" href="#related-information" id="id5">Related Information</a></p></li>
+<li><p><a class="reference internal" href="#considerations-for-working-with-amazon-eks" id="id1">Considerations for Working with Amazon EKS</a></p></li>
+<li><p><a class="reference internal" href="#about-using-the-operator-with-amazon-eks" id="id2">About Using the Operator with Amazon EKS</a></p></li>
+<li><p><a class="reference internal" href="#prerequisites" id="id3">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#procedure" id="id4">Procedure</a></p></li>
+<li><p><a class="reference internal" href="#next-steps" id="id5">Next Steps</a></p></li>
+<li><p><a class="reference internal" href="#related-information" id="id6">Related Information</a></p></li>
 </ul>
 </div>
+<section id="considerations-for-working-with-amazon-eks">
+<h2>Considerations for Working with Amazon EKS<a class="headerlink" href="#considerations-for-working-with-amazon-eks" title="Permalink to this heading"></a></h2>
+<p>Running workloads and using NVIDIA GPUs with Amazon EKS offers at least
+three approaches:</p>
+<dl>
+<dt>Option 1: Use default EKS configuration, no GPU Operator</dt><dd><p>By default, you can run Amazon EKS optimized Amazon Linux AMIs on instance types
+that support NVIDIA GPUs.</p>
+<p>Using the default configuration has the following limitations:</p>
+<ul class="simple">
+<li><p>The pre-installed NVIDIA GPU driver version and NVIDIA container runtime version
+lags the release schedule from NVIDIA.</p></li>
+<li><p>You must deploy the NVIDIA device plugin and you assume responsibility for
+upgrading the plugin.</p></li>
+</ul>
+<p>If these limitations are acceptable to you, you can refer to
+<a class="reference external" href="https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html">Amazon EKS optimized Amazon Linux AMIs</a>
+in the Amazon EKS documentation for information about configuring your cluster
+and you do not need to install the NVIDIA GPU Operator.</p>
+</dd>
+<dt>Option 2: Use default EKS configuration, add GPU Operator</dt><dd><p>You can configure your EKS cluster according to Option 1 and also run the NVIDIA GPU Operator.</p>
+<p>In this case, you still experience the limitations identified in the preceding list,
+but the Operator can deploy and manage other operands like the NVIDIA Container Toolkit and
+NVIDIA MIG Manager.</p>
+<p>FIXME: Can customers just jump to installing the Operator with Helm?</p>
+</dd>
+<dt>Option 3: Create a node group with an optimized AMI and run the GPU Operator</dt><dd><p>You can create a node group for your cluster based on instance types that have
+NVIDIA GPUs and use an AMI with a supported operating system.</p>
+<p>In this case, the Operator manages the lifecycle of all the operands, including
+the NVIDIA GPU driver containers.
+This approach enables you to run the most recent NVIDIA GPU drivers and use the
+Operator to manage upgrades of the driver and other software components such as
+the NVIDIA device plugin, NVIDIA Container Toolkit, and NVIDIA MIG Manager.</p>
+<p>This approach provides the most up-to-date software and the Operator reduces
+the administrative overhead.</p>
+</dd>
+</dl>
+</section>
 <section id="about-using-the-operator-with-amazon-eks">
 <h2>About Using the Operator with Amazon EKS<a class="headerlink" href="#about-using-the-operator-with-amazon-eks" title="Permalink to this heading"></a></h2>
-<p>You can use the NVIDIA GPU Operator with Amazon Elastic Kubernetes Service (EKS),
-but you must use an operating system that is supported by the Operator.</p>
-<p>By default, Amazon EKS configures nodes with the Amazon Linux 2 operating system.
-Amazon Linux 2 is not supported by the Operator.</p>
-<p>To use a supported operating system, such as Ubuntu 22.04 or 20.04, configure your
-Amazon EKS cluster with an unmanaged node group.
-The Amazon EKS documentation refers to these nodes as self-managed Linux nodes.</p>
-<p>When you create the unmanaged node group, you specify the Amazon EKS optimized
-Amazon Machine Image (AMI) that is specific to an AWS region and Kubernetes version.
+<p>To use the NVIDIA GPU Operator with Amazon Elastic Kubernetes Service (EKS)
+without any of the limitations described in the preceding section, you perform the
+following high-level actions:</p>
+<ul>
+<li><p>Create a node group with instance types that have NVIDIA GPUs.</p>
+<p>Refer to the table of <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/#Accelerated_Computing">Accelerated Computing</a>
+instance types in the Amazon EC2 documentation.</p>
+</li>
+<li><p>Use an Amazon EKS optimized Amazon Machine Image (AMI) with a supported operating system,
+such as Ubuntu 20.04, on the nodes in the node group.</p>
+<p>AMIs support are specific to an AWS region and Kubernetes version.
 See <a class="reference external" href="https://cloud-images.ubuntu.com/aws-eks/">https://cloud-images.ubuntu.com/aws-eks/</a> for the AMI values such as <code class="docutils literal notranslate"><span class="pre">ami-00687acd80b7a620a</span></code>.</p>
-<p>By selecting the AMI, you can customize which NVIDIA software components are
-installed by the GPU Operator at deployment time.
-For example, the Operator can deploy GPU driver containers and use the Operator
-to manage the lifecycle of the NVIDIA software components.</p>
+</li>
+</ul>
 </section>
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
@@ -213,9 +251,7 @@ The CLI is available from <a class="reference external" href="https://eksctl.io/
 If you prefer to use the AWS Management Console, refer to the <a class="reference internal" href="gpu-operator-rdma.html#related-information"><span class="std std-ref">Related Information</span></a> section for
 Amazon EKS documentation resources.</p></li>
 <li><p>You have the AMI value from <a class="reference external" href="https://cloud-images.ubuntu.com/aws-eks/">https://cloud-images.ubuntu.com/aws-eks/</a>.</p></li>
-<li><p>You have the EC2 instance type to use for your nodes.
-Refer to the table of <a class="reference external" href="https://aws.amazon.com/ec2/instance-types/#Accelerated_Computing">Accelerated Computing</a>
-instance types in the Amazon EC2 documentation.</p></li>
+<li><p>You have the EC2 instance type to use for your nodes.</p></li>
 </ul>
 </section>
 <section id="procedure">
@@ -235,7 +271,10 @@ The steps create a node group that uses an Amazon EKS optimized AMI.</p>
 <span class="w">    </span><span class="nt">instanceType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">g4dn.xlarge</span>
 <span class="w">    </span><span class="nt">ami</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ami-0770ab88ec35aa875</span>
 <span class="w">    </span><span class="nt">amiFamily</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ubuntu2004</span>
+<span class="w">    </span><span class="nt">minSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">desiredCapacity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">    </span><span class="nt">maxSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">    </span><span class="nt">volumeSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">    </span><span class="nt">overrideBootstrapCommand</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">#!/bin/bash</span>
 <span class="w">      </span><span class="no">source /var/lib/cloud/scripts/eksctl/bootstrap.helper.sh</span>
@@ -249,7 +288,7 @@ The steps create a node group that uses an Amazon EKS optimized AMI.</p>
 To resolve the environment variables in the override bootstrap command, you must source the bootstrap helper script.</p>
 </li>
 <li><p>Create the Amazon EKS cluster with the unmanaged node group:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>eksctl<span class="w"> </span>create<span class="w"> </span>-cluster<span class="w"> </span>-f<span class="w"> </span>cluster-config.yaml
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>eksctl<span class="w"> </span>create<span class="w"> </span>cluster<span class="w"> </span>-f<span class="w"> </span>cluster-config.yaml
 </pre></div>
 </div>
 <p>Creating the cluster requires several minutes.</p>
@@ -314,7 +353,7 @@ This documentation includes steps for using the AWS Management Console.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-06.
+      <span class="lastupdated">Last updated on 2023-04-10.
       </span></p>
   </div>
 
