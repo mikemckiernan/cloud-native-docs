@@ -175,13 +175,14 @@ Verifying |prod-name-short| with the GPU Operator
 
    .. code-block:: console
 
-      $ kubectl get nodes -o=jsonpath='{range .items[*].metadata}[{.name}, {.labels.nvidia\.com\/gpu\.count}]{"\n"}{end}'
+      $ kubectl get nodes "-o=custom-columns=NAME:.metadata.name,GPUs:.metadata.labels.nvidia\.com/gpu\.count"
 
    *Example Output*
 
    .. code-block:: output
 
-      [demo-node, 4]
+      NAME        GPUs
+      demo-node   4
       ...
 
    A response like the preceding example indicates that the GPU Operator and

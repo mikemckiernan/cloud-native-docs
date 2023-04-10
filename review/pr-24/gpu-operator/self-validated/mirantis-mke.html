@@ -348,11 +348,12 @@ Refer to <a class="reference internal" href="../../kubernetes/anthos-guide.html#
 <h2>Verifying MKE with the GPU Operator<a class="headerlink" href="#verifying-prod-name-short-with-the-gpu-operator" title="Permalink to this heading"></a></h2>
 <ul>
 <li><p>View the nodes and number of NVIDIA GPUs on each node:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span>-o<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{range .items[*].metadata}[{.name}, {.labels.nvidia\.com\/gpu\.count}]{&quot;\n&quot;}{end}&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>nodes<span class="w"> </span><span class="s2">&quot;-o=custom-columns=NAME:.metadata.name,GPUs:.metadata.labels.nvidia\.com/gpu\.count&quot;</span>
 </pre></div>
 </div>
 <p><em>Example Output</em></p>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">[demo-node, 4]</span>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">NAME        GPUs</span>
+<span class="go">demo-node   4</span>
 <span class="go">...</span>
 </pre></div>
 </div>
@@ -388,7 +389,7 @@ open an issue on GitHub: <a class="reference external" href="https://github.com/
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-07.
+      <span class="lastupdated">Last updated on 2023-04-10.
       </span></p>
   </div>
 
