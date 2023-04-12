@@ -26,9 +26,9 @@ NVIDIA GPU Operator with Amazon EKS
    :backlinks: none
 
 
-******************************************
-Considerations for Working with Amazon EKS
-******************************************
+**************************************
+Approaches for Working with Amazon EKS
+**************************************
 
 You can approach running workloads in Amazon EKS with NVIDIA GPUs in at least two ways.
 
