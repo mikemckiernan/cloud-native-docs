@@ -123,6 +123,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../kubernetes/mig-k8s.html">MIG Support in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../kubernetes/anthos-guide.html">NVIDIA GPUs with Google Cloud’s Anthos</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">NVIDIA GPUs and Red Hat Device Edge</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../edge/nvidia-gpu-with-device-edge.html">Accelerating workloads with NVIDIA GPUs with Red Hat Device Edge</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">GPU Telemetry:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../gpu-telemetry/dcgm-exporter.html">DCGM-Exporter</a></li>
@@ -192,7 +196,7 @@ the NVIDIA Container Toolkit, automatic node labeling using GFD, DCGM based moni
 </section>
 <section id="software-component-matrix">
 <h2>Software Component Matrix<a class="headerlink" href="#software-component-matrix" title="Permalink to this heading"></a></h2>
-<p>Mirantis Kubernetes Engine is self-validated with the following components and versions:</p>
+<p>Mirantis Kubernetes Engine has self-validated with the following components and versions:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 13%" />
@@ -229,16 +233,16 @@ the NVIDIA Container Toolkit, automatic node labeling using GFD, DCGM based moni
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>v3.6</p></td>
+<tr class="row-even"><td><p>FIXME</p></td>
 <td><p>v23.3.1</p></td>
 <td><div class="line-block">
-<div class="line">Ubuntu 22.04</div>
-<div class="line">Ubuntu 20.04</div>
+<div class="line">FIXME</div>
+<div class="line">FIXME 20.04</div>
 </div>
 </td>
-<td><p>MCR 23.0</p></td>
-<td><p>1.25, 1.26</p></td>
-<td><p>v3.11.2</p></td>
+<td><p>FIXME</p></td>
+<td><p>FIXME</p></td>
+<td><p>FIXME</p></td>
 <td><div class="line-block">
 <div class="line">NVIDIA HGX H100</div>
 <div class="line">NVIDIA H100</div>
@@ -246,9 +250,9 @@ the NVIDIA Container Toolkit, automatic node labeling using GFD, DCGM based moni
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">Dell PowerEdge R740</div>
-<div class="line">2 x Intel Xeon Silver 2.2 GHz</div>
-<div class="line">64GB RAM, 1TB NVMe</div>
+<div class="line">FIXME</div>
+<div class="line">FIXME</div>
+<div class="line">FIXME</div>
 </div>
 </td>
 </tr>
@@ -323,7 +327,7 @@ Ensure that the worker nodes are labeled:</p>
 </li>
 <li><p>Edit the <code class="docutils literal notranslate"><span class="pre">mke-config-gpu.toml</span></code> file and update the values like the following example:</p>
 <div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">priv_attributes_allowed_for_user_accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;hostbindmounts&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;privileged&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hostPID&quot;</span><span class="p">]</span>
-<span class="w">    </span><span class="n">priv_attributes_user_accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;gpu-operator:gpu-operator&quot;</span><span class="p">]</span>
+<span class="w">     </span><span class="n">priv_attributes_user_accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;gpu-operator:gpu-operator&quot;</span><span class="p">]</span>
 <span class="n">priv_attributes_allowed_for_service_accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;hostbindmounts&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;privileged&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="s">&quot;hostIPC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hostPID&quot;</span><span class="p">]</span>
 <span class="n">priv_attributes_service_accounts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;gpu-operator:nvidia-gpu-feature-discovery&quot;</span><span class="p">,</span>
@@ -367,7 +371,7 @@ operands are running correctly.</p>
 <h2>Getting Support<a class="headerlink" href="#getting-support" title="Permalink to this heading"></a></h2>
 <p>Refer to the MKE product documentation for information about working with MKE.</p>
 <p>If you experience an issue with the NVIDIA GPU Operator,
-open an issue on GitHub: <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues">https://github.com/NVIDIA/gpu-operator/issues</a>.</p>
+open an issue on GitHub and request assistance from &#64;FIXME: <a class="reference external" href="https://github.com/NVIDIA/gpu-operator/issues">https://github.com/NVIDIA/gpu-operator/issues</a></p>
 </section>
 <section id="related-information">
 <h2>Related information<a class="headerlink" href="#related-information" title="Permalink to this heading"></a></h2>
@@ -389,7 +393,7 @@ open an issue on GitHub: <a class="reference external" href="https://github.com/
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-10.
+      <span class="lastupdated">Last updated on 2023-04-17.
       </span></p>
   </div>
 

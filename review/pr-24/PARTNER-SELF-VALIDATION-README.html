@@ -117,6 +117,10 @@
 <li class="toctree-l1"><a class="reference internal" href="kubernetes/mig-k8s.html">MIG Support in Kubernetes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="kubernetes/anthos-guide.html">NVIDIA GPUs with Google Cloud’s Anthos</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">NVIDIA GPUs and Red Hat Device Edge</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="edge/nvidia-gpu-with-device-edge.html">Accelerating workloads with NVIDIA GPUs with Red Hat Device Edge</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">GPU Telemetry:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gpu-telemetry/dcgm-exporter.html">DCGM-Exporter</a></li>
@@ -178,6 +182,10 @@ additional details about the program.</p>
 <h2>What Partners Have to Do<a class="headerlink" href="#what-partners-have-to-do" title="Permalink to this heading"></a></h2>
 <p>You are asked to provide the following:</p>
 <ul class="simple">
+<li><p>Indicate whether you are a CNCF member and whether your software stack is a
+part of the
+<a class="reference external" href="https://www.cncf.io/certification/software-conformance/">certified Kubernetes software conformance program</a>
+from the CNCF.</p></li>
 <li><p>Document and contribute the exact software stack that that you self-validated.
 Refer to the <code class="docutils literal notranslate"><span class="pre">PARTNER-SELF-VALIDATION-TEMPLATE.rst</span></code> file as a starting point
 and open a pull request to the repository with your update.
@@ -189,6 +197,8 @@ further verification.</p></li>
 <li><p>Specify a GitHub username that NVIDIA can refer to when end users open GitHub issues
 specific to the partner self-validated stack.</p></li>
 </ul>
+<p>Performing the preceding steps is not a guarantee that NVIDIA will include your
+self-validated configuration in the GPU Operator documentation.</p>
 </section>
 <section id="how-end-users-receive-support">
 <h2>How End Users Receive Support<a class="headerlink" href="#how-end-users-receive-support" title="Permalink to this heading"></a></h2>
@@ -215,6 +225,26 @@ the partner validates, and, if necessary, ports the fix to the partner software 
 provides maintenance and support of the software.
 This maintenance and support includes security and bug fixes.</p>
 </section>
+<section id="frequently-asked-questions">
+<h2>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>Will NVIDIA add the partner’s software stack to the NVIDIA GPU Operator QA process?</dt><dd><p>No, but we advise the customer to include the GPU Operator into the partner’s QA process.</p>
+</dd>
+<dt>Will the partner have to run through the certification for all versions of the partner’s software stack?</dt><dd><p>Yes, if the partner wants the versions to be listed within the NVIDIA documentation.
+No, if the partner wants to only validate a specific version of the partner’s software.</p>
+</dd>
+<dt>Will there be any legal agreement/MOU associated with this program?</dt><dd><p>No. This program is aimed at community support, so the main objective is having a mutually beneficial partner collaboration.</p>
+</dd>
+<dt>What happens if the partner wants to exit the program?</dt><dd><p>The partner will be removed from the GPU Operator documentation as a supported config for future releases.
+For previously supported configurations, it is up to the partner to communicate a graceful exit strategy with their end customers.</p>
+</dd>
+<dt>What happens if the partner requires changes to the GPU Operator that are specific to the partner’s software stack.</dt><dd><p>The GPU Operator is open source and open to review incoming pull requests.</p>
+</dd>
+<dt>How are CVE fixes managed for partner software that is used by the NVIDIA GPU Operator.</dt><dd><p>The partner is responsible for managing security issues and is advised to proactively notify users of issues and fixes.
+When the partner provides users with software, such as a containerized GPU driver, the partner is responsible for notifying and resolving issues with the container image.</p>
+</dd>
+</dl>
+</section>
 </section>
 
 
@@ -226,7 +256,7 @@ This maintenance and support includes security and bug fixes.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018-2023, NVIDIA Corporation.
-      <span class="lastupdated">Last updated on 2023-04-10.
+      <span class="lastupdated">Last updated on 2023-04-17.
       </span></p>
   </div>
 

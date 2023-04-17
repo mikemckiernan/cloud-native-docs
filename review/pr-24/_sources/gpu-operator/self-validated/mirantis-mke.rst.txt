@@ -31,7 +31,7 @@ the NVIDIA Container Toolkit, automatic node labeling using GFD, DCGM based moni
 Software Component Matrix
 *************************
 
-|prod-name-long| is self-validated with the following components and versions:
+|prod-name-long| has self-validated with the following components and versions:
 
 .. list-table::
    :header-rows: 1
@@ -49,19 +49,19 @@ Software Component Matrix
      - NVIDIA GPU
      - Hardware Model
 
-   * - v3.6
+   * - FIXME
      - v23.3.1
-     - | Ubuntu 22.04
-       | Ubuntu 20.04
-     - MCR 23.0
-     - 1.25, 1.26
-     - v3.11.2
+     - | FIXME
+       | FIXME 20.04
+     - FIXME
+     - FIXME
+     - FIXME
      - | NVIDIA HGX H100
        | NVIDIA H100
        | NVIDIA A100
-     - | Dell PowerEdge R740
-       | 2 x Intel Xeon Silver 2.2 GHz
-       | 64GB RAM, 1TB NVMe
+     - | FIXME
+       | FIXME
+       | FIXME
 
 
 *************
@@ -148,7 +148,7 @@ Perform the following steps to prepare the MKE cluster:
    .. code-block:: toml
 
       priv_attributes_allowed_for_user_accounts = ["hostbindmounts", "privileged", "hostPID"]
-  	  priv_attributes_user_accounts = ["gpu-operator:gpu-operator"]
+  	   priv_attributes_user_accounts = ["gpu-operator:gpu-operator"]
       priv_attributes_allowed_for_service_accounts = ["hostbindmounts", "privileged",
         "hostIPC", "hostPID"]
       priv_attributes_service_accounts = ["gpu-operator:nvidia-gpu-feature-discovery",
@@ -199,7 +199,7 @@ Getting Support
 Refer to the MKE product documentation for information about working with MKE.
 
 If you experience an issue with the NVIDIA GPU Operator,
-open an issue on GitHub: https://github.com/NVIDIA/gpu-operator/issues.
+open an issue on GitHub and request assistance from @FIXME: https://github.com/NVIDIA/gpu-operator/issues
 
 
 *******************

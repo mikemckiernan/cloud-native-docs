@@ -45,6 +45,11 @@ What Partners Have to Do
 
 You are asked to provide the following:
 
+* Indicate whether you are a CNCF member and whether your software stack is a
+  part of the
+  `certified Kubernetes software conformance program <https://www.cncf.io/certification/software-conformance/>`_
+  from the CNCF.
+
 * Document and contribute the exact software stack that that you self-validated.
   Refer to the ``PARTNER-SELF-VALIDATION-TEMPLATE.rst`` file as a starting point
   and open a pull request to the repository with your update.
@@ -58,6 +63,9 @@ You are asked to provide the following:
 
 * Specify a GitHub username that NVIDIA can refer to when end users open GitHub issues
   specific to the partner self-validated stack.
+
+Performing the preceding steps is not a guarantee that NVIDIA will include your
+self-validated configuration in the GPU Operator documentation.
 
 
 *****************************
@@ -92,4 +100,30 @@ the partner validates, and, if necessary, ports the fix to the partner software 
 In cases where the partner provides software, such as GPU driver images, the partner
 provides maintenance and support of the software.
 This maintenance and support includes security and bug fixes.
+
+
+**************************
+Frequently Asked Questions
+**************************
+
+Will NVIDIA add the partner's software stack to the NVIDIA GPU Operator QA process?
+  No, but we advise the customer to include the GPU Operator into the partner's QA process.
+
+Will the partner have to run through the certification for all versions of the partner's software stack?
+  Yes, if the partner wants the versions to be listed within the NVIDIA documentation.
+  No, if the partner wants to only validate a specific version of the partner's software.
+
+Will there be any legal agreement/MOU associated with this program?
+  No. This program is aimed at community support, so the main objective is having a mutually beneficial partner collaboration.
+
+What happens if the partner wants to exit the program?
+  The partner will be removed from the GPU Operator documentation as a supported config for future releases.
+  For previously supported configurations, it is up to the partner to communicate a graceful exit strategy with their end customers.
+
+What happens if the partner requires changes to the GPU Operator that are specific to the partner's software stack.
+  The GPU Operator is open source and open to review incoming pull requests.
+
+How are CVE fixes managed for partner software that is used by the NVIDIA GPU Operator.
+  The partner is responsible for managing security issues and is advised to proactively notify users of issues and fixes.
+  When the partner provides users with software, such as a containerized GPU driver, the partner is responsible for notifying and resolving issues with the container image.
 
