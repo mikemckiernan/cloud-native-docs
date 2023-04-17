@@ -27,9 +27,9 @@ These components include the NVIDIA GPU drivers to enable CUDA, Kubernetes devic
 the NVIDIA Container Toolkit, automatic node labeling using GFD, DCGM based monitoring and others.
 
 
-*************************
-Software Component Matrix
-*************************
+******************************
+Validated Configuration Matrix
+******************************
 
 |prod-name-long| has self-validated with the following components and versions:
 

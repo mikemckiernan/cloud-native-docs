@@ -27,9 +27,9 @@ Providing a URL to your product documentation so readers can learn more about
 your product is also appropriate.
 
 
-*************************
-Software Component Matrix
-*************************
+******************************
+Validated Configuration Matrix
+******************************
 
 Identify the hardware baseline that was used to self-validate your product with
 the Operator.
