@@ -129,11 +129,11 @@ Perform the following steps to prepare the MKE cluster:
 
 #. Get an API key from MKE so that you can make API calls later:
 
-  .. code-block:: console
+   .. code-block:: console
 
-     $ AUTHTOKEN=$(curl --silent --insecure --data \
-         '{"username":"'$MKE_USERNAME'","password":"'$MKE_PASSWORD'"}' \
-         https://$MKE_HOST/auth/login | jq --raw-output .auth_token)
+      $ AUTHTOKEN=$(curl --silent --insecure --data \
+          '{"username":"'$MKE_USERNAME'","password":"'$MKE_PASSWORD'"}' \
+          https://$MKE_HOST/auth/login | jq --raw-output .auth_token)
 
 #. Download the MKE configuration file:
 
