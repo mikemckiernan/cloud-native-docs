@@ -61,7 +61,7 @@ You are asked to provide the following:
 * Upon request, provide NVIDIA remote access so that the NVIDIA team can perform
   further verification.
 
-* Specify a GitHub username that NVIDIA can refer to when end users open GitHub issues
+* Specify a GitHub user name that NVIDIA can refer to when end users open GitHub issues
   specific to the partner self-validated stack.
 
 Performing the preceding steps is not a guarantee that NVIDIA will include your
