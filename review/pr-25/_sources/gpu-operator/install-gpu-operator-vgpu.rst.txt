@@ -152,9 +152,9 @@ Perform the following steps to build and push a container image that includes th
 
         $ export CUDA_VERSION=11.8.0
 
-      The CUDA version only specifies which base image is used to build the driver container.
-      The version does not have any correlation to the version of CUDA that is associated with or supported by the
-      resulting driver container.
+     The CUDA version only specifies which base image is used to build the driver container.
+     The version does not have any correlation to the version of CUDA that is associated with or supported by the
+     resulting driver container.
 
    - Specify the Linux guest vGPU driver version that you downloaded from the NVIDIA Licensing Portal and append ``-grid``:
 

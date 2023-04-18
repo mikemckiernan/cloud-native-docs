@@ -275,13 +275,12 @@ Refer to <a class="reference internal" href="platform-support.html#supported-ope
 The value is used to install the Operator in a subsequent step.</p>
 </li>
 <li><p>Specify the version of the CUDA base image to use when building the driver container:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">  $ </span><span class="nb">export</span><span class="w"> </span><span class="nv">CUDA_VERSION</span><span class="o">=</span><span class="m">11</span>.8.0
-
-<span class="go">The CUDA version only specifies which base image is used to build the driver container.</span>
-<span class="go">The version does not have any correlation to the version of CUDA that is associated with or supported by the</span>
-<span class="go">resulting driver container.</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">CUDA_VERSION</span><span class="o">=</span><span class="m">11</span>.8.0
 </pre></div>
 </div>
+<p>The CUDA version only specifies which base image is used to build the driver container.
+The version does not have any correlation to the version of CUDA that is associated with or supported by the
+resulting driver container.</p>
 </li>
 <li><p>Specify the Linux guest vGPU driver version that you downloaded from the NVIDIA Licensing Portal and append <code class="docutils literal notranslate"><span class="pre">-grid</span></code>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">export</span><span class="w"> </span><span class="nv">VGPU_DRIVER_VERSION</span><span class="o">=</span><span class="m">525</span>.60.13-grid
