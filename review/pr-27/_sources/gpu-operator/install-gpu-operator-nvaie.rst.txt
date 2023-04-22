@@ -41,3 +41,9 @@ The pre-configured GPU Operator differs from the GPU Operator in the public NGC 
 For more information, including installation procedures, refer to the
 `Deployment Guides <https://docs.nvidia.com/ai-enterprise/index.html#deployment-guides>`_
 section of the NVIDIA AI Enterprise documentation page.
+
+NVIDIA AI Enterprise includes support for Red Hat OpenShift Container Platform.
+The following deployments are described at the preceding deployment guides link:
+
+* OpenShift Container Platform on bare metal or VMware vSphere with GPU Passthrough
+* OpenShift Container Platform on VMware vSphere with NVIDIA vGPU
