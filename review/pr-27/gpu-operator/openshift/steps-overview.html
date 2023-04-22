@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: Installation and Upgrade &mdash; NVIDIA Cloud Native Technologies  documentation</title>
+  <title>Installation and Upgrade Overview &mdash; NVIDIA Cloud Native Technologies  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -107,7 +107,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="contents.html">GPU Operator on OpenShift</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview: Installation and Upgrade</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation and Upgrade Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install-nfd.html">Installing the Node Feature Discovery (NFD) Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html">Installing the NVIDIA GPU Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nvaie-with-ocp.html">NVIDIA AI Enterprise with OpenShift</a></li>
@@ -172,8 +172,8 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../contents.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="contents.html">GPU Operator on OpenShift</a> &raquo;</li>
-      <li>Overview: Installation and Upgrade</li>
+          <li><a href="contents.html">NVIDIA GPU Operator on OpenShift</a> &raquo;</li>
+      <li>Installation and Upgrade Overview</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -182,8 +182,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="overview-installation-and-upgrade">
-<span id="steps-overview"></span><h1>Overview: Installation and Upgrade<a class="headerlink" href="#overview-installation-and-upgrade" title="Permalink to this heading"></a></h1>
+  <section id="installation-and-upgrade-overview">
+<span id="steps-overview"></span><h1>Installation and Upgrade Overview<a class="headerlink" href="#installation-and-upgrade-overview" title="Permalink to this heading"></a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#high-level-steps" id="id1">High-Level Steps</a></p></li>
+<li><p><a class="reference internal" href="#preparing-to-install-the-operator" id="id2">Preparing to Install the Operator</a></p></li>
+<li><p><a class="reference internal" href="#preparing-to-upgrade-the-operator" id="id3">Preparing to Upgrade the Operator</a></p></li>
+<li><p><a class="reference internal" href="#about-the-broken-driver-toolkit" id="id4">About the Broken Driver Toolkit</a></p></li>
+</ul>
+</div>
+<section id="high-level-steps">
+<h2>High-Level Steps<a class="headerlink" href="#high-level-steps" title="Permalink to this heading"></a></h2>
 <p>Follow these high-level steps to install an entitlement-free supported version of the NVIDIA GPU Operator:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="install-nfd.html#install-nfd"><span class="std std-ref">Installing the Node Feature Discovery (NFD) Operator</span></a>.</p></li>
@@ -192,12 +202,12 @@
 </ol>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>NVIDIA AI Enterprise</p>
 <p>The installation process for NVIDIA AI Enterprise customers is documented separately.
 Refer to the
 <a class="reference external" href="https://docs.nvidia.com/ai-enterprise/index.html#deployment-guides">Deployment Guides</a>
 section of the NVIDIA AI Enterprise documentation site.</p>
 </div>
+</section>
 <section id="preparing-to-install-the-operator">
 <h2>Preparing to Install the Operator<a class="headerlink" href="#preparing-to-install-the-operator" title="Permalink to this heading"></a></h2>
 <p>You can deploy the Operator on a a newly deployed cluster that was not upgraded without entitlement on the following versions:</p>
@@ -211,7 +221,7 @@ section of the NVIDIA AI Enterprise documentation site.</p>
 all OpenShift versions prior to 4.9.9. See <a class="reference internal" href="#broken-dtk"><span class="std std-ref">broken driver toolkit</span></a> for more information.</p>
 <p>You do not need an entitlement on OpenShift Container Platform versions greater than 4.9.9.</p>
 </div>
-<ol class="arabic">
+<ul>
 <li><p>Verify your cluster has the OpenShift Driver toolkit:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>oc<span class="w"> </span>get<span class="w"> </span>-n<span class="w"> </span>openshift<span class="w"> </span>is/driver-toolkit
 </pre></div>
@@ -222,7 +232,7 @@ all OpenShift versions prior to 4.9.9. See <a class="reference internal" href="#
 </pre></div>
 </div>
 </li>
-</ol>
+</ul>
 </section>
 <section id="preparing-to-upgrade-the-operator">
 <h2>Preparing to Upgrade the Operator<a class="headerlink" href="#preparing-to-upgrade-the-operator" title="Permalink to this heading"></a></h2>

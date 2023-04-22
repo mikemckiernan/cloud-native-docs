@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GPU Operator on OpenShift &mdash; NVIDIA Cloud Native Technologies  documentation</title>
+  <title>NVIDIA GPU Operator on OpenShift &mdash; NVIDIA Cloud Native Technologies  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
@@ -107,7 +107,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">GPU Operator on OpenShift</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="steps-overview.html">Overview: Installation and Upgrade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="steps-overview.html">Installation and Upgrade Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install-nfd.html">Installing the Node Feature Discovery (NFD) Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html">Installing the NVIDIA GPU Operator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nvaie-with-ocp.html">NVIDIA AI Enterprise with OpenShift</a></li>
@@ -172,7 +172,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../contents.html" class="icon icon-home"></a> &raquo;</li>
-      <li>GPU Operator on OpenShift</li>
+      <li>NVIDIA GPU Operator on OpenShift</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -181,110 +181,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="gpu-operator-on-openshift">
-<h1>GPU Operator on OpenShift<a class="headerlink" href="#gpu-operator-on-openshift" title="Permalink to this heading"></a></h1>
+  <section id="nvidia-gpu-operator-on-openshift">
+<h1>NVIDIA GPU Operator on OpenShift<a class="headerlink" href="#nvidia-gpu-operator-on-openshift" title="Permalink to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="steps-overview.html">Overview: Installation and Upgrade</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="steps-overview.html#preparing-to-install-the-operator">Preparing to Install the Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="steps-overview.html#preparing-to-upgrade-the-operator">Preparing to Upgrade the Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="steps-overview.html#about-the-broken-driver-toolkit">About the Broken Driver Toolkit</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="install-nfd.html">Installing the Node Feature Discovery (NFD) Operator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install-nfd.html#verify-that-the-node-feature-discovery-operator-is-functioning-correctly">Verify that the Node Feature Discovery Operator is functioning correctly</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="install-gpu-ocp.html">Installing the NVIDIA GPU Operator</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#installing-the-nvidia-gpu-operator-by-using-the-web-console">Installing the NVIDIA GPU Operator by using the web console</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#installing-the-nvidia-gpu-operator-using-the-cli">Installing the NVIDIA GPU Operator using the CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#create-the-clusterpolicy-instance">Create the ClusterPolicy instance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#create-the-clusterpolicy-instance-with-nvidia-vgpu">Create the ClusterPolicy instance with NVIDIA vGPU</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#verify-the-successful-installation-of-the-nvidia-gpu-operator">Verify the successful installation of the NVIDIA GPU Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#cluster-monitoring">Cluster monitoring</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#logging">Logging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#running-a-sample-gpu-application">Running a sample GPU Application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="install-gpu-ocp.html#getting-information-about-the-gpu">Getting information about the GPU</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="nvaie-with-ocp.html">NVIDIA AI Enterprise with OpenShift</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nvaie-with-ocp.html#openshift-container-platform-bare-metal-or-vmware-vsphere-with-gpu-passthrough">OpenShift Container Platform bare metal or VMware vSphere with GPU Passthrough</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nvaie-with-ocp.html#openshift-container-platform-on-vmware-vsphere-with-nvidia-vgpus">OpenShift Container Platform on VMware vSphere with NVIDIA vGPUs</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mig-ocp.html">MIG Support in OpenShift Container Platform</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#mig-geometry">MIG geometry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#configuring-mig-devices-in-openshift">Configuring MIG Devices in OpenShift</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#creating-and-applying-a-custom-mig-configuration">Creating and applying a custom MIG configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#running-a-sample-gpu-application">Running a sample GPU application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#disable-the-mig-mode">Disable the MIG mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mig-ocp.html#troubleshooting">Troubleshooting</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="steps-overview.html">Installation and Upgrade Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install-nfd.html">Installing the Node Feature Discovery (NFD) Operator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install-gpu-ocp.html">Installing the NVIDIA GPU Operator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nvaie-with-ocp.html">NVIDIA AI Enterprise with OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mig-ocp.html">MIG Support in OpenShift Container Platform</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clean-up.html">Cleanup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html">Deploy GPU Operators in a disconnected or airgapped environment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#set-up-a-basic-http-server">Set up a basic HTTP Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#optional-check-the-version-of-rhel-being-used-in-the-cluster">Optional: Check the version of RHEL being used in the cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#optional-mirror-the-rpm-packages">Optional: Mirror the RPM packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#creating-a-private-registry">Creating a private registry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#authenticate-the-mirror-registry">Authenticate the mirror registry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#configuring-credentials-that-allow-images-to-be-mirrored">Configuring credentials that allow images to be mirrored</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#mirror-the-operator-catalogs-on-a-disconnected-cluster">Mirror the Operator catalogs on a disconnected cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#disabling-the-default-operatorhub-sources">Disabling the default OperatorHub sources</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#mirror-node-feature-discovery-nfd-and-the-nvidia-gpu-operator-catalog">Mirror Node Feature Discovery (NFD) and the NVIDIA GPU Operator Catalog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#mirror-the-node-feature-discovery-nfd-catalogsource">Mirror the Node Feature Discovery (NFD) CatalogSource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#mirror-the-gpu-catalogsource">Mirror the GPU CatalogSource</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#verify-the-mirrored-catalog-source">Verify the mirrored catalog source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#install-the-node-feature-discovery-operator">Install the Node Feature Discovery Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#optional-installing-the-nvidia-gpu-operator-on-openshift-version-4-8-19-4-8-21-4-9-8">Optional: Installing the NVIDIA GPU Operator on OpenShift version <code class="docutils literal notranslate"><span class="pre">4.8.19</span></code>, <code class="docutils literal notranslate"><span class="pre">4.8.21</span></code>, <code class="docutils literal notranslate"><span class="pre">4.9.8</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html#install-the-nvidia-gpu-operator">Install the NVIDIA GPU Operator</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="enable-gpu-op-dashboard.html">Enable the GPU Operator Dashboard</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="enable-gpu-op-dashboard.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="enable-gpu-op-dashboard.html#enable-the-nvidia-gpu-operator-usage-information">Enable the NVIDIA GPU Operator usage information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="enable-gpu-op-dashboard.html#the-nvidia-gpu-operator-dashboards">The NVIDIA GPU Operator dashboards</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="time-slicing-gpus-in-openshift.html">Time-slicing NVIDIA GPUs in OpenShift</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="time-slicing-gpus-in-openshift.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="time-slicing-gpus-in-openshift.html#configuring-gpus-with-time-slicing">Configuring GPUs with time slicing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="time-slicing-gpus-in-openshift.html#applying-the-configuration-to-a-machineset">Applying the configuration to a MachineSet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="time-slicing-gpus-in-openshift.html#sample-configmap-values">Sample ConfigMap values</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="openshift-virtualization.html">NVIDIA GPU Operator with OpenShift Virtualization</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#assumptions-constraints-and-dependencies">Assumptions, constraints, and dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#labeling-worker-nodes">Labeling worker nodes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#building-the-vgpu-manager-image">Building the vGPU Manager image</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#installing-the-nvidia-gpu-operator-using-the-cli">Installing the NVIDIA GPU Operator using the CLI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#create-the-secret">Create the secret</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#creating-a-clusterpolicy-for-the-gpu-operator">Creating a ClusterPolicy for the GPU Operator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#enabling-the-iommu-driver-on-hosts">Enabling the IOMMU driver on hosts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#add-gpu-resources-to-the-hyperconverged-cr">Add GPU resources to the HyperConverged CR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#creating-a-virtual-machine-with-gpu">Creating a virtual machine with GPU</a></li>
-<li class="toctree-l2"><a class="reference internal" href="openshift-virtualization.html#vgpu-device-configuration">vGPU Device Configuration</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="troubleshooting-gpu-ocp.html">Troubleshooting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting-gpu-ocp.html#node-feature-discovery-checks">Node Feature Discovery checks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting-gpu-ocp.html#gpu-operator-checks">GPU Operator checks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting-gpu-ocp.html#validate-the-gpu-stack">Validate the GPU stack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting-gpu-ocp.html#verify-the-nvidia-driver-deployment">Verify the NVIDIA driver deployment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="troubleshooting-gpu-ocp.html#verify-the-openshift-driver-toolkit">Verify the OpenShift Driver Toolkit</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="appendix-ocp.html">Appendix</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="appendix-ocp.html#enabling-a-cluster-wide-entitlement">Enabling a Cluster-wide entitlement</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="mirror-gpu-ocp-disconnected.html">Deploy GPU Operators in a disconnected or airgapped environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enable-gpu-op-dashboard.html">Enable the GPU Operator Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time-slicing-gpus-in-openshift.html">Time-slicing NVIDIA GPUs in OpenShift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openshift-virtualization.html">NVIDIA GPU Operator with OpenShift Virtualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting-gpu-ocp.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix-ocp.html">Appendix</a></li>
 </ul>
 </div>
 </section>

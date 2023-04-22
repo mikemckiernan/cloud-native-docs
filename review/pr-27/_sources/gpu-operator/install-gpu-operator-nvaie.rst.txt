@@ -26,7 +26,8 @@
 NVIDIA AI Enterprise
 #####################
 
-NVIDIA AI Enterprise is an end-to-end, cloud-native suite of AI and data analytics software, optimized, certified, and supported by NVIDIA with  NVIDIA-Certified  Systems. Additional information can be found at the `NVIDIA AI Enterprise web page <https://www.nvidia.com/en-us/data-center/products/ai-enterprise-suite/#benefits>`_.
+NVIDIA AI Enterprise is an end-to-end, cloud-native suite of AI and data analytics software, optimized, certified, and supported by NVIDIA with NVIDIA-Certified Systems.
+Additional information can be found at the `NVIDIA AI Enterprise <https://www.nvidia.com/en-us/data-center/products/ai-enterprise-suite/>`_ web page.
 
 NVIDIA AI Enterprise customers have access to a pre-configured GPU Operator within the NVIDIA Enterprise Catalog.
 The GPU Operator is pre-configured to simplify the provisioning experience with NVIDIA AI Enterprise deployments.
@@ -39,4 +40,4 @@ The pre-configured GPU Operator differs from the GPU Operator in the public NGC 
 
 For more information, including installation procedures, refer to the
 `Deployment Guides <https://docs.nvidia.com/ai-enterprise/index.html#deployment-guides>`_
-section of the NVIDIA AI Enterprise documentation site.
+section of the NVIDIA AI Enterprise documentation page.

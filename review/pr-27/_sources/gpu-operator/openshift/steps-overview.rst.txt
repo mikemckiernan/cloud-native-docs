@@ -5,9 +5,19 @@
 
 .. _steps_overview:
 
-##################################
-Overview: Installation and Upgrade
-##################################
+#################################
+Installation and Upgrade Overview
+#################################
+
+.. contents::
+   :depth: 2
+   :local:
+   :backlinks: none
+
+
+****************
+High-Level Steps
+****************
 
 Follow these high-level steps to install an entitlement-free supported version of the NVIDIA GPU Operator:
 
@@ -15,7 +25,7 @@ Follow these high-level steps to install an entitlement-free supported version o
 #. :ref:`install-nvidiagpu`.
 #. :ref:`running-sample-app`.
 
-.. important:: NVIDIA AI Enterprise
+.. important::
 
    The installation process for NVIDIA AI Enterprise customers is documented separately.
    Refer to the
@@ -40,7 +50,7 @@ You can deploy the Operator on a a newly deployed cluster that was not upgraded 
 
    You do not need an entitlement on OpenShift Container Platform versions greater than 4.9.9.
 
-#. Verify your cluster has the OpenShift Driver toolkit:
+-  Verify your cluster has the OpenShift Driver toolkit:
 
    .. code-block:: console
 
