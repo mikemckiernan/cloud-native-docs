@@ -191,16 +191,17 @@ in the <em>NVIDIA NGC Private Registry User Guide</em> for more information.</p>
 </pre></div>
 </div>
 </li>
-<li><p>Go to the <a class="reference external" href="https://catalog.ngc.nvidia.com/orgs/nvidia/teams/vgpu/resources/gpu-operator-installer-5">NVIDIA GPU Operator - Deploy Installer Script</a> web page
-on NVIDIA NGC.</p>
-<ul class="simple">
-<li><p>Click **</p></li>
-</ul>
+<li><p>Go to the
+<a class="reference external" href="https://catalog.ngc.nvidia.com/orgs/nvidia/teams/vgpu/resources/gpu-operator-installer-5">NVIDIA GPU Operator - Deploy Installer Script</a>
+web page on NVIDIA NGC.</p>
+<p>Click the <strong>File Browser</strong> tab, identify your NVIDIA AI Enterprise release, click <a class="reference internal" href="https://brand-assets.cne.ngc.nvidia.com/assets/icons/2.2.2/fill/common-more-horiz.svg"><img alt="Actions button" height="14px" src="https://brand-assets.cne.ngc.nvidia.com/assets/icons/2.2.2/fill/common-more-horiz.svg" width="14px" /></a>, and select <strong>Download File</strong>.</p>
 <p>Copy the downloaded script to the same directory as the client configuration token.</p>
+<p>If your NVIDIA AI Enterprise release is older than the minimum shown, refer to an older version of the documentation,
+such as the <a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/23.9.1/install-gpu-operator-nvaie.html">23.9.1</a>
+version.</p>
 </li>
-<li><p>Rename the client configuration token that you downloaded to <code class="docutils literal notranslate"><span class="pre">client_configuration_token.tok</span></code>.</p>
-<p>Originally, the client configuration token is named to match the pattern: <code class="docutils literal notranslate"><span class="pre">client_configuration_token_mm-dd-yyyy-hh-mm-ss.tok</span></code>.</p>
-</li>
+<li><p>Rename the client configuration token that you downloaded to <code class="docutils literal notranslate"><span class="pre">client_configuration_token.tok</span></code>.
+Originally, the client configuration token is named to match the pattern: <code class="docutils literal notranslate"><span class="pre">client_configuration_token_mm-dd-yyyy-hh-mm-ss.tok</span></code>.</p></li>
 <li><p>From the directory that contains the downloaded script and the client configuration token, run the script:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>bash gpu-operator-nvaie.sh install
 </pre></div>
@@ -319,7 +320,7 @@ Refer to the <a class="reference external" href="https://docs.nvidia.com/ai-ente
 
   <div role="contentinfo">
     <p>&#169; Copyright 2020-2024, NVIDIA.
-      <span class="lastupdated">Last updated on Apr 10, 2024.
+      <span class="lastupdated">Last updated on Apr 11, 2024.
       </span></p>
   </div>
 
