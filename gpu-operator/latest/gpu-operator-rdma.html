@@ -262,6 +262,7 @@ refer to <a class="reference external" href="https://docs.nvidia.com/datacenter/
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm install --wait --generate-name <span class="se">\</span>
      -n gpu-operator --create-namespace <span class="se">\</span>
      nvidia/gpu-operator <span class="se">\</span>
+     --version<span class="o">=</span>v24.6.2 <span class="se">\</span>
      --set driver.useOpenKernelModules<span class="o">=</span><span class="nb">true</span>
 </pre></div>
 </div>
@@ -269,6 +270,7 @@ refer to <a class="reference external" href="https://docs.nvidia.com/datacenter/
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm install --wait --generate-name <span class="se">\</span>
      -n gpu-operator --create-namespace <span class="se">\</span>
      nvidia/gpu-operator <span class="se">\</span>
+     --version<span class="o">=</span>v24.6.2 <span class="se">\</span>
      --set driver.useOpenKernelModules<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
      --set driver.rdma.useHostMofed<span class="o">=</span><span class="nb">true</span>
 </pre></div>
@@ -384,8 +386,8 @@ from the preceding step.</p>
 </li>
 <li><p>Start two pods that run the <code class="docutils literal notranslate"><span class="pre">mellanox/cuda-perftest</span></code> container on two different nodes in the cluster.</p>
 <div class="sd-tab-set docutils">
-<input checked="checked" id="75fc37a3-124e-40b1-b461-258f55c7ca66" name="5eff8d8e-7475-49f2-9c65-524f88f39de6" type="radio">
-</input><label class="sd-tab-label" for="75fc37a3-124e-40b1-b461-258f55c7ca66">
+<input checked="checked" id="a45af4e2-0b7d-4255-8327-57d4e9082d05" name="6bc276b2-bc26-4d7e-8ace-a1d14b609ddd" type="radio">
+</input><label class="sd-tab-label" for="a45af4e2-0b7d-4255-8327-57d4e9082d05">
 demo-pod-1</label><div class="sd-tab-content docutils">
 <ul>
 <li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">demo-pod-1.yaml</span></code>, for the first pod with contents like the following:</p>
@@ -430,8 +432,8 @@ demo-pod-1</label><div class="sd-tab-content docutils">
 </li>
 </ul>
 </div>
-<input id="4e9b224f-4cb3-4e11-9843-3ae4f29aa9e1" name="5eff8d8e-7475-49f2-9c65-524f88f39de6" type="radio">
-</input><label class="sd-tab-label" for="4e9b224f-4cb3-4e11-9843-3ae4f29aa9e1">
+<input id="387279aa-d69f-45cc-9fcf-412c01808416" name="6bc276b2-bc26-4d7e-8ace-a1d14b609ddd" type="radio">
+</input><label class="sd-tab-label" for="387279aa-d69f-45cc-9fcf-412c01808416">
 demo-pod-2</label><div class="sd-tab-content docutils">
 <ul>
 <li><p>Create a file, such as <code class="docutils literal notranslate"><span class="pre">demo-pod-2.yaml</span></code>, for the second pod with contents like the following:</p>
@@ -588,6 +590,7 @@ Starting with v23.9.1, the GPU Operator deploys a version of GDS that requires u
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>helm install --wait --generate-name <span class="se">\</span>
      -n gpu-operator --create-namespace <span class="se">\</span>
      nvidia/gpu-operator <span class="se">\</span>
+     --version<span class="o">=</span>v24.6.2 <span class="se">\</span>
      --set driver.useOpenKernelModules<span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
      --set gds.enabled<span class="o">=</span><span class="nb">true</span>
 </pre></div>
@@ -711,7 +714,7 @@ After the verification completes, the nvidia-fs-ctr container starts inside the 
 </p>
 
     <p>
-      <span class="lastupdated">Last updated on Oct 18, 2024.
+      <span class="lastupdated">Last updated on Nov 21, 2024.
       </span></p>
 <script type="text/javascript">if (typeof _satellite !== "undefined"){ _satellite.pageBottom();}</script>
 
