@@ -1,30 +1,22 @@
-# Imported from https://hub.docker.com/r/sphinxdoc/sphinx/dockerfile
-# maintainer="Sphinx Team <https://www.sphinx-doc.org/>"
-# $ docker build --pull \
-#   --tag ${REGISTRY}/sphinxdoc
-#   --file Dockerfile .
-FROM python:3.10-slim
+FROM hashicorp/vault AS v
+FROM python:3.13
 
-WORKDIR /docs
+ARG UID=1000
+
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive \
  && apt-get install --no-install-recommends -y \
-      curl \
- && apt-get autoremove \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+      make \
+      rsync \
+      openssh-client \
+      wget \
+      jq
 
-ENV PM_PACKAGES_ROOT=/var/tmp/packman
+COPY --from=v /bin/vault /bin/vault
 
-RUN --mount=type=bind,source=.,destination=/x,rw /x/repo docs -p review || true
+ENV HOME=/home/nvidia
+RUN useradd -u "${UID}" -ms /bin/bash nvidia && chmod 777 "${HOME}"
+USER nvidia
+ENV PATH="/home/nvidia/.local/bin:${PATH}"
 
-RUN --mount=type=bind,source=.,destination=/x,rw /x/tools/packman/python.sh -m pip install --no-cache-dir --no-deps -U \
-   -t /tmp/extension \
-   sphinx-copybutton \
-   nvidia-sphinx-theme \
-   pydata-sphinx-theme \
-   linuxdoc
-
-RUN (cd /tmp/extension; tar cf - . ) | (cd /var/tmp/packman/chk/sphinx/4.5.0.2-py3.7-linux-x86_64/; tar xf -)
-RUN rm -rf /tmp/extension
-
-RUN --mount=type=bind,target=/work echo 'alias build-docs="./repo docs"' >> ~/.bashrc
+RUN --mount=type=bind,source=.,destination=/x,rw python3 -m pip install \
+        --requirement=/x/requirements.txt
