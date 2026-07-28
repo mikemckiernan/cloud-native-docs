@@ -29,20 +29,20 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/nvidia-sphinx-theme.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.4cbf315f70debaebd550c87a6162cf0f.min.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
 
 
@@ -56,12 +56,13 @@
     <script src="_static/design-tabs.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dcgm-exporter';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_version = '0.19.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = '../versions1.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '1.0.0';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             false;
         </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="_static/version.js"></script>
     <script src="_static/social-media.js"></script>
 
@@ -76,7 +77,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="Dec 04, 2025"/>
+    <meta name="docbuild:last-update" content="Jul 28, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
 
 
 
@@ -86,21 +93,21 @@
 
   </head>
 
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <body data-default-mode="">
+
 
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
 
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -126,7 +133,7 @@
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -206,11 +213,18 @@
       
         <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
       
     </div>
     
@@ -311,11 +325,18 @@
         
           <div class="navbar-item">
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button></div>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
         
       </div>
     
@@ -392,7 +413,7 @@
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://github.com/NVIDIA/dcgm-exporter">DCGM-Exporter</a> is a tool based on the
-Go APIs to <a class="reference external" href="https://developer.nvidia.com/dcgm">NVIDIA DCGM</a> that allows users to gather
+Go APIs to <a class="reference external" href="https://developer.nvidia.com/dcgm">NVIDIA DCGM</a> that allows you to gather
 GPU metrics and understand workload behavior or monitor GPUs in clusters. DCGM Exporter is
 written in Go and exposes GPU metrics at an HTTP endpoint (<code class="docutils literal notranslate"><span class="pre">/metrics</span></code>) for monitoring solutions
 such as Prometheus.</p>
@@ -441,62 +462,59 @@ docker run -d --rm <span class="se">\</span>
 <p>DCGM-Exporter has various options for adjusting its default behavior. Each option supports both a command-line flag and environment variable.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <colgroup>
-<col style="width: 35%" />
-<col style="width: 20%" />
-<col style="width: 45%" />
+<col style="width: 21%" />
+<col style="width: 44%" />
+<col style="width: 13%" />
+<col style="width: 21%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Environment Variable</p></th>
+<th class="head"><p>Description</p></th>
 <th class="head"><p>Command-Line Flag</p></th>
 <th class="head"><p>Value</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_COLLECTORS</span></code></p></td>
+<td><p>Path to file containing DCGM fields to collect. Default:
+“/etc/dcgm-exporter/default-counters.csv”</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-f</span></code></p></td>
 <td><p>File Path</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>Path to file containing DCGM fields to collect. Default: “/etc/dcgm-exporter/default-counters.csv”</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_LISTEN</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_LISTEN</span></code></p></td>
+<td><p>Address of listening http server. Default: “:9400”</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-a</span></code></p></td>
 <td><p>Address</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>Address of listening http server. Default: “:9400”</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_INTERVAL</span></code></p></td>
+<td><p>Interval of time at which point metrics are collected. Unit is
+milliseconds. Default: 30000</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-c</span></code></p></td>
 <td><p>Interval</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>Interval of time at which point metrics are collected. Unit is milliseconds. Default:30000</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_KUBERNETES</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_KUBERNETES</span></code></p></td>
+<td><p>Enable kubernetes mapping metrics to kubernetes pods. Default: false</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-k</span></code></p></td>
 <td><p>Boolean</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>Enable kubernetes mapping metrics to kubernetes pods. Default: false</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_CONFIGMAP_DATA</span></code></p></td>
+<td><p>ConfigMap namespace and name containing DCGM fields to collect.
+Default: “none”</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-m</span></code></p></td>
 <td><p>Namespace:Name</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>ConfigMap namespace and name containing DCGM fields to collect. Default: “none”</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_REMOTE_HOSTENGINE_INFO</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_REMOTE_HOSTENGINE_INFO</span></code></p></td>
+<td><p>Connect to remote hostengine at Host:Port. Default: NA
+(dcgm-exporter will start in embedded mode)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-r</span></code></p></td>
 <td><p>Host:Port</p></td>
 </tr>
-<tr class="row-odd"><td colspan="3"><p>Connect to remote hostengine at Host:Port. Default: NA (dcgm-exporter will started  in embedded mode)</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">$DCGM_EXPORTER_DEVICES_STR</span></code></p></td>
+<td><p>Specify which devices to monitor. Default: all GPU instances in
+MIG mode, all GPUs if MIG disabled.</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">-d</span></code></p></td>
-<td><p>Device String (see following note)</p></td>
-</tr>
-<tr class="row-odd"><td colspan="3"><p>Specify which devices to monitor. Default: all GPU instances in MIG mode, all GPUs if MIG disabled.</p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td></td>
-<td></td>
+<td><p>Device String
+(see following note)</p></td>
 </tr>
 </tbody>
 </table>
@@ -686,8 +704,8 @@ as can be seen in the output below:</p>
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-dcgm-exporter">Running DCGM Exporter</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcgm-exporter-customization">DCGM-Exporter Customization</a><ul class="nav section-nav flex-column">
@@ -714,8 +732,8 @@ as can be seen in the output below:</p>
   
 
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
 
 
 
@@ -779,7 +797,7 @@ as can be seen in the output below:</p>
 
   <p class="copyright">
     
-      Copyright © 2020-2025, NVIDIA Corporation.
+      Copyright © 2020-2026, NVIDIA Corporation.
       <br/>
     
   </p>
