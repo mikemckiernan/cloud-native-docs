@@ -53,10 +53,18 @@ Upgrades with the Upgrade Controller
 
 NVIDIA recommends upgrading by using the upgrade controller and the controller is enabled by default in the GPU Operator.
 The controller automates the upgrade process and generates metrics and events so that you can monitor the upgrade process.
+It supports both driver management modes:
+
+* When ``ClusterPolicy`` manages the driver, one policy applies to all driver nodes.
+* When ``NVIDIADriver`` resources manage the driver, each resource has its own policy that applies
+  to the nodes owned by that resource.
+  The upgrade controller supports this mode without a ``ClusterPolicy`` resource.
 
 .. rubric:: Procedure
 
-1. Upgrade the driver by changing the ``driver.version`` value in the cluster policy:
+#. Upgrade the driver by changing the version in the resource that manages the target nodes.
+
+   If ``ClusterPolicy`` manages the driver, change ``spec.driver.version``:
 
    .. code-block:: console
 
@@ -64,8 +72,17 @@ The controller automates the upgrade process and generates metrics and events so
           --type='json' \
           -p='[{"op": "replace", "path": "/spec/driver/version", "value":"580.95.05"}]'
 
+   If NVIDIA driver custom resources manage the driver, change ``spec.version`` in the appropriate
+   resource:
 
-   If you are using Openshift, you must update the ``driver.version``, ``driver.repository`` and ``driver.image`` values in the cluster policy.
+   .. code-block:: console
+
+      $ kubectl patch nvidiadrivers.nvidia.com/<resource-name> \
+          --type='json' \
+          -p='[{"op": "replace", "path": "/spec/version", "value":"580.95.05"}]'
+
+   If you are using OpenShift with ``ClusterPolicy`` driver management, you must update the
+   ``spec.driver.version``, ``spec.driver.repository``, and ``spec.driver.image`` values.
 
    .. code-block:: console
 
@@ -73,7 +90,7 @@ The controller automates the upgrade process and generates metrics and events so
           --type='json' \
           -p='[{"op": "replace", "path": "/spec/driver/version", "value":"580.95.05"},{"op": "replace", "path": "/spec/driver/repository", "value":"nvcr.io/nvidia"},{"op": "replace", "path": "/spec/driver/image", "value":"driver"}]'
 
-2. (Optional) For each node, monitor the upgrade status:
+#. Optional: For each node, monitor the upgrade status:
 
    .. code-block:: console
 
@@ -101,74 +118,104 @@ The controller automates the upgrade process and generates metrics and events so
 Configuration Options
 =====================
 
-You can set the following fields in the cluster policy to configure the upgrade controller:
+For ``ClusterPolicy`` driver management, configure ``spec.driver.upgradePolicy``.
+The following example shows the available fields:
 
 .. code-block:: yaml
 
-   driver:
+   spec:
+     driver:
+       upgradePolicy:
+         autoUpgrade: true
+         maxParallelUpgrades: 1
+         maxUnavailable: 25%
+         waitForCompletion:
+           timeoutSeconds: 0
+           podSelector: ""
+         gpuPodDeletion:
+           force: false
+           timeoutSeconds: 300
+           deleteEmptyDir: false
+         drain:
+           enable: false
+           force: false
+           podSelector: ""
+           timeoutSeconds: 300
+           deleteEmptyDir: false
 
+For NVIDIA driver custom resource management, configure ``spec.upgradePolicy`` on each resource.
+The policy applies only to nodes owned by that resource, so different node pools can use different
+parallelism, availability, workload eviction, and drain settings.
+The field structure is the same as the ``ClusterPolicy`` policy except that ``podDeletion`` is used
+instead of ``gpuPodDeletion``:
+
+.. code-block:: yaml
+
+   apiVersion: nvidia.com/v1alpha1
+   kind: NVIDIADriver
+   metadata:
+     name: example
+   spec:
+     version: 580.95.05
+     nodeSelector:
+       driver.config: example
      upgradePolicy:
-       # autoUpgrade (default=true): Switch which enables / disables the driver upgrade controller.
-       # If set to false all other options are ignored.
        autoUpgrade: true
-       # maxParallelUpgrades (default=1): Number of nodes that can be upgraded in parallel. 0 means infinite.
        maxParallelUpgrades: 1
-       # maximum number of nodes with the driver installed, that can be unavailable during
-       # the upgrade. Value can be an absolute number (ex: 5) or
-       # a percentage of total nodes at the start of upgrade (ex:
-       # 10%). Absolute number is calculated from percentage by rounding
-       # up. By default, a fixed value of 25% is used.'
        maxUnavailable: 25%
-       # waitForCompletion: Options for the 'wait-for-completion' state, which will wait for a user-defined group of pods
-       # to complete before upgrading the driver on a node.
        waitForCompletion:
-         # timeoutSeconds (default=0): The length of time to wait before giving up. 0 means infinite.
          timeoutSeconds: 0
-         # podSelector (default=""): The label selector defining the group of pods to wait for completion of. "" means to wait on none.
          podSelector: ""
-
-       # gpuPodDeletion: Options for the 'pod-deletion' state, which will evict all pods on the node allocated a GPU.
-       gpuPodDeletion:
-         # force (default=false): Delete pods even if they are not managed by a controller (for example ReplicationController, ReplicaSet,
-         # Job, DaemonSet or StatefulSet).
+       podDeletion:
          force: false
-         # timeoutSeconds (default=300): The length of time to wait before giving up. 0 means infinite. When the timeout is met,
-         # the GPU  pod(s) will be forcefully deleted.
          timeoutSeconds: 300
-         # deleteEmptyDir (default=false): Delete pods even if they are using emptyDir volumes (local data will be deleted).
          deleteEmptyDir: false
-
-       # drain: Options for the 'drain' state, which invokes 'kubectl drain' on the node.
-       # Unlike 'gpuPodDeletion', which targets only GPU-allocated pods, drain evicts all pods on the node.
-       # This should only be enabled as a fallback when 'gpuPodDeletion' cannot remove all GPU-using pods on its own.
        drain:
-         # enable (default=false): Set to true to allow node drain as a fallback when
-         # 'gpuPodDeletion' cannot evict all GPU pods. By default, drain evicts all pods
-         # on the node. Use podSelector to limit which pods are evicted.
          enable: false
-         # force (default=false): Delete pods even if they are not managed by a controller
-         # (for example, ReplicationController, ReplicaSet, Job, DaemonSet, or StatefulSet).
-         # Applies to all pods on the node, not just GPU pods.
          force: false
-         # podSelector (default=""): Label selector to restrict which pods are evicted
-         # during drain. An empty string means all pods on the node are evicted.
          podSelector: ""
-         # timeoutSeconds (default=300): The length of time to wait before giving up.
-         # 0 means infinite. When the timeout is reached, the drain attempt is abandoned.
          timeoutSeconds: 300
-         # deleteEmptyDir (default=false): Allow eviction of pods that use emptyDir volumes.
-         # Enabling this results in permanent loss of any data stored in those volumes.
          deleteEmptyDir: false
+
+If ``spec.upgradePolicy`` is omitted from an NVIDIA driver custom resource, the Operator enables
+automatic upgrades with ``maxParallelUpgrades: 1``, ``maxUnavailable: 25%``, and the defaults shown
+in the preceding example.
+The ``maxParallelUpgrades`` and ``maxUnavailable`` limits are evaluated separately for the nodes
+owned by each resource.
+
+The policy fields have the following effects:
+
+``autoUpgrade``
+  Enables or disables the upgrade controller for the applicable nodes.
+  When set to ``false``, the other policy fields are ignored.
+``maxParallelUpgrades``
+  Sets the number of nodes that can be upgraded in parallel.
+  A value of ``0`` means that there is no limit.
+``maxUnavailable``
+  Sets the maximum number or percentage of applicable nodes that can be unavailable during an upgrade.
+``waitForCompletion``
+  Selects pods or jobs that must finish before the driver is upgraded on a node and sets how long to wait.
+  A ``timeoutSeconds`` value of ``0`` waits indefinitely.
+``gpuPodDeletion`` or ``podDeletion``
+  Controls eviction of pods that have allocated GPUs.
+  ``gpuPodDeletion`` is the ``ClusterPolicy`` field name and ``podDeletion`` is the ``NVIDIADriver`` field name.
+``drain``
+  Configures node drain as a fallback when GPU pod deletion cannot remove the GPU workloads.
+  By default, drain is disabled.
 
 .. warning::
 
-   ``driver.upgradePolicy.drain.enable`` is a cluster-wide policy setting.
-   When set to ``true``, the upgrade controller drains each node before upgrading the driver on that node.
+   ``spec.driver.upgradePolicy.drain.enable`` in ``ClusterPolicy`` applies to all nodes managed by
+   that driver configuration.
+   ``spec.upgradePolicy.drain.enable`` in an NVIDIA driver custom resource applies to the nodes owned
+   by that resource.
+   When set to ``true``, the upgrade controller can drain each applicable node before upgrading the driver on that node.
    Draining a node evicts all pods from that node, including workloads unrelated to the GPU driver.
-   This is a disruptive operation that interrupts running GPU and non-GPU workloads on every node the upgrade controller processes.
+   This is a disruptive operation that interrupts running GPU and non-GPU workloads on every node the policy processes.
 
-   Enable ``drain`` only when ``gpuPodDeletion`` is insufficient to remove all GPU-using pods on its own.
-   Adjust the ``gpuPodDeletion`` settings first and use ``drain`` only if those settings do not work.
+   Enable ``drain`` only when ``gpuPodDeletion`` in ``ClusterPolicy``, or ``podDeletion`` in an
+   NVIDIA driver custom resource, is insufficient to remove all GPU-using pods on its own.
+   Adjust the pod deletion settings first and use ``drain`` only if those settings do not work.
    If you must enable ``drain``, use ``podSelector`` to limit which pods are evicted.
 
 If you specify a value for ``maxUnavailable`` and also specify ``maxParallelUpgrades``,
@@ -176,10 +223,10 @@ the ``maxUnavailable`` value applies an additional constraint on the value of
 ``maxParallelUpgrades`` to ensure that the number of parallel upgrades does not
 cause more than the intended number of nodes to become unavailable during the upgrade.
 For example, if you specify ``maxUnavailable=100%`` and ``maxParallelUpgrades=1``,
-one node is upgraded at a time .
+one node is upgraded at a time.
 
-The ``maxUnavailable`` value also applies to the currently unavailable nodes in the cluster.
-If you cordoned nodes in the cluster and the ``maxUnavailable`` value is already met by the number of cordoned nodes,
+The ``maxUnavailable`` value also applies to currently unavailable nodes in the applicable node set.
+If the number of cordoned nodes already meets the ``maxUnavailable`` value,
 then the upgrade does not progress.
 
 
@@ -195,11 +242,11 @@ The set of possible states are:
 * ``cordon-required``: Node will be marked Unschedulable in preparation for the driver upgrade.
 * ``wait-for-jobs-required``: Node will wait on the completion of a group of pods/jobs before proceeding.
 * ``pod-deletion-required``: Pods allocated with GPUs are deleted from the node. If pod deletion fails, the node state is set to ``drain-required``
-  if drain is enabled in ClusterPolicy.
+  if drain is enabled in the applicable upgrade policy.
 * ``drain-required``: Node is drained using ``kubectl drain``, which evicts all pods on the
   node.
-  This state is only reached if ``gpuPodDeletion`` fails to remove all
-  GPU-using pods and ``drain.enable`` is set to ``true`` in the cluster policy.
+  This state is only reached if pod deletion fails to remove all
+  GPU-using pods and ``drain.enable`` is set to ``true`` in the applicable upgrade policy.
   This state is skipped if all GPU pods are successfully deleted from the node.
 * ``pod-restart-required``: The NVIDIA driver pod running on the node will be restarted and upgraded to the new version.
 * ``validation-required``: Validation of the new driver deployed on the node is required before proceeding. The GPU Operator
@@ -216,10 +263,12 @@ The complete state machine is depicted in the diagram below.
 Pausing Driver Upgrades
 =======================
 
-To pause the automatic driver upgrade process in the cluster, toggle ``driver.upgradePolicy.autoUpgrade`` flag
-in the cluster policy.
-The entire state machine pauses and effectively disables any pending nodes from being upgraded.
-You can toggle the flag to ``true`` again to re-enable the upgrade controller and resume any pending upgrades.
+With ``ClusterPolicy`` driver management, set ``spec.driver.upgradePolicy.autoUpgrade`` to ``false``
+to pause automatic upgrades for all driver nodes.
+With NVIDIA driver custom resource management, set ``spec.upgradePolicy.autoUpgrade`` to ``false``
+on a resource to pause automatic upgrades only for the nodes that it owns.
+The Operator removes the upgrade-state labels from those nodes.
+Set the field to ``true`` to re-enable automatic upgrades.
 
 Skipping Driver Upgrades
 ========================
@@ -230,6 +279,9 @@ Metrics and Events
 ==================
 
 The GPU Operator generates the following metrics during the upgrade process which can be scraped by Prometheus.
+When NVIDIA driver custom resources manage the driver, the node upgrade metrics are aggregated across
+all resources, and ``gpu_operator_auto_upgrade_enabled`` is ``1`` when at least one resource enables
+automatic upgrades.
 
 * ``gpu_operator_auto_upgrade_enabled``: 1 if driver auto upgrade is enabled; 0 if not.
 * ``gpu_operator_nodes_upgrades_in_progress``: Total number of nodes in which a driver pod is being upgraded on.
@@ -313,23 +365,44 @@ In addition, no new features will be added to the ``k8s-driver-manager`` moving 
 
 .. rubric:: Procedure
 
-1. Upgrade the driver by changing ``driver.version`` value in ClusterPolicy:
+#. Upgrade the driver by changing the version in the resource that manages the target nodes.
+
+   For ``ClusterPolicy`` driver management:
 
    .. code-block:: console
 
       $ kubectl patch clusterpolicies.nvidia.com/cluster-policy --type='json' -p='[{"op": "replace", "path": "/spec/driver/version", "value":"580.95.05"},{"op": "replace", "path": "/spec/driver/repository", "value":"nvcr.io/nvidia"},{"op": "replace", "path": "/spec/driver/image", "value":"driver"}]'
 
-2. (Optional) To monitor the status of the upgrade, watch the deployment of the new driver pod on GPU worker nodes:
+   For NVIDIA driver custom resource management:
+
+   .. code-block:: console
+
+      $ kubectl patch nvidiadrivers.nvidia.com/<resource-name> \
+          --type='json' \
+          -p='[{"op": "replace", "path": "/spec/version", "value":"580.95.05"}]'
+
+#. Optional: To monitor the status of the upgrade, watch the deployment of the new driver pod on GPU worker nodes:
+
+   For ``ClusterPolicy`` driver management:
 
    .. code-block:: console
 
       $ kubectl get pods -n gpu-operator -lapp=nvidia-driver-daemonset -w
+
+   For NVIDIA driver custom resource management:
+
+   .. code-block:: console
+
+      $ kubectl get pods -n gpu-operator \
+          -l app.kubernetes.io/component=nvidia-driver -w
 
 Configuration Options
 =====================
 
 The following configuration options are available for ``k8s-driver-manager``. The options allow users to control the
 GPU pod eviction and node drain behavior.
+Configure them under ``spec.driver.manager.env`` in ``ClusterPolicy`` or under ``spec.manager.env``
+in each NVIDIA driver custom resource.
 
 .. code-block:: yaml
 
@@ -361,4 +434,3 @@ GPU pod eviction and node drain behavior.
    With ``OnDelete`` update strategy, a new driver pod with the updated spec will only get deployed on a node once the old driver pod is manually deleted.
    Thus, admins can control when to rollout spec updates to driver pods on any given node.
    For more information on DaemonSet update strategies, refer to the `Kubernetes documentation <https://kubernetes.io/docs/tasks/manage-daemon/update-daemon-set/#daemonset-update-strategy>`_.
-
