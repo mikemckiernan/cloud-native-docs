@@ -77,20 +77,28 @@ Cluster Requirements
    If the command output is ``true``, then NFD is already running in the cluster.
 
 
-DRA Requirements 
+DRA Requirements
 ****************
 
 If you are planning to use the DRA Driver for NVIDIA GPUs for GPU resource management, the following requirements must be met:
 
-* Use Kubernetes 1.34.2 or later. 
-
-* If you plan to use pre-installed driver, the NVIDIA GPU driver must be version 580 or later.
+* Use Kubernetes v1.34.2 or later.
+  The cluster must serve ``DeviceClass``.
+  The Operator recognizes ``resource.k8s.io/v1``, ``resource.k8s.io/v1beta2``, and ``resource.k8s.io/v1beta1``.
+  Enable the Kubernetes DRA API and its required feature gates when your Kubernetes version does not serve the API by
+  default.
+* The nodes and software stack must meet the :ref:`GPU Operator support matrix <operator-platform-support>`.
+* Use NVIDIA GPU Driver v580 or later.
+* Enable CDI in the container runtime.
 
 * For ComputeDomains, ensure the following:
 
   * NVIDIA Grace Blackwell GPUs with Multi-Node NVLink (MNNVL) are available on your cluster.
     Refer to the `NVIDIA Multi-Node NVLink Systems documentation
     <https://docs.nvidia.com/multi-node-nvlink-systems/index.html>`_ for details.
+
+  * GPU Feature Discovery is enabled so that participating nodes receive the required ``nvidia.com/gpu.clique``
+    label.
 
   * When using ComputeDomains with a pre-installed GPU driver:
 

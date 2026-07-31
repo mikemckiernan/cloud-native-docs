@@ -35,8 +35,10 @@ Unlike :doc:`ClusterPolicy <clusterpolicy-reference>`, ``GPUCluster`` does not m
 NVIDIA Kubernetes Device Plugin.
 The GPU driver must be pre-installed on the host or managed by an ``NVIDIADriver`` custom resource, and GPUs are
 surfaced to workloads through DRA rather than through extended resources.
-For a conceptual overview of the DRA stack, installation steps, and deployment scenarios, refer to
+The ``GPUCluster`` integration is separate from the DRA operand configured through ``ClusterPolicy.spec.draDriver``.
+For the ``ClusterPolicy`` integration, refer to
 :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`.
+The ``GPUCluster.spec.draDriver`` fields documented here belong to a different custom resource schema.
 
 .. note::
 
@@ -52,7 +54,7 @@ Singleton Behavior
 
 ``GPUCluster`` is a *singleton* resource: the GPU Operator reconciles only one instance in the cluster.
 The GPU Operator Helm chart creates a default instance named ``gpu-cluster`` when DRA support is enabled
-(``gpuCluster.enabled=true``).
+(``gpuCluster.deployCR=true`` and ``clusterPolicy.deployCR=false``).
 
 The first ``GPUCluster`` object that the controller observes becomes the active instance ("first-wins").
 Any additional ``GPUCluster`` objects are not reconciled and are marked with the ``ignored`` state in their status.

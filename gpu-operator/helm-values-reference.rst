@@ -58,8 +58,6 @@ Operator and Global Settings
 
    * - ``operator.env``
      - List of environment variables (``name``/``value`` pairs) set on the GPU Operator.
-       For a ``GPUCluster`` deployment, set ``DEFAULT_GPU_ALLOCATION_MODE`` to ``dra`` so newly-added GPU nodes use the
-       DRA model. Refer to :ref:`Deployment Model <dra-deployment-scenarios>`.
      - ``[]``
 
    * - ``daemonsets.labels``
@@ -318,14 +316,21 @@ Node Feature Discovery
 
 .. _helm-values-dra:
 
-************************
-DRA Support (GPUCluster)
-************************
+******************************
+DRA Driver for NVIDIA GPUs
+******************************
 
-These values enable and configure the DRA GPU resource management model.
-The ``gpuCluster.*`` values populate the ``GPUCluster`` custom resource; for the full field list, refer to the
-:doc:`GPUCluster Custom Resource Reference <gpucluster-reference>` and
-:doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`.
+These values configure the DRA Driver for NVIDIA GPUs as an operand of the ``ClusterPolicy`` resource.
+The operand is disabled by default.
+Refer to :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>` for prerequisites, configuration
+restrictions, and installation steps.
+
+This section documents how the ``draDriver.*`` values configure ``ClusterPolicy.spec.draDriver``.
+These values are distinct from the values of the standalone DRA Driver Helm chart.
+``GPUCluster.spec.draDriver`` is a separate custom resource API; refer to the
+:doc:`GPUCluster Custom Resource Reference <gpucluster-reference>`.
+For the ``ClusterPolicy`` path documented here, retain the default resource selectors:
+``clusterPolicy.deployCR=true`` and ``gpuCluster.deployCR=false``.
 
 .. list-table::
    :widths: 25 50 25
@@ -335,18 +340,69 @@ The ``gpuCluster.*`` values populate the ``GPUCluster`` custom resource; for the
      - Description
      - Default
 
-   * - ``gpuCluster.enabled``
-     - When set to ``true``, the Operator creates the default ``GPUCluster`` resource and enables the DRA model.
+   * - ``draDriver.repository``
+     - Container registry and path for the DRA driver image.
+     - Defined by the Operator release.
+
+   * - ``draDriver.image``
+     - DRA driver image name.
+     - ``dra-driver-nvidia-gpu``
+
+   * - ``draDriver.version``
+     - DRA driver image tag.
+     - Defined by the Operator release.
+
+   * - ``draDriver.imagePullPolicy``
+     - Image pull policy for the DRA driver containers.
+     - ``IfNotPresent``
+
+   * - ``draDriver.imagePullSecrets``
+     - List of secret names for pulling the DRA driver image from a private registry.
+     - ``[]``
+
+   * - ``draDriver.featureGates``
+     - Map of DRA driver feature-gate names to Boolean values.
+       Refer to :ref:`Configure Driver Features <dra-feature-gates>`.
+     - ``{}``
+
+   * - ``draDriver.gpus.enabled``
+     - Deploys the GPU allocation capability.
+       Set ``devicePlugin.enabled=false`` when you enable this value.
      - ``false``
 
-   * - ``gpuCluster.draDriver.*``
-     - Configures the DRA driver image and its GPU allocation (``gpus``) and ComputeDomains capabilities.
-       Populates ``spec.draDriver`` of the ``GPUCluster`` resource.
-     - See reference
+   * - ``draDriver.gpus.kubeletPlugin.env``
+     - Environment variables for the ``gpus`` kubelet-plugin container.
+     - ``[]``
 
-   * - ``operator.env[*]`` (``DEFAULT_GPU_ALLOCATION_MODE``)
-     - Set to ``dra`` for a ``GPUCluster`` deployment so newly-added GPU nodes use the DRA model.
-     - unset
+   * - ``draDriver.gpus.kubeletPlugin.resources``
+     - Resource requests and limits for the ``gpus`` kubelet-plugin container.
+     - ``{}``
+
+   * - ``draDriver.computeDomains.enabled``
+     - Deploys the ComputeDomain controller and kubelet-plugin capability.
+     - ``false``
+
+   * - ``draDriver.computeDomains.controller.env``
+     - Environment variables for the ComputeDomain controller container.
+     - ``[]``
+
+   * - ``draDriver.computeDomains.controller.resources``
+     - Resource requests and limits for the ComputeDomain controller container.
+     - ``{}``
+
+   * - ``draDriver.computeDomains.controller.tolerations``
+     - Tolerations for the ComputeDomain controller pod.
+     - Control-plane toleration defined by the chart.
+
+   * - ``draDriver.computeDomains.kubeletPlugin.env``
+     - Environment variables for the ``compute-domains`` kubelet-plugin container.
+     - ``[]``
+
+   * - ``draDriver.computeDomains.kubeletPlugin.resources``
+     - Resource requests and limits for the ``compute-domains`` kubelet-plugin container.
+     - ``{}``
+
+For the corresponding custom resource fields, refer to :ref:`spec.draDriver <clusterpolicy-spec-dra-driver>`.
 
 *****************
 Sandbox Workloads

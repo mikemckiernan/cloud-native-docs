@@ -41,6 +41,20 @@ Refer to the :ref:`GPU Operator Component Matrix` for a list of software compone
 New Features
 ------------
 
+* Added the DRA Driver for NVIDIA GPUs as a GPU Operator-managed operand.
+  Configure the driver through ``ClusterPolicy.spec.draDriver`` or the corresponding ``draDriver.*`` Helm values.
+  You can enable DRA allocation for full GPUs and MIG devices, ComputeDomains for Multi-Node NVLink systems, or both
+  capabilities together.
+  The integration deploys the DRA kubelet plug-in, creates the DeviceClasses for the enabled capabilities, and deploys
+  the ComputeDomain controller when ComputeDomains are enabled.
+  It also supports passing driver feature gates to the managed components through ``draDriver.featureGates``.
+  The operand is disabled by default.
+  DRA GPU allocation cannot be enabled with the NVIDIA Kubernetes Device Plugin, and neither DRA capability can be
+  enabled with sandbox workloads in the same ``ClusterPolicy``.
+  Refer to :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`.
+  (`PR #1541 <https://github.com/NVIDIA/gpu-operator/pull/1541>`__,
+  `PR #2424 <https://github.com/NVIDIA/gpu-operator/pull/2424>`__)
+
 * Updated software component versions:
 
   - NVIDIA GPU Driver 595.71.05

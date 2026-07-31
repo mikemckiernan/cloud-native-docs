@@ -53,6 +53,7 @@ ClusterPolicy Resource Structure
      driver: {}
      toolkit: {}
      devicePlugin: {}
+     draDriver: {}
      dcgmExporter: {}
      dcgm: {}
      nodeStatusExporter: {}
@@ -102,6 +103,10 @@ ClusterPolicy Resource Structure
 
    * - ``devicePlugin``
      - Configuration for the NVIDIA Kubernetes Device Plugin.
+     - Yes
+
+   * - ``draDriver``
+     - Configuration for the DRA Driver for NVIDIA GPUs.
      - Yes
 
    * - ``dcgmExporter``
@@ -735,6 +740,97 @@ through a ConfigMap. Refer to :doc:`gpu-sharing` and :doc:`gpu-operator-mig`.
      - Host path to use as the MPS (Multi-Process Service) root directory.
        Relevant when using the Device Plugin in MPS mode.
      - ``/run/nvidia/mps``
+
+
+.. _clusterpolicy-spec-dra-driver:
+
+*************************
+spec.draDriver
+*************************
+
+Controls deployment of the DRA Driver for NVIDIA GPUs.
+The DRA operand is disabled unless ``gpus.enabled`` or ``computeDomains.enabled`` is ``true``.
+Refer to :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>` for prerequisites, supported
+configurations, and installation steps.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 32 48 20
+
+   * - Field
+     - Description
+     - Default
+
+   * - ``repository``
+     - Container registry and path for the DRA driver image.
+     - Defined by the Operator release.
+
+   * - ``image``
+     - DRA driver image name.
+     - ``dra-driver-nvidia-gpu``
+
+   * - ``version``
+     - DRA driver image tag.
+       Refer to the :ref:`operator-component-matrix`.
+     - Version defined by the Operator release.
+
+   * - ``imagePullPolicy``
+     - Image pull policy.
+     - ``IfNotPresent``
+
+   * - ``imagePullSecrets``
+     - List of secret names for pulling the DRA driver image from a private registry.
+     - None
+
+   * - ``featureGates``
+     - Map of DRA driver feature-gate names to Boolean values.
+       The Operator passes the map to every enabled DRA driver container as the ``FEATURE_GATES`` environment
+       variable.
+       Refer to :ref:`Configure Driver Features <dra-feature-gates>`.
+     - ``{}``
+
+   * - ``gpus.enabled``
+     - When ``true``, deploys the ``gpus`` kubelet-plugin container and creates the ``gpu.nvidia.com`` and
+       ``mig.nvidia.com`` DeviceClasses.
+       ``devicePlugin.enabled`` must be ``false``.
+     - ``false``
+
+   * - ``gpus.kubeletPlugin.env``
+     - Environment variables for the ``gpus`` kubelet-plugin container.
+     - ``[]``
+
+   * - ``gpus.kubeletPlugin.resources``
+     - Resource requests and limits for the ``gpus`` kubelet-plugin container.
+     - None
+
+   * - ``computeDomains.enabled``
+     - When ``true``, deploys the ComputeDomain controller and the ``compute-domains`` kubelet-plugin container and
+       creates the ComputeDomain DeviceClasses.
+     - ``false``
+
+   * - ``computeDomains.controller.env``
+     - Environment variables for the ComputeDomain controller container.
+     - ``[]``
+
+   * - ``computeDomains.controller.resources``
+     - Resource requests and limits for the ComputeDomain controller container.
+     - None
+
+   * - ``computeDomains.controller.tolerations``
+     - Tolerations for the ComputeDomain controller pod.
+     - Control-plane toleration defined by the chart.
+
+   * - ``computeDomains.kubeletPlugin.env``
+     - Environment variables for the ``compute-domains`` kubelet-plugin container.
+     - ``[]``
+
+   * - ``computeDomains.kubeletPlugin.resources``
+     - Resource requests and limits for the ``compute-domains`` kubelet-plugin container.
+     - None
+
+The Operator rejects a ``ClusterPolicy`` that enables ``gpus`` while the NVIDIA Kubernetes Device Plugin is enabled.
+It also rejects any enabled DRA capability when ``sandboxWorkloads.enabled`` is ``true``.
+The Kubernetes cluster must serve a supported ``DeviceClass`` API before either capability can be enabled.
 
 
 *************************

@@ -43,17 +43,17 @@ GPU Resource Management
 The GPU Operator supports managing GPU resources on your cluster using the following methods:
 
 - NVIDIA Device Plugin through the ``ClusterPolicy`` custom resource.
-- DRA Driver for NVIDIA GPUs through the ``GPUCluster`` custom resource.
+- DRA Driver for NVIDIA GPUs through ``ClusterPolicy.spec.draDriver``.
 
-At install time, choose one GPU resource management model for the cluster.
-Use either ``ClusterPolicy`` or ``GPUCluster``; using both in the same cluster is not supported.
+For GPU and MIG allocation, choose either the device plug-in or the DRA driver in the ``ClusterPolicy``.
+The Operator rejects a policy that enables both GPU allocation mechanisms.
+The DRA ComputeDomains capability can coexist with device-plugin allocation.
 
 .. note::
 
-   Deploying the DRA model through the ``GPUCluster`` custom resource is in Technology Preview and is supported only
-   for greenfield (new) deployments.
-   The ``GPUCluster`` API is served under ``nvidia.com/v1alpha1`` and is subject to change in future releases.
-   Migrating an existing ``ClusterPolicy`` deployment to ``GPUCluster`` in place is not supported.
+   The ``GPUCluster`` custom resource is a separate DRA integration.
+   The ``GPUCluster.spec.draDriver`` fields do not configure the ``ClusterPolicy.spec.draDriver`` operand described in
+   the default DRA install path.
 
 .. list-table::
    :header-rows: 1
@@ -61,22 +61,21 @@ Use either ``ClusterPolicy`` or ``GPUCluster``; using both in the same cluster i
 
    * - Component
      - Device-plugin model (``ClusterPolicy``)
-     - DRA model (``GPUCluster``)
+     - DRA model (``ClusterPolicy``)
    * - GPU allocation
      - NVIDIA Kubernetes Device Plugin (extended resources)
      - DRA Driver for NVIDIA GPUs (ResourceClaims)
    * - NVIDIA GPU driver
      - Managed by ``ClusterPolicy`` or ``NVIDIADriver``
-     - Pre-installed or managed by ``NVIDIADriver`` (not managed by ``GPUCluster``)
+     - Managed by ``ClusterPolicy`` or ``NVIDIADriver``, or pre-installed
    * - Default install path
      - :doc:`Install with Helm <getting-started>`
      - :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`
 
-Do not deploy ``ClusterPolicy`` and ``GPUCluster`` as GPU resource management models in the same cluster.
-Refer to :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>` for the supported greenfield DRA
-deployment.
+Refer to :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>` for DRA prerequisites, supported
+capability combinations, and installation.
 
-For the fully supported standalone DRA Driver Helm chart (without Operator-managed ``GPUCluster``), refer to
+For a DRA Driver that is installed as a separate Helm release instead of an Operator-managed operand, refer to
 :doc:`DRA Driver for NVIDIA GPUs <dra-intro-install>`.
 
 
@@ -96,7 +95,7 @@ How the NVIDIA GPU driver is installed is independent of which platform or GPU r
      - Default for generic Kubernetes and most cloud installs
      - :doc:`Install with Helm <getting-started>` and :ref:`common deployment scenarios`
    * - ``NVIDIADriver`` custom resource
-     - Per-node or mixed-OS driver management; use this for Operator-managed drivers with the DRA model
+     - Per-node or mixed-OS driver management
      - :doc:`GPU Driver CRD <gpu-driver-configuration>`
    * - Pre-installed on the host
      - Driver already present on GPU nodes (``driver.enabled=false``)
@@ -261,7 +260,7 @@ If you are new to the GPU Operator, follow one of these common sequences.
            O1[OpenShift Book]
        end
 
-       subgraph dra["DRA Greenfield"]
+       subgraph dra["DRA Operand"]
            P3[Prerequisites] --> D1[DRA Install Guide]
        end
 
@@ -276,7 +275,7 @@ If you are new to the GPU Operator, follow one of these common sequences.
 - **Amazon EKS, Azure AKS, or Google GKE**: :doc:`prerequisites` → platform guide → :doc:`Install with Helm
   <getting-started>` → verify
 - **Red Hat OpenShift**: :external+ocp:doc:`index` (OperatorHub or ``oc`` install)
-- **DRA-native cluster (Technology Preview)**: :doc:`prerequisites` → :doc:`Deploying the GPU Operator with DRA Support
+- **DRA allocation**: :doc:`prerequisites` → :doc:`Deploying the GPU Operator with DRA Support
   <gpu-operator-dra>` → verify
 
 If your cluster uses a restricted network, add the matching guide from :ref:`install-paths-network` before or during

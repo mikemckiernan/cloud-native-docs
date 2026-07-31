@@ -298,18 +298,9 @@ bare metal hosts or virtual machines with GPU passthrough.
 Installing with DRA Driver for NVIDIA GPUs
 ==========================================
 
-.. note::
-
-   Deploying and managing the DRA Driver for NVIDIA GPUs through the ``GPUCluster`` custom resource is in Technology
-   Preview and is supported only for greenfield (new) deployments.
-   Configuration options may change in future releases.
-   Migrating an existing ``ClusterPolicy`` deployment to ``GPUCluster`` in place is not supported.
-   Do not use ``ClusterPolicy`` and ``GPUCluster`` as GPU resource management models in the same cluster.
-
 If you want to use Kubernetes Dynamic Resource Allocation (DRA) to manage GPU resource allocation in your cluster,
-install the GPU Operator with the ``GPUCluster`` custom resource enabled and ``DEFAULT_GPU_ALLOCATION_MODE`` set to
-``dra``.
-This deploys the GPU Operator with the components necessary for DRA, including the DRA Driver for NVIDIA GPUs.
+enable the DRA Driver for NVIDIA GPUs in the ``ClusterPolicy`` and disable the NVIDIA Kubernetes Device Plugin.
+The DRA operand is disabled by default.
 
 .. code-block:: console
 
@@ -317,14 +308,13 @@ This deploys the GPU Operator with the components necessary for DRA, including t
       --version=${version} \
       --create-namespace \
       --namespace gpu-operator \
-      --set gpuCluster.enabled=true \
-      --set driver.nvidiaDriverCRD.enabled=true \
-      --set operator.env[0].name=DEFAULT_GPU_ALLOCATION_MODE \
-      --set operator.env[0].value=dra
+      --set devicePlugin.enabled=false \
+      --set draDriver.gpus.enabled=true
 
-The ``gpuCluster.enabled=true`` flag creates the default ``GPUCluster`` resource.
-The ``driver.nvidiaDriverCRD.enabled=true`` flag creates the ``NVIDIADriver`` custom resource to manage the NVIDIA GPU driver. If you are planning to use pre-installed drivers, set this flag to ``false`` and include the ``driver.enabled=false`` flag.
-Setting the ``DEFAULT_GPU_ALLOCATION_MODE`` environment variable to ``dra`` ensures that GPU nodes are labeled for DRA components.
+If you use a pre-installed GPU driver, also set ``driver.enabled=false``.
+For DRA prerequisites, ComputeDomain configuration, validation, and the distinction between Operator-managed,
+standalone, and ``GPUCluster`` deployment paths, refer to
+:doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`.
 
 Specifying the Operator Namespace
 =================================

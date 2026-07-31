@@ -29,9 +29,9 @@ and the path from GPU discovery to workload allocation.
 
 .. note::
 
-   This page describes the device-plugin-based control path implemented on the GPU Operator
-   ``main`` branch at the source baseline recorded at the end of this file.
-   DRA-based resource allocation uses a different architecture and is outside this page's scope.
+   This page focuses on the default device-plugin-based control path.
+   For the optional DRA operand topology, refer to
+   :doc:`Deploying the GPU Operator with DRA Support <gpu-operator-dra>`.
 
 .. image:: graphics/gpu-operator-architecture.svg
    :alt: GPU Operator control plane and operand architecture
@@ -69,6 +69,9 @@ default with the container workload configuration, and what it does.
        access GPUs.
    * - NVIDIA Kubernetes Device Plugin
      - Registers ``nvidia.com/gpu`` and MIG extended resources with kubelet.
+   * - DRA Driver for NVIDIA GPUs
+     - Disabled by default. When enabled, publishes GPUs, MIG devices, and ComputeDomain devices through Kubernetes
+       Dynamic Resource Allocation.
    * - MPS control daemon
      - Supports Multi-Process Service (MPS) GPU sharing; deployed with the device plugin.
    * - GPU Feature Discovery (GFD)
@@ -114,11 +117,11 @@ API and desired-state layer
 The API layer stores the configuration that the Operator reconciles:
 
 * ``ClusterPolicy`` is the primary, cluster-scoped API.
-  It configures the driver, container toolkit, device plugin, telemetry, validation, and optional
+  It configures the driver, container toolkit, device plugin, DRA driver, telemetry, validation, and optional
   workload stacks.
   Only one ``ClusterPolicy`` is active in a cluster.
 * ``GPUCluster`` is a cluster-scoped API for configuring the DRA Driver for NVIDIA GPUs.
-  It configures the DRA Driver for NVIDIA GPUs, including the DRA Driver for NVIDIA GPUs DaemonSet.
+  It is a separate API surface from the DRA operand configured by ``ClusterPolicy.spec.draDriver``.
   Only one ``GPUCluster`` is active in a cluster.
 * ``NVIDIADriver`` is an optional, cluster-scoped API for assigning different driver configurations
   to different node pools.
