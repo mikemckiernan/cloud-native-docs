@@ -42,7 +42,7 @@ New Features
 
 * Added support for the following software components:
 
-  * Kata Containers 3.31.0 
+  * Kata Containers ${kata_version}
   * containerd 2.3.x
 
 
@@ -82,7 +82,7 @@ Key Features
   - NVIDIA H200 Protected PCIe (multi-GPU passthrough)
   - NVIDIA B200 (single-GPU and multi-GPU passthrough)
   - NVIDIA RTX Pro 6000 BSE (single-GPU passthrough)
-  - AMD Genoa / Milan CPUs with Ubuntu 25.10 (kernel 6.17+) for SEV-SNP 
+  - AMD Genoa / Milan CPUs with Ubuntu 25.10 (kernel 6.17+) for SEV-SNP
   - Intel Emerald Rapids / Granite Rapids CPUs with Ubuntu 25.10 (kernel 6.17+) for TDX
 
 * This release supports the following software components:
