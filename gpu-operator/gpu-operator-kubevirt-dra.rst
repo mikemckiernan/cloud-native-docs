@@ -506,29 +506,71 @@ advertises the required ``partitionN`` attribute.
 
       $ nvidia-smi topo -m
 
-#. Optional: Verification that relies on additional software.
+#. Optional: Verify the partition state from a temporary debug container.
 
-   #. Refer to the `Fabric-Manager-Client <https://github.com/NVIDIA/Fabric-Manager-Client>`__ repository
-      for information about building the `fmpm` utility.
+   The following steps build and run the ``list-partitions`` example from the
+   `go-nvfm <https://github.com/NVIDIA/go-nvfm/tree/main/examples/list-partitions>`__ repository.
+   The debug container accesses the host-mounted Fabric Manager socket without
+   copying software into the driver container.
 
-      You can use the `fmpm` utility to list the partitions and verify the partition status.
-
-      .. code-block:: console
-
-         $ /run/nvidia/fmpm \
-             --unix-domain-socket /run/nvidia-fabricmanager/socket \
-            -l
-
-      Confirm that the partition selected for the claim reports ``isActive: 1``.
-
-   #. For an additional connectivity demonstration, install a guest-compatible build of
-      `nvbandwidth v0.8 <https://github.com/NVIDIA/nvbandwidth/releases/tag/v0.8>`__ and run:
+   #. Start a debug container on the node that owns the allocated GPUs.
+      Record the generated debug pod name so that you can delete it when you finish:
 
       .. code-block:: console
 
-         $ ./nvbandwidth -t device_to_device_memcpy_read_sm
+         $ kubectl debug node/<node-name> \
+             --namespace gpu-operator \
+             --profile=sysadmin \
+             --image=golang:1.24 \
+             --stdin --tty -- bash
 
-      A successful run reports device-to-device bandwidth for both GPUs without a CUDA peer-access error.
+   #. In the debug container, clone the repository and build the example:
+
+      .. code-block:: console
+
+         root@<node-name>:/# git clone --depth 1 https://github.com/NVIDIA/go-nvfm.git
+         root@<node-name>:/# cd go-nvfm
+         root@<node-name>:/go-nvfm# make example-list-partitions
+
+   #. Locate ``libnvfm.so`` in the host filesystem:
+
+      .. code-block:: console
+
+         root@<node-name>:/go-nvfm# NVFM_LIB_PATH="$(find \
+             /host/run/nvidia/driver /host/usr \
+             -name libnvfm.so -print -quit 2>/dev/null)"
+         root@<node-name>:/go-nvfm# echo "$NVFM_LIB_PATH"
+
+      For an Operator-managed driver, the library is typically under ``/host/run/nvidia/driver``.
+      For a pre-installed driver, the library is typically under ``/host/usr``.
+      If the command does not report a path, provide the ``libnvfm.so`` library
+      from the Fabric Manager development package that matches the installed driver branch.
+
+   #. List the Fabric Manager partitions:
+
+      .. code-block:: console
+
+         root@<node-name>:/go-nvfm# export LD_LIBRARY_PATH="$(dirname "$NVFM_LIB_PATH")"
+         root@<node-name>:/go-nvfm# NVFM_UNIX_SOCKET_PATH=/host/run/nvidia-fabricmanager/socket \
+             ./list-partitions
+
+      Confirm that the partition selected for the claim reports ``"isActive": 1``.
+
+   #. Exit the debug container and delete the generated debug pod:
+
+      .. code-block:: console
+
+         root@<node-name>:/go-nvfm# exit
+         $ kubectl delete pod --namespace gpu-operator <debug-pod-name>
+
+#. Optional: For an additional connectivity demonstration, install a guest-compatible build of
+   `nvbandwidth v0.8 <https://github.com/NVIDIA/nvbandwidth/releases/tag/v0.8>`__ and run:
+
+   .. code-block:: console
+
+      $ ./nvbandwidth -t device_to_device_memcpy_read_sm
+
+   A successful run reports device-to-device bandwidth for both GPUs without a CUDA peer-access error.
 
 ****************************************
 Troubleshooting and Operational Guidance
