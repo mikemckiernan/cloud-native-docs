@@ -1,0 +1,32 @@
+{
+  "task": "NVIDIA Container Toolkit 1.20.2 documentation update",
+  "draft": "B",
+  "baseline_commit": "f36eef3359edf7b466916ab811e466386a451305",
+  "branch": "experiment/ctk-1.20.2-draft-b",
+  "style_guide_sha256": "6736f784e22e49ed246357e3c872b2715ce93702b69b50fd04506f3f09078e2d",
+  "instructions_sha256": "c9760356cfdd247893ec1f89595c5dc48c35fd601916edbfd90642de5c8a0d82",
+  "review_records": "container-toolkit-1.20.2.jsonl",
+  "initial_draft_patch": "ctk-1.20.2-draft-b.patch",
+  "draft_after_review_012_patch": "ctk-1.20.2-draft-b-after-review-012.patch",
+  "task_clarifications": [
+    {
+      "topic": "Azure Linux 4 platform matrix",
+      "user_statement": "I'm confident we can claim the remaining two",
+      "interpretation": "Mark x86_64 and Arm64 supported; leave ppc64le blank.",
+      "kind": "task-specific factual confirmation"
+    },
+    {
+      "topic": "Validation",
+      "user_statement": "you don't need to build",
+      "interpretation": "Skip documentation builds and dependency setup; finalize draft for review.",
+      "kind": "task-specific instruction"
+    }
+  ],
+  "collection_note": "Review records imported byte-for-byte from the working experiment. Artifact paths in older records refer to files alongside this context file. Timestamps and status values retain the original recording values.",
+  "acceptance_note": "Only the sentence identified in draft-b-review-009 has explicit wording acceptance. No whole-draft approval is recorded.",
+  "artifacts_sha256": {
+    "container-toolkit-1.20.2.jsonl": "baa9e1ccdbee3ed69e344c7ccebf5b092a37b85a776a749bc64a7a242858d57d",
+    "ctk-1.20.2-draft-b.patch": "ecb3fc6a6f447f85d06ca1c7968157d59229abe6f6bd39d7cf2bb0ff0d95935e",
+    "ctk-1.20.2-draft-b-after-review-012.patch": "150b4958dd185fdfff2d96f74d2c708747f656b1aa15bf57096651992fb6858b"
+  }
+}

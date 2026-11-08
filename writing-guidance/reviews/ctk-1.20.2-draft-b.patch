@@ -1,0 +1,142 @@
+diff --git a/container-toolkit/cdi-support.md b/container-toolkit/cdi-support.md
+index 0bdab4812..7b18bb4c5 100644
+--- a/container-toolkit/cdi-support.md
++++ b/container-toolkit/cdi-support.md
+@@ -220,6 +220,13 @@ Using CDI to inject NVIDIA devices can conflict with using the NVIDIA Container
+ This means that if a `/usr/share/containers/oci/hooks.d/oci-nvidia-hook.json` file exists, delete it
+ or ensure that you do not run containers with the `NVIDIA_VISIBLE_DEVICES` environment variable set.
+ 
++As of version 1.20.2, generated CDI specifications include a `void` volume mount
++that prevents the NVIDIA Container Runtime from injecting additional devices
++through volume-mount requests. This applies when
++`accept-nvidia-visible-devices-as-volume-mounts` is enabled. Regenerate an
++existing specification by following [Manual CDI Specification Generation](#manual-cdi-specification-generation)
++to include this change.
++
+ The use of the CDI specification depends on the CDI-enabled container engine or CLI that you use.
+ In the case of `podman`, for example, releases as of `v4.1.0` include support for specifying CDI devices in the `--device` argument.
+ Assuming that you generated a CDI specification as in the preceding section, running a container with access to all NVIDIA GPUs requires the following command:
+diff --git a/container-toolkit/docker-specialized.md b/container-toolkit/docker-specialized.md
+index c2f22c56e..6dbc88a0f 100644
+--- a/container-toolkit/docker-specialized.md
++++ b/container-toolkit/docker-specialized.md
+@@ -261,6 +261,12 @@ The 1.20.0 release adds the same behavior to CDI and JIT-CDI modes through the
+ `update-application-profile` hook. This change provides feature parity across
+ the modes.
+ 
++As of version 1.20.2, the hook replaces the application profile atomically.
++If the profile path is a symbolic link, the hook replaces the link and leaves
++its target unchanged. Read-only filesystem errors and busy-file errors do not
++prevent the container from starting, but the hook cannot update the profile in
++these cases.
++
+ If the application-profile hook conflicts with an application, refer to
+ [Disabling Hooks in JIT-CDI Mode](cdi-support.md#disabling-hooks-in-jit-cdi-mode).
+ 
+diff --git a/container-toolkit/install-guide.md b/container-toolkit/install-guide.md
+index 81480f170..3297e0ecb 100644
+--- a/container-toolkit/install-guide.md
++++ b/container-toolkit/install-guide.md
+@@ -78,7 +78,9 @@ where `systemd` cgroup drivers are used that cause containers to lose access to
+ 
+ (installing-with-yum-or-dnf)=
+ 
+-### With `dnf`: RHEL/CentOS, Fedora, Amazon Linux
++(with-dnf-rhel-centos-fedora-amazon-linux)=
++
++### With `dnf`: RHEL/CentOS, Fedora, Amazon Linux, Azure Linux
+ 
+ 
+    ```{note}
+diff --git a/container-toolkit/release-notes.md b/container-toolkit/release-notes.md
+index 5fcfdb3c5..9832f8a6b 100644
+--- a/container-toolkit/release-notes.md
++++ b/container-toolkit/release-notes.md
+@@ -8,6 +8,45 @@
+ 
+ This document describes the new features, improvements, fixes and known issues for the NVIDIA Container Toolkit.
+ 
++## NVIDIA Container Toolkit 1.20.2
++
++This release of the NVIDIA Container Toolkit `v1.20.2` is a bugfix release.
++
++### Fixes and Features
++
++This release includes the following changes:
++
++- Added support for Azure Linux 4. For installation instructions, refer to [Installing With `dnf`](install-guide.md#installing-with-yum-or-dnf).
++- Generated CDI specifications now prevent duplicate device injection when the NVIDIA Container Runtime accepts device requests through volume mounts.
++  The specification adds a `void` volume mount that suppresses these requests, so the runtime does not inject devices in addition to those selected through CDI.
++  For more information, refer to [PR #2184](https://github.com/NVIDIA/nvidia-container-toolkit/pull/2184).
++- Management CDI specifications now include `libnvsdm.so.1` and its dependencies, `libibumad.so.3` and `libibmad.so.5`, when available on the host.
++  Management applications such as NVIDIA Data Center GPU Manager (DCGM) can initialize NVSDM for NVSwitch monitoring on systems that require these libraries.
++  For more information, refer to [PR #2162](https://github.com/NVIDIA/nvidia-container-toolkit/pull/2162).
++- The `disable-device-node-modification` hook now mounts the modified driver parameter file as read-only in the container.
++  This fix prevents writes to that file through the bind mount.
++  For more information, refer to [PR #2160](https://github.com/NVIDIA/nvidia-container-toolkit/pull/2160).
++- The toolkit container now uses a BusyBox build that runs host binaries when executing commands through `chroot`.
++  Previously, BusyBox could run a built-in applet instead of the requested host binary.
++  For more information, refer to [PR #2189](https://github.com/NVIDIA/nvidia-container-toolkit/pull/2189) and [issue #299 in /NVIDIA/k8s-driver-manager](https://github.com/NVIDIA/k8s-driver-manager/issues/299).
++- The `update-application-profile` hook now writes the GPU visibility profile atomically, replacing an existing profile without writing through a symbolic link at the profile path.
++  The hook also ignores busy-file errors, in addition to read-only filesystem errors, so these errors do not prevent container startup.
++  For more information, refer to [PR #2201](https://github.com/NVIDIA/nvidia-container-toolkit/pull/2201).
++
++### Included Packages
++
++The following packages are included:
++
++- `nvidia-container-toolkit 1.20.2`
++- `nvidia-container-toolkit-base 1.20.2`
++- `libnvidia-container-tools 1.20.2`
++- `libnvidia-container1 1.20.2`
++
++The following `container-toolkit` containers are included:
++
++- `nvcr.io/nvidia/k8s/container-toolkit:v1.20.2`
++- `nvcr.io/nvidia/k8s/container-toolkit:v1.20.2-packaging`
++
+ ## NVIDIA Container Toolkit 1.20.1
+ 
+ This release of the NVIDIA Container Toolkit `v1.20.1` is a bugfix release.
+diff --git a/container-toolkit/supported-platforms.md b/container-toolkit/supported-platforms.md
+index c18ff6c14..6c2605485 100644
+--- a/container-toolkit/supported-platforms.md
++++ b/container-toolkit/supported-platforms.md
+@@ -12,6 +12,7 @@ Recent NVIDIA Container Toolkit releases are tested and expected to work on thes
+ | ------------------------ | -------------- | ------- | ------------------------ |
+ | Amazon Linux 2023        | X              |         | X {sup}`2`               |
+ | Amazon Linux 2           | X              |         | X                        |
++| Azure Linux 4            | X              |         | X                        |
+ | Open Suse/SLES 15.x      | X              |         |                          |
+ | Debian Linux 11          | X              |         |                          |
+ | CentOS 8                 | X              | X       | X                        |
+diff --git a/container-toolkit/versions1.json b/container-toolkit/versions1.json
+index c05b88f0c..5b5bcc1e2 100644
+--- a/container-toolkit/versions1.json
++++ b/container-toolkit/versions1.json
+@@ -1,6 +1,10 @@
+ [
+   {
+     "preferred": "true",
++    "url": "../1.20.2/",
++    "version": "1.20.2"
++  },
++  {
+     "url": "../1.20.1/",
+     "version": "1.20.1"
+   },
+diff --git a/repo.toml b/repo.toml
+index 2752d317e..a75ce4f7c 100644
+--- a/repo.toml
++++ b/repo.toml
+@@ -110,8 +110,8 @@ project_build_order = [
+ docs_root = "${root}/container-toolkit"
+ project = "container-toolkit"
+ name = "NVIDIA Container Toolkit"
+-version = "1.20.1"
+-source_substitutions = {version = "1.20.1"}
++version = "1.20.2"
++source_substitutions = {version = "1.20.2"}
+ copyright_start = 2020
+ redirects = [
+   { path="concepts.html", target="index.html" },

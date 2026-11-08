@@ -1,3 +1,6 @@
+# Preserve quoted feedback and historical draft patches without rewriting them.
+exclude: ^writing-guidance/reviews/
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0

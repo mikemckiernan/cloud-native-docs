@@ -1,0 +1,2 @@
+# Archived patches retain the leading space on blank context lines.
+writing-guidance/reviews/*.patch whitespace=-blank-at-eol
