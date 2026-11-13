@@ -14,6 +14,9 @@ The following files support writing and subsequent review:
 - `reviews/ctk-1.20.2-draft-b.patch` preserves the initial independent draft.
 - `reviews/ctk-1.20.2-draft-b-after-review-012.patch` preserves the cumulative draft after the recorded reviews.
 - `reviews/container-toolkit-1.20.2-context.json` identifies the starting commit, style-guide digest, and artifact provenance.
+- `reviews/gpu-operator-26.7.3.jsonl` preserves 11 selected review records from the GPU Operator release-note and upgrade-guide review.
+- `reviews/gpu-operator-26.7.3-after-review.patch` preserves the reviewed product-documentation changes for context.
+- `reviews/gpu-operator-26.7.3-context.json` records source commits, artifact hashes, collection limits, and the elapsed review window.
 
 The patches are historical evidence, not instructions to apply product documentation changes.
 The examples illustrate writing decisions, not a technical reference for later releases.

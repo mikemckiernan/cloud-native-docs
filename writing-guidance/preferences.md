@@ -1,8 +1,8 @@
 # Writing Preferences
 
 Apply these preferences alongside the authoritative NVIDIA style guide and the task instructions.
-These preferences come from the Container Toolkit 1.20.2 documentation review.
-Review IDs refer to [the preserved feedback](reviews/container-toolkit-1.20.2.jsonl).
+These preferences come from the Container Toolkit 1.20.2 and GPU Operator 26.7.3 documentation reviews.
+Review IDs refer to the preserved [Container Toolkit feedback](reviews/container-toolkit-1.20.2.jsonl) and [GPU Operator feedback](reviews/gpu-operator-26.7.3.jsonl).
 
 ## Describe the Documented Release Directly
 
@@ -11,7 +11,7 @@ Omit introductions such as "As of version 1.20.2" when the documentation version
 Put product release history in release notes or migration guidance where comparisons are needed.
 Preserve dependency requirements and versions needed to perform a task.
 
-Source: `draft-b-review-001`.
+Sources: `draft-b-review-001` and `gpu-operator-review-002`.
 
 ## Use One Sentence per Source Line
 
@@ -56,6 +56,16 @@ Verify the problem from source material rather than inventing an application fai
 
 Source: `draft-b-review-010`.
 
+## Classify Issues by the Shipped Behavior
+
+Do not describe an issue as fixed solely because a source-code change has merged.
+If the documented configuration still requires a workaround, describe the remaining limitation under known issues and explain the required action.
+Include consequences of the workaround, such as workload eviction during an image upgrade.
+Verify which workaround applies to the release.
+This review does not establish a prohibition on proposing workarounds supplied by issue reporters.
+
+Sources: `gpu-operator-review-006`, its revision in `gpu-operator-review-008`, and the qualification in `gpu-operator-review-009`.
+
 ## Keep Details That Explain Why a Change Matters
 
 Omit implementation terms that distract from the changed behavior.
@@ -63,4 +73,4 @@ Retain concrete examples and practical consequences that help readers understand
 For example, naming `modprobe` and explaining kernel-module dependency handling is more useful than describing BusyBox built-in applets.
 Concision must not leave a release note vague or apparently unnecessary.
 
-Sources: `draft-b-review-011` and its refinement, `draft-b-review-012`.
+Sources: `draft-b-review-011`, its refinement, `draft-b-review-012`, and `gpu-operator-review-011`.
