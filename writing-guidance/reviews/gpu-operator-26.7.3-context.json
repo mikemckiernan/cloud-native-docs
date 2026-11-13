@@ -1,0 +1,21 @@
+{
+  "task": "GPU Operator 26.7.3 documentation review",
+  "recorded_at": "2026-11-13T17:08:42.959487+00:00",
+  "baseline_commit": "28a34942728b2a4b84e11db97f0f6e115d7f153a",
+  "reviewed_commit": "3f92de243d8fc3a27af295d4a1c6bc80afc9348f",
+  "review_records": "gpu-operator-26.7.3.jsonl",
+  "reviewed_patch": "gpu-operator-26.7.3-after-review.patch",
+  "collection_note": "Feedback and feedback_at were extracted from local session user turns. Before/after excerpts were reconstructed from the visible discussion and edits; they are selected evidence, not a complete chronological patch replay. Some final text was edited by the reviewer directly.",
+  "acceptance_note": "Only records with explicit acceptance evidence identify accepted wording. Other revisions remain applied without inferred acceptance. No whole-draft approval is recorded.",
+  "style_guide_note": "The guide path required by AGENTS.md was unavailable in this environment; no claim of style-guide validation is made.",
+  "elapsed_time": {
+    "worktree_created": "2026-11-13T11:00:13-05:00",
+    "reviewed_commit_created": "2026-11-13T12:01:34-05:00",
+    "elapsed_minutes": 61.35,
+    "interpretation": "Wall-clock elapsed review window, including discussion and reader review; not measured active editing time. The agent edited a local worktree of the PR branch; no remote publication by the agent is implied."
+  },
+  "artifacts_sha256": {
+    "gpu-operator-26.7.3.jsonl": "35d5559b9f547ee9e5d2938bd5f1f931b4b49506a6d5276cf2dfd0cdbc1f44d9",
+    "gpu-operator-26.7.3-after-review.patch": "289ed008f5cb33676c0024f08b43fbd5a6ed2f52c2fc3088a2ffe0c1b1b2d987"
+  }
+}
